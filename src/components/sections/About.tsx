@@ -59,11 +59,7 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Leadership badge */}
-              <div className={styles.leaderBadge} aria-label="Leadership achievement">
-                <span style={{ color: 'var(--neon)' }}>★</span>
-                <span>Society President</span>
-              </div>
+
             </div>
 
             {/* Stats */}
@@ -97,9 +93,9 @@ export default function About() {
                 engineered to scale, crafted to convert, and built to last.
               </p>
               <p>
-                Beyond code, I serve as <strong>President of my University&apos;s Technology Society</strong> —
-                leading a team of engineers, organizing technical events, and driving the next generation of
-                tech talent. Leadership isn&apos;t just a role; it&apos;s how I approach every collaboration.
+                Beyond code, I have a deep passion for system design, clean architecture, and building
+                products that genuinely improve people&apos;s lives. Every project is a chance to push
+                the boundaries of what the web can do.
               </p>
             </div>
 

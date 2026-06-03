@@ -203,18 +203,44 @@
 
 @media (max-width: 768px) {
   .content {
-    padding-top: 120px;
-    padding-bottom: 120px;
+    padding-top: 110px;
+    padding-bottom: 100px;
     max-width: 100%;
   }
 
   .gradientLeft {
-    background: linear-gradient(to bottom, var(--void) 0%, transparent 30%, var(--void) 100%);
+    background: linear-gradient(to bottom, var(--void) 0%, transparent 40%, var(--void) 100%);
   }
 
   .scrollIndicator { display: none; }
 
-  .headline {
-    gap: 0.2em;
+  .headline { gap: 0.15em; }
+
+  .badge { margin-bottom: 24px; font-size: 0.68rem; }
+
+  .sub {
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    max-width: 100%;
+  }
+
+  .ctas { gap: 12px; }
+
+  .ctaPrimary,
+  .ctaGhost {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 28px;
+    font-size: 0.9rem;
+  }
+
+  .techStrip {
+    padding: 12px clamp(16px, 4vw, 40px);
+    gap: 10px;
+  }
+
+  .techTag {
+    font-size: 0.65rem;
+    padding: 3px 10px;
   }
 }

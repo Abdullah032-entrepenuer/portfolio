@@ -257,6 +257,7 @@
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 48px;
   }
 
   .leftCol {
@@ -264,12 +265,41 @@
   }
 }
 
-@media (max-width: 600px) {
-  .row {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 768px) {
+  .grid { gap: 36px; }
 
   .formWrapper {
     padding: 28px 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .chip {
+    font-size: 0.82rem;
+    padding: 12px 14px;
+  }
+
+  .desc { font-size: 0.93rem; }
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .formWrapper {
+    padding: 24px 16px;
+  }
+
+  .input,
+  .textarea,
+  .select {
+    font-size: 1rem; /* Prevent iOS zoom on focus */
+  }
+
+  .submitBtn {
+    padding: 15px 24px;
+    font-size: 0.9rem;
   }
 }
+

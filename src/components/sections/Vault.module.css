@@ -1,299 +1,919 @@
+/* ═══════════════════════════════════════════
+   VAULT SECTION
+═══════════════════════════════════════════ */
 .vault {
   background: var(--void);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Header */
+/* Ambient top glow */
+.vault::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(ellipse 55% 55% at 50% 0%, rgba(139, 92, 246, 0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Header ─── */
 .header {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
 }
 
-.title { max-width: 500px; }
+.title { max-width: 480px; }
 
 .subtitle {
   color: var(--white-muted);
-  font-size: 1.1rem;
-  max-width: 440px;
-  line-height: 1.7;
-}
-
-/* Projects list */
-.projects {
-  display: flex;
-  flex-direction: column;
-  gap: 120px;
-}
-
-/* Project */
-.project {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.projectOdd {
-  direction: rtl;
-}
-.projectOdd > * {
-  direction: ltr;
-}
-
-/* Content */
-.projectContent {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.projectMeta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.projectNum {
-  font-family: var(--font-display);
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1;
-  opacity: 0.25;
-  letter-spacing: -0.05em;
-}
-
-.projectTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
-  letter-spacing: -0.03em;
-}
-
-.tagline {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-
-.projectDesc {
-  color: var(--white-muted);
-  font-size: 0.975rem;
+  font-size: 1.05rem;
+  max-width: 420px;
   line-height: 1.75;
-  max-width: 480px;
 }
 
-/* Info row */
-.projectInfoRow {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.infoChip {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.infoLabel {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--white-muted);
-}
-
-.infoChip > span:last-child {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--white);
-}
-
-/* Tags */
-.projectTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.projectTag {
-  padding: 5px 12px;
-  border-radius: 100px;
-  border: 1px solid;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  background: rgba(255, 255, 255, 0.03);
-  transition: all 0.25s ease;
-}
-
-.projectTag:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-/* ═══ Laptop Mockup ═══ */
-.projectMockup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mockupWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 520px;
-  cursor: none;
-}
-
-.mockupGlow {
-  position: absolute;
-  inset: -40px;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(40px);
-}
-
-/* Laptop */
-.laptop {
+/* ─── Grid ─── */
+/*
+  5 cards: featured (spans 2 cols) + 4 regular in a 3-col grid
+  Row 1: [featured][card2][card3] but featured is 2 cols → actually:
+  Row 1: [featured (col1-2)][card2 (col3)]  -- 2 rows implicit
+  Row 2: [card3][card4][card5]
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 20px;
   position: relative;
   z-index: 1;
-  width: 100%;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7));
 }
 
-/* Screen part */
-.laptopScreen {
-  background: linear-gradient(160deg, #2A2A2E 0%, #1A1A1E 100%);
-  border-radius: 12px 12px 4px 4px;
-  padding: 10px 10px 6px;
-  border: 1.5px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 -2px 6px rgba(0,0,0,0.5);
-}
-
-.laptopBezel {
+/* ─── Card ─── */
+.card {
   position: relative;
-  background: #0a0a0b;
-  border-radius: 6px;
+  background: #111113;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  cursor: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 10px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform;
+  /* The card row in grid: image takes the top, body below */
 }
 
-.laptopCamera {
-  width: 6px;
-  height: 6px;
-  background: #2a2a2e;
-  border-radius: 50%;
-  border: 1px solid #333;
-  flex-shrink: 0;
-  margin-bottom: 6px;
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
+@media (max-width: 768px) {
+  .card { cursor: pointer; }
 }
 
-.laptopDisplay {
-  position: relative;
-  width: 100%;
-  flex: 1;
-  overflow: hidden;
-  border-radius: 4px;
+.card:hover {
+  border-color: rgba(var(--accent-rgb), 0.35);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.1),
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.projectImage {
-  object-fit: cover;
-  object-position: top;
-  transition: object-position 6s ease;
+/* Featured card spans first 2 columns, 2 rows tall */
+.cardFeatured {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
 }
 
-.mockupWrapper:hover .projectImage {
-  object-position: bottom;
-}
-
-.screenGlare {
+/* Ambient glow overlay */
+.cardGlow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.06) 0%,
-    transparent 40%,
-    transparent 60%,
-    rgba(0,0,0,0.1) 100%
-  );
   pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+  border-radius: inherit;
+}
+
+/* ─── Card Image ─── */
+.cardImg {
+  position: relative;         /* required for Next.js Image fill */
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #0d0d0f;
+  /* Blurred bg clone trick: the image bg-copy fills behind */
+}
+
+/* Featured card gets slightly wider ratio */
+.cardFeatured .cardImg {
+  aspect-ratio: 16 / 7;
+}
+
+/*
+  KEY FIX: contain so the full screenshot is visible, no cropping/zoom.
+  A blurred copy is rendered as background via the ::before pseudo-element
+  to fill the letterbox bars with a blurred version of the same image.
+*/
+.cardPhoto {
+  object-fit: contain;        /* show full screenshot — no zoom/crop */
+  object-position: center top;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 2;
 }
 
-/* Hinge */
-.laptopBase {
-  position: relative;
+.card:hover .cardPhoto {
+  transform: scale(1.02);
 }
 
-.laptopHinge {
-  height: 5px;
-  background: linear-gradient(to bottom, #2A2A2E, #1A1A1E);
-  border-radius: 0 0 2px 2px;
-  border: 1.5px solid rgba(255,255,255,0.06);
-  border-top: none;
+/* Blurred ambient background behind the contained image */
+.cardPhotoBg {
+  position: absolute;
+  inset: -8px;
+  object-fit: cover;
+  object-position: center top;
+  filter: blur(18px) brightness(0.35) saturate(1.2);
+  z-index: 1;
+  transform: scale(1.05);
 }
 
-.laptopBottom {
-  height: 16px;
-  background: linear-gradient(160deg, #252528 0%, #1C1C1F 100%);
-  border-radius: 0 0 8px 8px;
-  border: 1.5px solid rgba(255,255,255,0.06);
-  border-top: none;
-  position: relative;
-}
-
-.laptopBottom::after {
-  content: '';
+/* Bottom fade from image into card body */
+.cardImgFade {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
-  height: 3px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 0 0 4px 4px;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to top, #111113 0%, rgba(17,17,19,0.6) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 4;
 }
 
-/* Coming soon */
+/* Accent color wash at bottom */
+.cardImgAccent {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.card:hover .cardImgAccent {
+  opacity: 1;
+}
+
+/* Screenshot count badge */
+.cardImgCount {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hover overlay */
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: opacity 0.3s ease;
+}
+
+.cardOverlayBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: translateY(6px) scale(0.95);
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.card:hover .cardOverlayBtn {
+  transform: translateY(0) scale(1);
+}
+
+/* ─── Card Body ─── */
+.cardBody {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.cardTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardNum {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.cardYear {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--white-muted);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--white);
+  margin-top: 2px;
+}
+
+.cardTagline {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.cardTag {
+  padding: 3px 9px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: filter 0.2s ease;
+}
+
+.cardTag:hover {
+  filter: brightness(1.2);
+}
+
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cardRole {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--white-muted);
+  text-transform: uppercase;
+}
+
+.cardLive {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cardLiveDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ─── Coming Soon ─── */
 .comingSoon {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-top: 80px;
+  margin-top: 64px;
 }
 
 .comingSoonLine {
   flex: 1;
   height: 1px;
-  background: var(--border);
+  background: linear-gradient(to right, transparent, var(--border), transparent);
 }
 
-@media (max-width: 1024px) {
-  .project {
+/* ═══════════════════════════════════════════
+   PROJECT MODAL
+═══════════════════════════════════════════ */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9900;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: overlayFadeIn 0.25s ease both;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 90vh;
+  background: #111113;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 56% 44%;
+  animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 40px 100px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(var(--accent-rgb), 0.06);
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: scale(0.93) translateY(24px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Close button ── */
+.modalClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 20;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 768px) { .modalClose { cursor: pointer; } }
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg) scale(1.05);
+}
+
+/* ── Left: Gallery ── */
+.modalLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* ── Main image — THE KEY FIX ── */
+.modalMainImg {
+  position: relative;         /* required for Next.js Image fill */
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0a0a0b;
+  flex-shrink: 0;
+}
+
+.modalImg {
+  object-fit: contain;        /* show full screenshot — no zoom/crop */
+  object-position: center top;
+  z-index: 2;
+}
+
+/* Blurred ambient background fills the letterbox bars */
+.modalImgBg {
+  position: absolute;
+  inset: -8px;
+  object-fit: cover;
+  object-position: center top;
+  filter: blur(20px) brightness(0.3) saturate(1.2);
+  z-index: 1;
+  transform: scale(1.05);
+}
+
+.modalImgVignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(0,0,0,0.15) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.modalImgGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Arrow nav buttons */
+.modalArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+@media (max-width: 768px) { .modalArrow { cursor: pointer; } }
+
+.modalMainImg:hover .modalArrow { opacity: 1; }
+
+.modalArrowLeft { left: 10px; }
+.modalArrowRight { right: 10px; }
+
+.modalArrow:hover {
+  background: rgba(0, 0, 0, 0.85);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  color: var(--accent);
+}
+
+/* Image counter */
+.modalCounter {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.modalCounterSep {
+  color: var(--white-muted);
+  margin: 0 1px;
+}
+
+/* Thumbnails strip */
+.modalThumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.modalThumb {
+  position: relative;         /* required for Next.js Image fill */
+  width: 68px;
+  height: 46px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  cursor: none;
+  flex-shrink: 0;
+  background: #0a0a0b;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+@media (max-width: 768px) { .modalThumb { cursor: pointer; } }
+
+.modalThumb:hover { transform: scale(1.06); border-color: rgba(255, 255, 255, 0.2); }
+
+.modalThumbActive { border-width: 2px; }
+
+.modalThumbImg {
+  object-fit: cover;   /* fill thumbnail completely */
+  object-position: center top;
+}
+
+.modalThumbDim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  transition: opacity 0.2s ease;
+}
+
+.modalThumb:hover .modalThumbDim { opacity: 0; }
+
+/* ── Right: Info panel ── */
+.modalRight {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 28px 28px 24px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Badge row */
+.modalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px 5px 8px;
+  border-radius: 100px;
+  border: 1px solid;
+  align-self: flex-start;
+}
+
+.modalNum {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: rgba(var(--accent-rgb), 0.15);
+  border-radius: 100px;
+  padding: 2px 8px;
+}
+
+.modalLabel {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.modalTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.modalTagline {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-top: -6px;
+}
+
+.modalDesc {
+  color: var(--white-muted);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+/* Chips */
+.modalChips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modalChip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 8px 14px;
+  flex: 1;
+  min-width: 80px;
+}
+
+.modalChipLabel {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.modalChipValue {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* Tags */
+.modalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.modalTag {
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: filter 0.2s ease;
+}
+
+.modalTag:hover { filter: brightness(1.2); }
+
+/* Actions */
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.modalCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 26px;
+  border-radius: 100px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #000;
+  cursor: none;
+  transition: all 0.3s var(--ease-spring);
+}
+
+@media (max-width: 768px) { .modalCta { cursor: pointer; } }
+
+.modalCta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.38);
+}
+
+.modalCtaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 26px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white-muted);
+  cursor: none;
+  transition: all 0.25s ease;
+}
+
+@media (max-width: 768px) { .modalCtaGhost { cursor: pointer; } }
+
+.modalCtaGhost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cardFeatured {
+    grid-column: 1 / 3;
+  }
+  .cardFeatured .cardImg {
+    aspect-ratio: 16 / 7;
+  }
+  .modal {
     grid-template-columns: 1fr;
-    gap: 48px;
+    max-height: 94vh;
   }
-  .projectOdd {
-    direction: ltr;
+  .modalLeft {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 14px;
+  }
+  .modalRight {
+    padding: 20px;
   }
 }
 
-@media (max-width: 768px) {
-  .projects { gap: 80px; }
-  .header { margin-bottom: 60px; }
+/* ── Tablet ── */
+@media (max-width: 900px) {
+  .header { margin-bottom: 52px; }
+  .subtitle { font-size: 0.95rem; }
 }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  /* Grid: single column */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .cardFeatured {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .cardFeatured .cardImg,
+  .cardImg {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Section header */
+  .header { margin-bottom: 40px; }
+  .comingSoon { margin-top: 40px; }
+
+  /* Cards */
+  .card { border-radius: 16px; }
+  .cardBody { padding: 14px 16px 16px; gap: 6px; }
+  .cardTitle { font-size: 1.05rem; }
+  .cardTagline { font-size: 0.74rem; }
+  .cardTag { font-size: 0.6rem; padding: 2px 8px; }
+  .cardRole { font-size: 0.58rem; }
+
+  /* Modal: bottom-sheet style on mobile */
+  .modalOverlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+    grid-template-columns: 1fr;
+    animation: modalSlideUp 0.38s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+
+  @keyframes modalSlideUp {
+    from { transform: translateY(100%); opacity: 0.5; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+
+  /* Gallery panel */
+  .modalLeft {
+    padding: 12px 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    max-height: 52vh;
+    overflow: hidden;
+  }
+
+  .modalMainImg {
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+
+  /* Always show arrows on touch */
+  .modalArrow {
+    opacity: 1;
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Thumbnails scroll horizontally */
+  .modalThumbs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    gap: 6px;
+  }
+  .modalThumbs::-webkit-scrollbar { display: none; }
+  .modalThumb { width: 56px; height: 38px; flex-shrink: 0; }
+
+  /* Info panel */
+  .modalRight {
+    padding: 16px 16px 24px;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 44vh;
+  }
+
+  .modalTitle { font-size: 1.4rem; }
+  .modalTagline { font-size: 0.8rem; }
+  .modalDesc { font-size: 0.82rem; line-height: 1.7; }
+
+  .modalChips { gap: 8px; }
+  .modalChip { padding: 7px 12px; }
+  .modalChipValue { font-size: 0.78rem; }
+
+  .modalTag { font-size: 0.66rem; padding: 4px 10px; }
+
+  .modalCta,
+  .modalCtaGhost {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+  }
+
+  /* Close button repositioned */
+  .modalClose {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* ── Small phones ── */
+@media (max-width: 400px) {
+  .cardImg { aspect-ratio: 4 / 3; }
+  .cardFeatured .cardImg { aspect-ratio: 4 / 3; }
+  .modal { max-height: 95vh; }
+  .modalLeft { max-height: 45vh; }
+  .modalRight { max-height: 52vh; }
+}
+
