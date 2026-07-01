@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Abdullah@1122';
 
 export function verifySessionToken(token: string | undefined): boolean {
   if (!token) return false;

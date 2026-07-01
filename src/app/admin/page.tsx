@@ -360,7 +360,7 @@ export default function AdminPage() {
         {isDefaultPassword && (
           <div className="warning-box">
             <FiAlertTriangle size={18} />
-            <span>Note: Configure the <strong>ADMIN_PASSWORD</strong> key in your <strong>.env.local</strong> file for enhanced production security. Default password is <strong>admin123</strong>.</span>
+            <span>Note: Configure the <strong>ADMIN_PASSWORD</strong> key in your <strong>.env.local</strong> file for enhanced production security. Default password is <strong>Abdullah@1122</strong>.</span>
           </div>
         )}
 
