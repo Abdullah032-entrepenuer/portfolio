@@ -12,11 +12,10 @@
   transform: translateX(-50%);
   width: 800px;
   height: 600px;
-  background: radial-gradient(ellipse, rgba(139, 92, 246, 0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse, var(--crimson-dim) 0%, transparent 70%);
   pointer-events: none;
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 440px 1fr;
@@ -24,7 +23,6 @@
   align-items: start;
 }
 
-/* ── Left ── */
 .leftCol {
   display: flex;
   flex-direction: column;
@@ -39,12 +37,11 @@
 }
 
 .desc {
-  color: var(--white-muted);
+  color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.75;
 }
 
-/* Chips */
 .chips {
   display: flex;
   flex-direction: column;
@@ -56,51 +53,49 @@
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--glass-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--white-dim);
+  color: var(--text-dim);
   transition: all 0.3s var(--ease-fluid);
   cursor: none;
 }
 
 .chip:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--glass-bg-hover);
   border-color: var(--border-hover);
-  color: var(--white);
+  color: var(--text-primary);
   transform: translateX(4px);
 }
 
-/* Availability */
 .availability {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 14px 18px;
-  background: rgba(200, 255, 0, 0.05);
-  border: 1px solid rgba(200, 255, 0, 0.15);
+  background: var(--mint-dim);
+  border: 1px solid var(--mint-dim);
   border-radius: var(--radius-md);
   font-size: 0.85rem;
   font-family: var(--font-display);
   font-weight: 500;
-  color: var(--neon);
+  color: var(--mint);
 }
 
 .availDot {
   width: 8px;
   height: 8px;
-  background: var(--neon);
+  background: var(--mint);
   border-radius: 50%;
   animation: pulse-glow 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
-/* ── Form ── */
 .formWrapper {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--glass-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: 48px 44px;
@@ -130,20 +125,20 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--white-muted);
+  color: var(--text-muted);
 }
 
 .input,
 .textarea,
 .select {
   width: 100%;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--text-ghost);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: var(--white);
+  color: var(--text-primary);
   outline: none;
   transition: all 0.25s ease;
   -webkit-appearance: none;
@@ -159,21 +154,21 @@
 }
 
 .select option {
-  background: #1a1a1e;
-  color: var(--white);
+  background: var(--card);
+  color: var(--text-primary);
 }
 
 .input::placeholder,
 .textarea::placeholder {
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
 }
 
 .input:focus,
 .textarea:focus,
 .select:focus {
-  border-color: rgba(139, 92, 246, 0.5);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border-color: var(--crimson-glow);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 0 0 3px var(--crimson-dim);
 }
 
 .inputError {
@@ -193,7 +188,6 @@
   font-weight: 500;
 }
 
-/* Submit */
 .submitBtn {
   width: 100%;
   justify-content: center;
@@ -206,7 +200,6 @@
   opacity: 0.7;
 }
 
-/* Spinner */
 .spinner {
   display: inline-block;
   width: 16px;
@@ -217,7 +210,6 @@
   animation: spin-slow 0.7s linear infinite;
 }
 
-/* Success state */
 .successState {
   display: flex;
   flex-direction: column;
@@ -230,13 +222,13 @@
 .successIcon {
   width: 64px;
   height: 64px;
-  background: rgba(200, 255, 0, 0.1);
-  border: 1px solid rgba(200, 255, 0, 0.3);
+  background: var(--mint-dim);
+  border: 1px solid var(--mint-dim);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--neon);
+  color: var(--mint);
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
@@ -244,11 +236,11 @@
   font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--text-primary);
 }
 
 .successDesc {
-  color: var(--white-muted);
+  color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.7;
   max-width: 380px;
@@ -259,7 +251,6 @@
     grid-template-columns: 1fr;
     gap: 48px;
   }
-
   .leftCol {
     position: static;
   }
@@ -267,17 +258,14 @@
 
 @media (max-width: 768px) {
   .grid { gap: 36px; }
-
   .formWrapper {
     padding: 28px 20px;
     border-radius: var(--radius-lg);
   }
-
   .chip {
     font-size: 0.82rem;
     padding: 12px 14px;
   }
-
   .desc { font-size: 0.93rem; }
 }
 
@@ -286,20 +274,16 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
-
   .formWrapper {
     padding: 24px 16px;
   }
-
   .input,
   .textarea,
   .select {
-    font-size: 1rem; /* Prevent iOS zoom on focus */
+    font-size: 1rem;
   }
-
   .submitBtn {
     padding: 15px 24px;
     font-size: 0.9rem;
   }
 }
-

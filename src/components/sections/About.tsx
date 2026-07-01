@@ -2,24 +2,15 @@
 
 import Image from 'next/image';
 import styles from './About.module.css';
+import { AboutData } from '@/lib/db';
 
-const stats = [
-  { value: '3+', label: 'Years Experience' },
-  { value: '50+', label: 'Projects Delivered' },
-  { value: '1', label: 'Tech Society Led' },
-  { value: '∞', label: 'Problems Solved' },
-];
+export default function About({ data }: { data: AboutData }) {
+  const bioParagraphs = data?.bioParagraphs || [];
+  const stats = data?.stats || [];
+  const skills = data?.skills || [];
+  const title = data?.title || 'Not just a developer.<br />An <span class="gradient-violet">engineer</span> who ships.';
+  const floatingBadge = data?.floatingBadge || { icon: '◈', title: 'Senior Engineer', sub: 'Full‑Stack Developer' };
 
-const skills = [
-  { name: 'React / Next.js', level: 95 },
-  { name: 'Node.js / Express', level: 90 },
-  { name: 'MongoDB / Databases', level: 85 },
-  { name: 'Three.js / WebGL', level: 80 },
-  { name: 'System Architecture', level: 88 },
-  { name: 'Technical Writing', level: 92 },
-];
-
-export default function About() {
   return (
     <section id="about" className={`section ${styles.about}`} aria-label="About Abdullah Awais">
       <div className="container">
@@ -52,14 +43,12 @@ export default function About() {
 
               {/* Floating badge */}
               <div className={styles.floatingBadge} aria-label="Role badge">
-                <span className={styles.badgeIcon}>◈</span>
+                <span className={styles.badgeIcon}>{floatingBadge.icon}</span>
                 <div>
-                  <div className={styles.badgeTitle}>Senior Engineer</div>
-                  <div className={styles.badgeSub}>Full‑Stack Developer</div>
+                  <div className={styles.badgeTitle}>{floatingBadge.title}</div>
+                  <div className={styles.badgeSub}>{floatingBadge.sub}</div>
                 </div>
               </div>
-
-
             </div>
 
             {/* Stats */}
@@ -77,26 +66,12 @@ export default function About() {
           <div className={styles.rightCol}>
             <span className="text-label">The Person Behind the Code</span>
 
-            <h2 className={`text-h2 ${styles.title}`}>
-              Not just a developer.<br />
-              An <span className="gradient-violet">engineer</span> who ships.
-            </h2>
+            <h2 className={`text-h2 ${styles.title}`} dangerouslySetInnerHTML={{ __html: title }} />
 
             <div className={styles.bio}>
-              <p>
-                I&apos;m <strong>Abdullah Awais</strong> — a Full-Stack Developer specializing in
-                building high-performance web applications that don&apos;t just function, they <em>captivate</em>.
-              </p>
-              <p>
-                With deep expertise in the MERN stack and a passion for immersive 3D web experiences, I bridge
-                the gap between complex engineering and elegant, intuitive design. Every project I take on is
-                engineered to scale, crafted to convert, and built to last.
-              </p>
-              <p>
-                Beyond code, I have a deep passion for system design, clean architecture, and building
-                products that genuinely improve people&apos;s lives. Every project is a chance to push
-                the boundaries of what the web can do.
-              </p>
+              {bioParagraphs.map((para, i) => (
+                <p key={i} dangerouslySetInnerHTML={{ __html: para }} />
+              ))}
             </div>
 
             {/* Skill bars */}

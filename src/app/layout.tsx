@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk, Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import CustomCursor from '@/components/ui/CustomCursor';
+import { ThemeProvider } from '@/components/ui/ThemeProvider';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -59,13 +57,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
+      data-theme="dark"
       style={{ colorScheme: 'dark' }}
     >
       <body className="noise">
-        <CustomCursor />
-        <Navbar />
-        {children}
-        <Footer />
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

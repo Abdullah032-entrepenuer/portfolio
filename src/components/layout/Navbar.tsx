@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -40,13 +41,11 @@ export default function Navbar() {
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''} ${hidden ? styles.navHidden : ''}`}>
         <div className={`container ${styles.navInner}`}>
-          {/* Logo */}
           <Link href="/" className={styles.logo} aria-label="Abdullah Awais Portfolio">
             <span className={styles.logoAA}>AA</span>
             <span className={styles.logoDot}>.</span>
           </Link>
 
-          {/* Desktop Links */}
           <ul className={styles.links} role="list">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -61,16 +60,17 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA */}
-          <button
-            className={`btn btn-primary ${styles.ctaBtn}`}
-            onClick={() => handleNavClick('#contact')}
-            aria-label="Let's Build"
-          >
-            Let's Build
-          </button>
+          <div className={styles.rightGroup}>
+            <ThemeToggle />
+            <button
+              className={`btn btn-primary ${styles.ctaBtn}`}
+              onClick={() => handleNavClick('#contact')}
+              aria-label="Let's Build"
+            >
+              Let&apos;s Build
+            </button>
+          </div>
 
-          {/* Hamburger */}
           <button
             className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -84,8 +84,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ''}`} aria-hidden={!menuOpen}>
+        <div className={styles.mobileToggleRow}>
+          <ThemeToggle />
+        </div>
         <ul className={styles.mobileLinks} role="list">
           {navLinks.map((link, i) => (
             <li key={link.href} style={{ '--i': i } as React.CSSProperties}>

@@ -3,121 +3,8 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './Vault.module.css';
+import { ProjectItem as Project } from '@/lib/db';
 
-const projects = [
-  {
-    id: 'coursecraft',
-    num: '01',
-    label: 'EdTech · Full‑Stack · E‑Learning',
-    title: 'CourseCraft',
-    tagline: 'Learn job-ready skills. Earn real certificates.',
-    desc: 'A full-stack e-learning platform offering free and paid courses across technology, business, and design. Features user authentication, instructor admin dashboard, Stripe payments, certificate generation on completion, and a modern learning experience.',
-    image: '/coursecraft-1.jpeg',
-    images: [
-      '/coursecraft-1.jpeg',
-      '/coursecraft-2.jpeg',
-      '/coursecraft-3.jpeg',
-      '/coursecraft-4.jpeg',
-      '/coursecraft-5.jpeg',
-      '/coursecraft-6.jpeg',
-      '/coursecraft-7.jpeg',
-    ],
-    imageAlt: 'CourseCraft e-learning platform homepage',
-    tags: ['PHP', 'MySQL', 'JavaScript', 'Stripe', 'Certificate Generation'],
-    accent: '#F97316',
-    accentRgb: '249,115,22',
-    year: '2025',
-    role: 'Full‑Stack Developer',
-    link: null,
-  },
-  {
-    id: 'rivaan',
-    num: '02',
-    label: 'Brand Identity · Full‑Stack · Strategy',
-    title: 'Rivaan',
-    tagline: 'Premium water. Digital presence redefined.',
-    desc: 'A complete digital transformation for a premium water brand — brand identity design, full-stack website development, and social media content strategy. Transforming Rivaan from concept to a market-ready product.',
-    image: '/rivaan.png',
-    images: ['/rivaan.png'],
-    imageAlt: 'Rivaan premium water brand website',
-    tags: ['Next.js', 'Framer Motion', 'Brand Identity', 'Social Media'],
-    accent: '#06B6D4',
-    accentRgb: '6,182,212',
-    year: '2024',
-    role: 'Tech Lead & Brand Strategist',
-    link: null,
-  },
-  {
-    id: 'dairy-farm',
-    num: '03',
-    label: 'AgriTech · Full‑Stack',
-    title: 'Dairy Farm Management',
-    tagline: 'Modernizing agriculture with tech.',
-    desc: 'A comprehensive system for dairy farms — track livestock, monitor milk production, manage sales & revenue, and track expenses through a beautiful real-time dashboard with role-based access.',
-    image: '/dairy-farm-2.png',
-    images: [
-      '/dairy-farm-2.png',
-      '/dairy-farm-3.png',
-      '/dairy-farm-4.png',
-      '/dairy-farm-5.png',
-      '/dairy-farm-1.png',
-    ],
-    imageAlt: 'Dairy Farm Management Dashboard',
-    tags: ['React', 'Node.js', 'MongoDB', 'Dashboard', 'Charts'],
-    accent: '#10B981',
-    accentRgb: '16,185,129',
-    year: '2025',
-    role: 'Full‑Stack Developer',
-    link: null,
-  },
-  {
-    id: 'car-bidding',
-    num: '04',
-    label: 'Marketplace · Auctions',
-    title: 'Car Bidding Platform',
-    tagline: 'Find your ultimate ride.',
-    desc: 'A real-time auction marketplace for prestigious vehicles. Live bidding, secure payments, verified ownership records, and a sleek marketplace UI for a seamless buying experience.',
-    image: '/car-bidding-1.jpeg',
-    images: [
-      '/car-bidding-1.jpeg',
-      '/car-bidding-2.jpeg',
-      '/car-bidding-3.jpeg',
-      '/car-bidding-4.jpeg',
-    ],
-    imageAlt: 'Car Bidding Platform Homepage',
-    tags: ['Next.js', 'WebSockets', 'Payment Gateway', 'Real-Time'],
-    accent: '#3B82F6',
-    accentRgb: '59,130,246',
-    year: '2025',
-    role: 'Full‑Stack Developer',
-    link: null,
-  },
-  {
-    id: 'auto-care',
-    num: '05',
-    label: 'E‑Commerce · Auto Parts',
-    title: 'Auto Care',
-    tagline: 'Your one-stop shop for quality auto parts.',
-    desc: 'A live e-commerce platform connecting users to trusted auto parts vendors. Features smart oil-grade recommendations, category browsing, secure checkout, coupon system, and real-time WhatsApp support.',
-    image: '/auto-care-1.jpeg',
-    images: [
-      '/auto-care-1.jpeg',
-      '/auto-care-2.jpeg',
-      '/auto-care-3.jpeg',
-      '/auto-care-4.jpeg',
-      '/auto-care-5.jpeg',
-    ],
-    imageAlt: 'Auto Care E-Commerce Store',
-    tags: ['React', 'E-Commerce', 'Logistics', 'Oil Recommender'],
-    accent: '#C8FF00',
-    accentRgb: '200,255,0',
-    year: '2025',
-    role: 'Full‑Stack Developer',
-    link: 'https://auto-care.me',
-  },
-];
-
-type Project = typeof projects[0];
 
 /* ─────────────────── Project Modal ─────────────────── */
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
@@ -451,8 +338,9 @@ function ProjectCard({ project, index, onClick }: { project: Project; index: num
 }
 
 /* ─────────────────── Vault Section ─────────────────── */
-export default function Vault() {
+export default function Vault({ data }: { data: Project[] }) {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const projectsList = data || [];
 
   return (
     <section id="vault" className={`section ${styles.vault}`} aria-label="Selected works">
@@ -470,7 +358,7 @@ export default function Vault() {
 
         {/* Grid */}
         <div className={styles.grid}>
-          {projects.map((project, i) => (
+          {projectsList.map((project, i) => (
             <ProjectCard
               key={project.id}
               project={project}

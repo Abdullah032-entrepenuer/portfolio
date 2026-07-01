@@ -3,16 +3,14 @@
 import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import styles from './Hero.module.css';
+import { HeroData } from '@/lib/db';
 
 const HeroCanvas = dynamic(() => import('@/components/3d/HeroCanvas'), {
   ssr: false,
   loading: () => <div className={styles.canvasPlaceholder} />,
 });
 
-const words = ['Engineering', 'Digital', 'Luxury.'];
-const subWords = ['Bridging', 'the', 'gap', 'between', 'high‑performance', 'code', 'and', 'high‑fidelity', 'design.'];
-
-export default function Hero() {
+export default function Hero({ data }: { data: HeroData }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -24,7 +22,12 @@ export default function Hero() {
       span.style.animationDelay = `${0.1 + i * 0.08}s`;
       span.classList.add(styles.wordVisible);
     });
-  }, []);
+  }, [data]);
+
+  const words = data?.words || ['Engineering', 'Digital', 'Luxury.'];
+  const subWords = data?.subWords || [];
+  const subText = data?.sub || '';
+  const techList = data?.tech || [];
 
   return (
     <section ref={containerRef} className={styles.hero} id="hero" aria-label="Hero section">
@@ -47,11 +50,14 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 ref={headlineRef} className={`text-hero ${styles.headline}`}>
-          {words.map((word, i) => (
-            <span key={i} data-word className={`${styles.word} ${word === 'Luxury.' ? 'gradient-neon' : ''}`}>
-              {word}
-            </span>
-          ))}
+          {words.map((word, i) => {
+            const isHighlighted = word === 'Luxury.' || word.toLowerCase().includes('luxury') || word.toLowerCase().includes('digital') || i === words.length - 1;
+            return (
+              <span key={i} data-word className={`${styles.word} ${isHighlighted ? 'gradient-neon' : ''}`}>
+                {word}
+              </span>
+            );
+          })}
           <br />
           <span className={styles.headlineSecond}>
             {subWords.map((word, i) => (
@@ -64,8 +70,7 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className={styles.sub}>
-          Full‑Stack Developer specializing in MERN architectures
-          and immersive 3D web experiences.
+          {subText}
         </p>
 
         {/* CTAs */}
@@ -100,7 +105,7 @@ export default function Hero() {
 
       {/* Tech strip */}
       <div className={styles.techStrip} aria-label="Technology stack">
-        {['React', 'Next.js', 'Node.js', 'MongoDB', 'Three.js', 'TypeScript', 'WebGL', 'Express'].map((tech) => (
+        {techList.map((tech) => (
           <span key={tech} className={styles.techTag}>{tech}</span>
         ))}
       </div>

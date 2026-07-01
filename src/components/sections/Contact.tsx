@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FiGithub, FiExternalLink, FiSend, FiCheck, FiMail, FiPhone } from 'react-icons/fi';
 import { SiFiverr } from 'react-icons/si';
 import styles from './Contact.module.css';
+import { ContactData } from '@/lib/db';
 
 const budgetOptions = [
   'Under $500',
@@ -23,7 +24,11 @@ const projectTypes = [
   'Other',
 ];
 
-export default function Contact() {
+export default function Contact({ data }: { data: ContactData }) {
+  const emailVal = data?.email || 'abdullahawais034@gmail.com';
+  const phoneVal = data?.phone || '923250995477';
+  const phoneDisplayVal = data?.phoneDisplay || '0325 099 5477';
+
   const [form, setForm] = useState({ name: '', email: '', type: '', budget: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -46,7 +51,7 @@ export default function Contact() {
     setSending(true);
 
     // Construct WhatsApp message
-    const phone = "923250995477";
+    const phone = phoneVal;
     const text = `*New Project Inquiry from Portfolio*\n\n*Name:* ${form.name}\n*Email:* ${form.email}\n*Project Type:* ${form.type || 'Not specified'}\n*Budget:* ${form.budget || 'Not specified'}\n\n*Project Brief:*\n${form.message}`;
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedText}`;
@@ -82,22 +87,22 @@ export default function Contact() {
             {/* Contact chips */}
             <div className={styles.chips}>
               <a
-                href="mailto:abdullahawais034@gmail.com"
+                href={`mailto:${emailVal}`}
                 className={styles.chip}
                 aria-label="Email Abdullah Awais"
                 id="link-email"
               >
                 <FiMail size={18} color="var(--neon)" />
-                <span>abdullahawais034@gmail.com</span>
+                <span>{emailVal}</span>
               </a>
               <a
-                href="tel:+923250995477"
+                href={`tel:+${phoneVal}`}
                 className={styles.chip}
                 aria-label="Call Abdullah Awais"
                 id="link-phone"
               >
                 <FiPhone size={18} color="var(--violet)" />
-                <span>0325 099 5477</span>
+                <span>{phoneDisplayVal}</span>
               </a>
               <a
                 href="https://www.fiverr.com/users/abdu1lah_awais"

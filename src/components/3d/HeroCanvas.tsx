@@ -22,14 +22,14 @@ function DistortedSphere() {
       <mesh ref={mesh} castShadow>
         <icosahedronGeometry args={[1.6, 4]} />
         <MeshDistortMaterial
-          color="#8B5CF6"
+          color="#FF3366"
           attach="material"
           distort={0.38}
           speed={2.2}
           roughness={0.1}
           metalness={0.8}
           wireframe={false}
-          emissive="#3B0764"
+          emissive="#660022"
           emissiveIntensity={0.4}
         />
       </mesh>
@@ -91,7 +91,7 @@ function FloatingParticles() {
       </bufferGeometry>
       <pointsMaterial
         size={0.045}
-        color="#C8FF00"
+        color="#00FFA3"
         transparent
         opacity={0.7}
         sizeAttenuation
@@ -105,15 +105,15 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <pointLight position={[5, 5, 5]} intensity={1.5} color="#C8FF00" />
-      <pointLight position={[-5, -3, -5]} intensity={1.0} color="#8B5CF6" />
+      <pointLight position={[5, 5, 5]} intensity={1.5} color="#00FFA3" />
+      <pointLight position={[-5, -3, -5]} intensity={1.0} color="#FF3366" />
       <pointLight position={[0, 0, 3]} intensity={0.5} color="#06B6D4" />
 
       <Stars radius={80} depth={50} count={2000} factor={3} saturation={0} fade speed={0.6} />
       <FloatingParticles />
       <DistortedSphere />
-      <OrbitRing radius={2.8} color="#C8FF00" speed={0.5} tilt={Math.PI / 4} />
-      <OrbitRing radius={3.4} color="#8B5CF6" speed={-0.35} tilt={Math.PI / 6} />
+      <OrbitRing radius={2.8} color="#00FFA3" speed={0.5} tilt={Math.PI / 4} />
+      <OrbitRing radius={3.4} color="#FF3366" speed={-0.35} tilt={Math.PI / 6} />
       <OrbitRing radius={4.0} color="#06B6D4" speed={0.22} tilt={Math.PI / 2.5} />
     </>
   );

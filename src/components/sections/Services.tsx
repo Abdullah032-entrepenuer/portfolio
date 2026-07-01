@@ -2,43 +2,9 @@
 
 import { useRef, useState } from 'react';
 import styles from './Services.module.css';
+import { ServiceItem } from '@/lib/db';
 
-const services = [
-  {
-    id: 'mern',
-    icon: '⚡',
-    label: 'Core Engineering',
-    title: 'Full‑Stack MERN Development',
-    desc: 'End-to-end web applications built on MongoDB, Express.js, React, and Node.js. From scalable REST APIs to polished React UIs — delivered with production-grade architecture.',
-    tags: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Next.js', 'REST APIs', 'TypeScript'],
-    accent: 'neon',
-    stat: '50+ Projects',
-  },
-  {
-    id: '3d',
-    icon: '◈',
-    label: 'Immersive Experiences',
-    title: '3D Web & WebGL Engineering',
-    desc: 'Interactive 3D experiences powered by Three.js and React Three Fiber. Product configurators, immersive e-commerce, and WebGL-powered storytelling that converts visitors into buyers.',
-    tags: ['Three.js', 'React Three Fiber', 'WebGL', 'GSAP', 'Shader Programming', 'R3F Drei'],
-    accent: 'violet',
-    stat: 'WebGL Expert',
-  },
-  {
-    id: 'docs',
-    icon: '◎',
-    label: 'Technical Leadership',
-    title: 'Software Documentation & Architecture',
-    desc: 'Comprehensive technical documentation, system design, and software specifications that bridge the gap between complex engineering and stakeholder clarity. Clear thinking, scalable systems.',
-    tags: ['System Design', 'API Docs', 'SRS / BRD', 'Tech Writing', 'Architecture Diagrams', 'Agile'],
-    accent: 'cyan',
-    stat: 'Tech Lead',
-  },
-];
-
-type Service = typeof services[0];
-
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+function ServiceCard({ service, index }: { service: ServiceItem; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tiltStyle, setTiltStyle] = useState({});
   const [hovered, setHovered] = useState(false);
@@ -67,12 +33,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   };
 
   const accentColor = service.accent === 'neon' ? 'var(--neon)' :
-                      service.accent === 'violet' ? 'var(--violet)' : 'var(--cyan)';
+                      service.accent === 'violet' ? 'var(--violet)' : 
+                      service.accent === 'cyan' ? 'var(--cyan)' : service.accent || 'var(--cyan)';
 
   return (
     <div
       ref={cardRef}
-      className={`${styles.card} ${styles[`card-${service.accent}`]} ${hovered ? styles.cardHovered : ''}`}
+      className={`${styles.card} ${styles[`card-${service.accent}`] || ''} ${hovered ? styles.cardHovered : ''}`}
       style={tiltStyle}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
@@ -121,8 +88,9 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   );
 }
 
-export default function Services() {
+export default function Services({ data }: { data: ServiceItem[] }) {
   const sectionRef = useRef<HTMLElement>(null);
+  const servicesList = data || [];
 
   return (
     <section ref={sectionRef} id="services" className={`section ${styles.services}`} aria-label="Services and expertise">
@@ -140,7 +108,7 @@ export default function Services() {
 
         {/* Grid */}
         <div className={styles.grid}>
-          {services.map((service, i) => (
+          {servicesList.map((service, i) => (
             <ServiceCard key={service.id} service={service} index={i} />
           ))}
         </div>

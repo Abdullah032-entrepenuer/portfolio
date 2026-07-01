@@ -4,7 +4,7 @@
   left: 0;
   width: 8px;
   height: 8px;
-  background: var(--neon);
+  background: var(--mint);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
@@ -18,7 +18,7 @@
   left: 0;
   width: 36px;
   height: 36px;
-  border: 1.5px solid rgba(200, 255, 0, 0.5);
+  border: 1.5px solid var(--mint-glow);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
@@ -29,13 +29,13 @@
 .dotExpanded {
   width: 14px;
   height: 14px;
-  background: var(--violet);
+  background: var(--crimson);
 }
 
 .ringExpanded {
   width: 52px;
   height: 52px;
-  border-color: rgba(139, 92, 246, 0.6);
+  border-color: var(--crimson-glow);
 }
 
 @media (max-width: 768px) {

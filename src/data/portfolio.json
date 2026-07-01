@@ -1,0 +1,219 @@
+{
+  "hero": {
+    "words": ["Engineering", "Digital", "Luxury."],
+    "subWords": ["Bridging", "the", "gap", "between", "high‑performance", "code", "and", "high‑fidelity", "design."],
+    "sub": "Full‑Stack Developer specializing in MERN architectures and immersive 3D web experiences.",
+    "tech": ["React", "Next.js", "Node.js", "MongoDB", "Three.js", "TypeScript", "WebGL", "Express"]
+  },
+  "services": [
+    {
+      "id": "mern",
+      "icon": "⚡",
+      "label": "Core Engineering",
+      "title": "Full‑Stack MERN Development",
+      "desc": "End-to-end web applications built on MongoDB, Express.js, React, and Node.js. From scalable REST APIs to polished React UIs — delivered with production-grade architecture.",
+      "tags": ["MongoDB", "Express.js", "React", "Node.js", "Next.js", "REST APIs", "TypeScript"],
+      "accent": "neon",
+      "stat": "50+ Projects"
+    },
+    {
+      "id": "3d",
+      "icon": "◈",
+      "label": "Immersive Experiences",
+      "title": "3D Web & WebGL Engineering",
+      "desc": "Interactive 3D experiences powered by Three.js and React Three Fiber. Product configurators, immersive e-commerce, and WebGL-powered storytelling that converts visitors into buyers.",
+      "tags": ["Three.js", "React Three Fiber", "WebGL", "GSAP", "Shader Programming", "R3F Drei"],
+      "accent": "violet",
+      "stat": "WebGL Expert"
+    },
+    {
+      "id": "docs",
+      "icon": "◎",
+      "label": "Technical Leadership",
+      "title": "Software Documentation & Architecture",
+      "desc": "Comprehensive technical documentation, system design, and software specifications that bridge the gap between complex engineering and stakeholder clarity. Clear thinking, scalable systems.",
+      "tags": ["System Design", "API Docs", "SRS / BRD", "Tech Writing", "Architecture Diagrams", "Agile"],
+      "accent": "cyan",
+      "stat": "Tech Lead"
+    },
+    {
+      "id": "mobile",
+      "icon": "📱",
+      "label": "App Engineering",
+      "title": "Cross-Platform Mobile Apps",
+      "desc": "High-performance native and cross-platform mobile apps built with React Native and Flutter. Smooth gestures, offline support, and App Store / Google Play deployment.",
+      "tags": ["React Native", "Flutter", "iOS & Android", "App Store", "Mobile UI", "Push Notifications"],
+      "accent": "neon",
+      "stat": "iOS / Android"
+    },
+    {
+      "id": "devops",
+      "icon": "☁",
+      "label": "Cloud Engineering",
+      "title": "DevOps & Cloud Architecture",
+      "desc": "Scalable, secure cloud deployment on AWS, Docker, and Kubernetes. Automated CI/CD pipelines, serverless infrastructure, database optimization, and high availability systems.",
+      "tags": ["AWS", "Docker", "CI/CD", "Kubernetes", "Serverless", "Security", "GitHub Actions"],
+      "accent": "violet",
+      "stat": "Cloud Architect"
+    },
+    {
+      "id": "marketing",
+      "icon": "📈",
+      "label": "Growth & Marketing",
+      "title": "Meta Ads & Digital Marketing",
+      "desc": "High-converting digital advertising campaigns managed via Meta Business Suite & Meta Ads Manager. Audience targeting, pixel integration, A/B testing, and ROI optimization for brands.",
+      "tags": ["Meta Ads", "Business Suite", "A/B Testing", "Pixel Tracking", "Retargeting", "ROAS Optimization"],
+      "accent": "cyan",
+      "stat": "Growth Lead"
+    }
+  ],
+  "projects": [
+    {
+      "id": "coursecraft",
+      "num": "01",
+      "label": "EdTech · Full‑Stack · E‑Learning",
+      "title": "CourseCraft",
+      "tagline": "Learn job-ready skills. Earn real certificates.",
+      "desc": "A full-stack e-learning platform offering free and paid courses across technology, business, and design. Features user authentication, instructor admin dashboard, Stripe payments, certificate generation on completion, and a modern learning experience.",
+      "image": "/coursecraft-1.jpeg",
+      "images": [
+        "/coursecraft-1.jpeg",
+        "/coursecraft-2.jpeg",
+        "/coursecraft-3.jpeg",
+        "/coursecraft-4.jpeg",
+        "/coursecraft-5.jpeg",
+        "/coursecraft-6.jpeg",
+        "/coursecraft-7.jpeg"
+      ],
+      "imageAlt": "CourseCraft e-learning platform homepage",
+      "tags": ["PHP", "MySQL", "JavaScript", "Stripe", "Certificate Generation"],
+      "accent": "#F97316",
+      "accentRgb": "249,115,22",
+      "year": "2025",
+      "role": "Full‑Stack Developer",
+      "link": null
+    },
+    {
+      "id": "synapse",
+      "num": "02",
+      "label": "AI · 3D WebGL · Knowledge Graph",
+      "title": "Synapse",
+      "tagline": "Think in Three Dimensions.",
+      "desc": "An interactive AI-powered 3D knowledge mapping and visualization platform. Synapse takes any topic and generates an interconnected concept graph, allowing users to explore relationships in a custom 3D web-space or a 2D flowchart with dynamic drag-and-merge functionality.",
+      "image": "/synapse-1.png",
+      "images": [
+        "/synapse-1.png",
+        "/synapse-2.png",
+        "/synapse-3.png"
+      ],
+      "imageAlt": "Synapse AI 3D Knowledge Map platform",
+      "tags": ["React", "Three.js", "React Three Fiber", "AI Integration", "2D Flowchart"],
+      "accent": "#8B5CF6",
+      "accentRgb": "139,92,246",
+      "year": "2026",
+      "role": "Full‑Stack Developer",
+      "link": "https://synapse-server-5bb8.onrender.com/"
+    },
+    {
+      "id": "dairy-farm",
+      "num": "03",
+      "label": "AgriTech · Full‑Stack",
+      "title": "Dairy Farm Management",
+      "tagline": "Modernizing agriculture with tech.",
+      "desc": "A comprehensive system for dairy farms — track livestock, monitor milk production, manage sales & revenue, and track expenses through a beautiful real-time dashboard with role-based access.",
+      "image": "/dairy-farm-2.png",
+      "images": [
+        "/dairy-farm-2.png",
+        "/dairy-farm-3.png",
+        "/dairy-farm-4.png",
+        "/dairy-farm-5.png",
+        "/dairy-farm-1.png"
+      ],
+      "imageAlt": "Dairy Farm Management Dashboard",
+      "tags": ["React", "Node.js", "MongoDB", "Dashboard", "Charts"],
+      "accent": "#10B981",
+      "accentRgb": "16,185,129",
+      "year": "2025",
+      "role": "Full‑Stack Developer",
+      "link": null
+    },
+    {
+      "id": "car-bidding",
+      "num": "04",
+      "label": "Marketplace · Auctions",
+      "title": "Car Bidding Platform",
+      "tagline": "Find your ultimate ride.",
+      "desc": "A real-time auction marketplace for prestigious vehicles. Live bidding, secure payments, verified ownership records, and a sleek marketplace UI for a seamless buying experience.",
+      "image": "/car-bidding-1.jpeg",
+      "images": [
+        "/car-bidding-1.jpeg",
+        "/car-bidding-2.jpeg",
+        "/car-bidding-3.jpeg",
+        "/car-bidding-4.jpeg"
+      ],
+      "imageAlt": "Car Bidding Platform Homepage",
+      "tags": ["Next.js", "WebSockets", "Payment Gateway", "Real-Time"],
+      "accent": "#3B82F6",
+      "accentRgb": "59,130,246",
+      "year": "2025",
+      "role": "Full‑Stack Developer",
+      "link": null
+    },
+    {
+      "id": "auto-care",
+      "num": "05",
+      "label": "E‑Commerce · Auto Parts",
+      "title": "Auto Care",
+      "tagline": "Your one-stop shop for quality auto parts.",
+      "desc": "A live e-commerce platform connecting users to trusted auto parts vendors. Features smart oil-grade recommendations, category browsing, secure checkout, coupon system, and real-time WhatsApp support.",
+      "image": "/auto-care-1.jpeg",
+      "images": [
+        "/auto-care-1.jpeg",
+        "/auto-care-2.jpeg",
+        "/auto-care-3.jpeg",
+        "/auto-care-4.jpeg",
+        "/auto-care-5.jpeg"
+      ],
+      "imageAlt": "Auto Care E-Commerce Store",
+      "tags": ["React", "E-Commerce", "Logistics", "Oil Recommender"],
+      "accent": "#C8FF00",
+      "accentRgb": "200,255,0",
+      "year": "2025",
+      "role": "Full‑Stack Developer",
+      "link": "https://www.auto-care.me"
+    }
+  ],
+  "about": {
+    "title": "Not just a developer. An engineer who ships.",
+    "bioParagraphs": [
+      "I'm Abdullah Awais — a Full-Stack Developer specializing in building high-performance web applications that don't just function, they captivate.",
+      "With deep expertise in the MERN stack and a passion for immersive 3D web experiences, I bridge the gap between complex engineering and elegant, intuitive design. Every project I take on is engineered to scale, crafted to convert, and built to last.",
+      "Beyond code, I have a deep passion for system design, clean architecture, and building products that genuinely improve people's lives. Every project is a chance to push the boundaries of what the web can do."
+    ],
+    "stats": [
+      { "value": "3+", "label": "Years Experience" },
+      { "value": "50+", "label": "Projects Delivered" },
+      { "value": "1", "label": "Tech Society Led" },
+      { "value": "∞", "label": "Problems Solved" }
+    ],
+    "skills": [
+      { "name": "React / Next.js", "level": 95 },
+      { "name": "Node.js / Express", "level": 90 },
+      { "name": "MongoDB / Databases", "level": 85 },
+      { "name": "Three.js / WebGL", "level": 80 },
+      { "name": "System Architecture", "level": 88 },
+      { "name": "Technical Writing", "level": 92 },
+      { "name": "Meta Business Suite & Ads Manager", "level": 87 }
+    ],
+    "floatingBadge": {
+      "icon": "◈",
+      "title": "Senior Engineer",
+      "sub": "Full‑Stack Developer"
+    }
+  },
+  "contact": {
+    "email": "abdullahawais034@gmail.com",
+    "phone": "923250995477",
+    "phoneDisplay": "0325 099 5477"
+  }
+}
