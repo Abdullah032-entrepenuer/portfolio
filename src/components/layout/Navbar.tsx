@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
-import ThemeToggle from '@/components/ui/ThemeToggle';
+
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -61,7 +61,7 @@ export default function Navbar() {
           </ul>
 
           <div className={styles.rightGroup}>
-            <ThemeToggle />
+
             <button
               className={`btn btn-primary ${styles.ctaBtn}`}
               onClick={() => handleNavClick('#contact')}
@@ -86,7 +86,7 @@ export default function Navbar() {
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ''}`} aria-hidden={!menuOpen}>
         <div className={styles.mobileToggleRow}>
-          <ThemeToggle />
+
         </div>
         <ul className={styles.mobileLinks} role="list">
           {navLinks.map((link, i) => (

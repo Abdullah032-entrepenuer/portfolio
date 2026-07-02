@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk, Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/ui/ThemeProvider';
+
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -61,9 +61,7 @@ export default function RootLayout({
       style={{ colorScheme: 'dark' }}
     >
       <body className="noise">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
