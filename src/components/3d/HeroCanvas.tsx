@@ -7,13 +7,19 @@ import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postpro
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
-const SHARD_COUNT = 450;
+const SHARD_COUNT = 250;
 
 function KineticMonolith() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
+
+  // Temp vectors for garbage collection optimization
+  const tempTargetPos = useMemo(() => new THREE.Vector3(), []);
+  const tempWorldPos = useMemo(() => new THREE.Vector3(), []);
+  const tempDir = useMemo(() => new THREE.Vector3(), []);
+  const tempNoise = useMemo(() => new THREE.Vector3(), []);
 
   // Pre-calculate base positions on a sphere using the Fibonacci sphere algorithm
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -45,7 +51,7 @@ function KineticMonolith() {
         currentPos: v.clone(),
         baseRot: rot,
         currentRot: rot.clone(),
-        scale: 0.4 + Math.random() * 0.8,
+        scale: 0.5 + Math.random() * 0.9,
         speed: 0.5 + Math.random() * 1.5,
         offset: Math.random() * 100,
       });
@@ -53,9 +59,9 @@ function KineticMonolith() {
     return pos;
   }, []);
 
-  const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-  const raycaster = new THREE.Raycaster();
-  const targetPointer = new THREE.Vector3();
+  const plane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const targetPointer = useMemo(() => new THREE.Vector3(), []);
 
   useFrame(({ clock, pointer }) => {
     const time = clock.getElapsedTime();
@@ -73,25 +79,23 @@ function KineticMonolith() {
         const noiseY = Math.cos(time * data.speed * 0.8 + data.offset) * 0.15;
         const noiseZ = Math.sin(time * data.speed * 1.2 + data.offset) * 0.15;
         
-        const targetPos = data.basePos.clone().add(new THREE.Vector3(noiseX, noiseY, noiseZ));
+        tempNoise.set(noiseX, noiseY, noiseZ);
+        tempTargetPos.copy(data.basePos).add(tempNoise);
 
         // Get world position of the shard to compare with mouse
-        // Since we rotate the group later, we need to apply group rotation to find true position
-        const worldPos = targetPos.clone();
+        tempWorldPos.copy(tempTargetPos);
         if (groupRef.current) {
-            worldPos.applyMatrix4(groupRef.current.matrixWorld);
+            tempWorldPos.applyMatrix4(groupRef.current.matrixWorld);
         }
 
         // Repulsion logic
-        const distToMouse = worldPos.distanceTo(targetPointer);
+        const distToMouse = tempWorldPos.distanceTo(targetPointer);
         const maxDist = 3.8;
         if (distToMouse < maxDist) {
           const force = Math.pow((maxDist - distToMouse) / maxDist, 1.5); // non-linear force
-          const dir = worldPos.clone().sub(targetPointer).normalize();
+          tempDir.copy(tempWorldPos).sub(targetPointer).normalize();
           
-          // Push target position outward relative to group
-          // We apply the force in local space since targetPos is local
-          targetPos.add(dir.multiplyScalar(force * 3.5));
+          tempTargetPos.add(tempDir.multiplyScalar(force * 3.5));
           
           // Add chaotic rotation when repelled
           data.currentRot.x += force * 0.15;
@@ -103,7 +107,7 @@ function KineticMonolith() {
         }
 
         // Smoothly lerp current position to target position
-        data.currentPos.lerp(targetPos, 0.08);
+        data.currentPos.lerp(tempTargetPos, 0.08);
 
         dummy.position.copy(data.currentPos);
         dummy.rotation.copy(data.currentRot);
@@ -191,7 +195,7 @@ function Scene() {
       </Float>
 
       {/* High-End Postprocessing Effects */}
-      <EffectComposer multisampling={4}>
+      <EffectComposer multisampling={0}>
         <Bloom 
           luminanceThreshold={0.5} 
           luminanceSmoothing={0.9} 
@@ -212,7 +216,7 @@ export default function HeroCanvas() {
   return (
     <Canvas
       camera={{ position: [0, 0, 8.5], fov: 50 }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       performance={{ min: 0.5 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
       gl={{ antialias: false, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
