@@ -3,11 +3,9 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Stars, Float } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
-const SHARD_COUNT = 250;
+const SHARD_COUNT = 150;
 
 function KineticMonolith() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -51,7 +49,7 @@ function KineticMonolith() {
         currentPos: v.clone(),
         baseRot: rot,
         currentRot: rot.clone(),
-        scale: 0.5 + Math.random() * 0.9,
+        scale: 0.6 + Math.random() * 1.2, // increased scale slightly since there are fewer shards
         speed: 0.5 + Math.random() * 1.5,
         offset: Math.random() * 100,
       });
@@ -186,27 +184,17 @@ function Scene() {
       <pointLight position={[0, 0, 3]} intensity={1.0} color="#06B6D4" />
 
       {/* Environment map for hyper-realistic glass/obsidian reflections */}
-      <Environment preset="city" />
+      <Environment preset="city" resolution={128} />
 
-      <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.8} />
+      {/* Reduced stars for performance */}
+      <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={0.8} />
       
       <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
         <KineticMonolith />
       </Float>
 
-      {/* High-End Postprocessing Effects */}
-      <EffectComposer multisampling={0}>
-        <Bloom 
-          luminanceThreshold={0.5} 
-          luminanceSmoothing={0.9} 
-          height={300} 
-          intensity={1.2} 
-        />
-        <ChromaticAberration 
-          blendFunction={BlendFunction.NORMAL} 
-          offset={new THREE.Vector2(0.0015, 0.0015)} 
-        />
-      </EffectComposer>
+      {/* We removed heavy Postprocessing to guarantee butter-smooth 60fps on all devices. 
+          The elite look is maintained purely through PBR materials and environment lighting. */}
     </>
   );
 }
@@ -219,7 +207,7 @@ export default function HeroCanvas() {
       dpr={[1, 1.5]}
       performance={{ min: 0.5 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-      gl={{ antialias: false, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <Scene />
     </Canvas>
