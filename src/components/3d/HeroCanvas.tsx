@@ -3,6 +3,8 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Stars, Float } from '@react-three/drei';
+import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
 const SHARD_COUNT = 450;
@@ -187,6 +189,20 @@ function Scene() {
       <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
         <KineticMonolith />
       </Float>
+
+      {/* High-End Postprocessing Effects */}
+      <EffectComposer multisampling={4}>
+        <Bloom 
+          luminanceThreshold={0.5} 
+          luminanceSmoothing={0.9} 
+          height={300} 
+          intensity={1.2} 
+        />
+        <ChromaticAberration 
+          blendFunction={BlendFunction.NORMAL} 
+          offset={new THREE.Vector2(0.0015, 0.0015)} 
+        />
+      </EffectComposer>
     </>
   );
 }
@@ -196,10 +212,10 @@ export default function HeroCanvas() {
   return (
     <Canvas
       camera={{ position: [0, 0, 8.5], fov: 50 }}
-      dpr={[1, 1.5]}
+      dpr={[1, 2]}
       performance={{ min: 0.5 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      gl={{ antialias: false, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
     >
       <Scene />
     </Canvas>
