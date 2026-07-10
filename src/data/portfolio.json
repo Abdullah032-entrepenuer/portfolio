@@ -2,16 +2,16 @@
   "hero": {
     "words": ["Engineering", "Digital", "Luxury."],
     "subWords": ["Bridging", "the", "gap", "between", "high‑performance", "code", "and", "high‑fidelity", "design."],
-    "sub": "Full‑Stack Developer specializing in MERN architectures and immersive 3D web experiences.",
-    "tech": ["React", "Next.js", "Node.js", "MongoDB", "Three.js", "TypeScript", "WebGL", "Express"]
+    "sub": "Full‑Stack Engineer with a strong focus on Front‑end excellence and immersive 3D web experiences.",
+    "tech": ["React", "Next.js", "Figma", "Node.js", "Three.js", "TypeScript", "WebGL", "TailwindCSS"]
   },
   "services": [
     {
       "id": "mern",
       "icon": "⚡",
       "label": "Core Engineering",
-      "title": "Full‑Stack MERN Development",
-      "desc": "End-to-end web applications built on MongoDB, Express.js, React, and Node.js. From scalable REST APIs to polished React UIs — delivered with production-grade architecture.",
+      "title": "Front‑End Focused Full‑Stack",
+      "desc": "End-to-end web applications built on React, Next.js, and Node.js. My primary focus is delivering pixel-perfect, highly interactive front-end UIs backed by scalable REST APIs.",
       "tags": ["MongoDB", "Express.js", "React", "Node.js", "Next.js", "REST APIs", "TypeScript"],
       "accent": "neon",
       "stat": "50+ Projects"
@@ -57,14 +57,14 @@
       "stat": "Cloud Architect"
     },
     {
-      "id": "marketing",
-      "icon": "📈",
-      "label": "Growth & Marketing",
-      "title": "Meta Ads & Digital Marketing",
-      "desc": "High-converting digital advertising campaigns managed via Meta Business Suite & Meta Ads Manager. Audience targeting, pixel integration, A/B testing, and ROI optimization for brands.",
-      "tags": ["Meta Ads", "Business Suite", "A/B Testing", "Pixel Tracking", "Retargeting", "ROAS Optimization"],
+      "id": "figma",
+      "icon": "✦",
+      "label": "UI / UX Design",
+      "title": "Figma Prototyping & Design",
+      "desc": "High-fidelity UI/UX design and interactive prototyping using Figma. I translate complex product requirements into beautiful, user-centric interfaces that seamlessly transition into production-grade front-end code.",
+      "tags": ["Figma", "UI Design", "UX Research", "Wireframing", "Prototyping", "Design Systems"],
       "accent": "cyan",
-      "stat": "Growth Lead"
+      "stat": "Pixel Perfect"
     }
   ],
   "projects": [
@@ -186,9 +186,9 @@
   "about": {
     "title": "Not just a developer. An engineer who ships.",
     "bioParagraphs": [
-      "I'm Abdullah Awais — a Full-Stack Developer specializing in building high-performance web applications that don't just function, they captivate.",
-      "With deep expertise in the MERN stack and a passion for immersive 3D web experiences, I bridge the gap between complex engineering and elegant, intuitive design. Every project I take on is engineered to scale, crafted to convert, and built to last.",
-      "Beyond code, I have a deep passion for system design, clean architecture, and building products that genuinely improve people's lives. Every project is a chance to push the boundaries of what the web can do."
+      "I'm Abdullah Awais — a Full-Stack Engineer with a relentless focus on Front-end development. I build high-performance web applications that don't just function, they captivate.",
+      "With deep expertise in React, Next.js, and immersive 3D web experiences, I bridge the gap between complex engineering and elegant, intuitive UI/UX design. Every project I take on is engineered to scale, crafted to convert, and visually stunning.",
+      "Beyond code, I have a deep passion for Figma prototyping, clean architecture, and building products that genuinely improve people's lives. Every project is a chance to push the boundaries of what the modern web can do."
     ],
     "stats": [
       { "value": "3+", "label": "Years Experience" },
@@ -203,12 +203,12 @@
       { "name": "Three.js / WebGL", "level": 80 },
       { "name": "System Architecture", "level": 88 },
       { "name": "Technical Writing", "level": 92 },
-      { "name": "Meta Business Suite & Ads Manager", "level": 87 }
+      { "name": "Figma / UI Design", "level": 90 }
     ],
     "floatingBadge": {
       "icon": "◈",
       "title": "Senior Engineer",
-      "sub": "Full‑Stack Developer"
+      "sub": "Front‑End Focused"
     }
   },
   "contact": {
