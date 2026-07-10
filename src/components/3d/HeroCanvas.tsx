@@ -137,8 +137,8 @@ function KineticMonolith() {
       <mesh ref={coreRef}>
         <icosahedronGeometry args={[1.3, 2]} />
         <meshStandardMaterial 
-          color="#00FFA3" 
-          emissive="#00FFA3" 
+          color="#8B5CF6" 
+          emissive="#8B5CF6" 
           emissiveIntensity={1.8} 
           wireframe 
           transparent
@@ -150,8 +150,8 @@ function KineticMonolith() {
       <mesh scale={0.85}>
         <icosahedronGeometry args={[1.3, 1]} />
         <meshStandardMaterial 
-          color="#FF3366" 
-          emissive="#FF3366" 
+          color="#06B6D4" 
+          emissive="#06B6D4" 
           emissiveIntensity={1.0} 
           wireframe 
         />
@@ -162,7 +162,7 @@ function KineticMonolith() {
         {/* Polyhedron makes great shard shapes */}
         <tetrahedronGeometry args={[0.5, 0]} />
         <meshPhysicalMaterial 
-          color="#050505" 
+          color="#020202" 
           metalness={1.0}
           roughness={0.05}
           clearcoat={1.0}
@@ -179,9 +179,9 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.2} />
-      <pointLight position={[5, 5, 5]} intensity={2.0} color="#00FFA3" />
-      <pointLight position={[-5, -3, -5]} intensity={1.5} color="#FF3366" />
-      <pointLight position={[0, 0, 3]} intensity={1.0} color="#06B6D4" />
+      <pointLight position={[5, 5, 5]} intensity={2.0} color="#8B5CF6" />
+      <pointLight position={[-5, -3, -5]} intensity={1.5} color="#06B6D4" />
+      <pointLight position={[0, 0, 3]} intensity={1.0} color="#F472B6" />
 
       {/* Environment map for hyper-realistic glass/obsidian reflections */}
       <Environment preset="city" resolution={128} />

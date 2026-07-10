@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk, Inter } from 'next/font/google';
 import './globals.css';
-
+import Preloader from '@/components/ui/Preloader';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#050505',
+  themeColor: '#020202',
 };
 
 export const metadata: Metadata = {
@@ -61,6 +61,7 @@ export default function RootLayout({
       style={{ colorScheme: 'dark' }}
     >
       <body className="noise">
+        <Preloader />
         {children}
       </body>
     </html>
