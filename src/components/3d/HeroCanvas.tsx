@@ -11,8 +11,10 @@ function KineticMonolith() {
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   // Dynamic shard count based on screen size to guarantee mobile performance
-  const SHARD_COUNT = useMemo(() => (typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 150), []);
+  const SHARD_COUNT = useMemo(() => (isMobile ? 30 : 150), [isMobile]);
 
   // Temp vectors for garbage collection optimization
   const tempTargetPos = useMemo(() => new THREE.Vector3(), []);
@@ -56,7 +58,7 @@ function KineticMonolith() {
       });
     }
     return pos;
-  }, []);
+  }, [SHARD_COUNT]);
 
   const plane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
@@ -90,7 +92,7 @@ function KineticMonolith() {
         // Repulsion logic
         const distToMouse = tempWorldPos.distanceTo(targetPointer);
         const maxDist = 3.8;
-        if (distToMouse < maxDist) {
+        if (distToMouse < maxDist && !isMobile) { // Disable mouse repulsion physics on mobile
           const force = Math.pow((maxDist - distToMouse) / maxDist, 1.5); // non-linear force
           tempDir.copy(tempWorldPos).sub(targetPointer).normalize();
           
@@ -162,14 +164,23 @@ function KineticMonolith() {
       <instancedMesh ref={meshRef} args={[undefined, undefined, SHARD_COUNT]}>
         {/* Polyhedron makes great shard shapes */}
         <tetrahedronGeometry args={[0.5, 0]} />
-        <meshPhysicalMaterial 
-          color="#020202" 
-          metalness={1.0}
-          roughness={0.05}
-          clearcoat={1.0}
-          clearcoatRoughness={0.1}
-          envMapIntensity={3.0}
-        />
+        {isMobile ? (
+          <meshStandardMaterial 
+            color="#020202" 
+            metalness={0.8}
+            roughness={0.2}
+            envMapIntensity={2.0}
+          />
+        ) : (
+          <meshPhysicalMaterial 
+            color="#020202" 
+            metalness={1.0}
+            roughness={0.05}
+            clearcoat={1.0}
+            clearcoatRoughness={0.1}
+            envMapIntensity={3.0}
+          />
+        )}
       </instancedMesh>
     </group>
   );
@@ -189,15 +200,12 @@ function Scene() {
       {/* Environment map for hyper-realistic glass/obsidian reflections */}
       <Environment preset="city" resolution={isMobile ? 64 : 128} />
 
-      {/* Reduced stars for performance */}
-      <Stars radius={100} depth={50} count={isMobile ? 300 : 1000} factor={4} saturation={0} fade speed={0.8} />
+      {/* Completely disable stars on mobile to save performance */}
+      {!isMobile && <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={0.8} />}
       
       <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
         <KineticMonolith />
       </Float>
-
-      {/* We removed heavy Postprocessing to guarantee butter-smooth 60fps on all devices. 
-          The elite look is maintained purely through PBR materials and environment lighting. */}
     </>
   );
 }
@@ -209,8 +217,8 @@ export default function HeroCanvas() {
   return (
     <Canvas
       camera={{ position: [0, 0, 8.5], fov: 50 }}
-      dpr={isMobile ? [1, 1] : [1, 1.5]}
-      performance={{ min: 0.5 }}
+      dpr={isMobile ? [0.5, 1] : [1, 1.5]}
+      performance={{ min: 0.1 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
       gl={{ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' }}
     >
