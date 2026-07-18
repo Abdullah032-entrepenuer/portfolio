@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import styles from './Hero.module.css';
@@ -13,6 +13,16 @@ const HeroCanvas = dynamic(() => import('@/components/3d/HeroCanvas'), {
 
 export default function Hero({ data }: { data: HeroData }) {
   const containerRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(true); // Default to true (mobile) so it doesn't load heavy JS until we confirm it's desktop
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const words = data?.words || ['Precision', 'Immersive', 'Digital', 'Architecture.'];
   const subWords = data?.subWords || ['I', 'architect', 'high‑performance', 'digital', 'environments.'];
@@ -23,7 +33,7 @@ export default function Hero({ data }: { data: HeroData }) {
     <section ref={containerRef} className={styles.hero} id="hero" aria-label="Hero section">
       {/* 3D Canvas */}
       <div className={styles.canvasWrapper} aria-hidden="true">
-        <HeroCanvas />
+        {!isMobile && <HeroCanvas />}
       </div>
 
       {/* Radial gradient overlays */}
