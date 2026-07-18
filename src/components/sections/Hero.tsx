@@ -33,7 +33,7 @@ export default function Hero({ data }: { data: HeroData }) {
     <section ref={containerRef} className={styles.hero} id="hero" aria-label="Hero section">
       {/* 3D Canvas */}
       <div className={styles.canvasWrapper} aria-hidden="true">
-        {!isMobile && <HeroCanvas />}
+        <HeroCanvas />
       </div>
 
       {/* Radial gradient overlays */}

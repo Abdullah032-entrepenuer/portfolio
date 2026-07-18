@@ -136,29 +136,33 @@ function KineticMonolith() {
 
   return (
     <group ref={groupRef}>
-      {/* The Core */}
-      <mesh ref={coreRef}>
-        <icosahedronGeometry args={[1.3, 2]} />
-        <meshStandardMaterial 
-          color="#8B5CF6" 
-          emissive="#8B5CF6" 
-          emissiveIntensity={1.8} 
-          wireframe 
-          transparent
-          opacity={0.8}
-        />
-      </mesh>
+      {/* The Core (Removed in mobile view) */}
+      {!isMobile && (
+        <>
+          <mesh ref={coreRef}>
+            <icosahedronGeometry args={[1.3, 2]} />
+            <meshStandardMaterial 
+              color="#8B5CF6" 
+              emissive="#8B5CF6" 
+              emissiveIntensity={1.8} 
+              wireframe 
+              transparent
+              opacity={0.8}
+            />
+          </mesh>
 
-      {/* A secondary crimson wireframe inside for depth */}
-      <mesh scale={0.85}>
-        <icosahedronGeometry args={[1.3, 1]} />
-        <meshStandardMaterial 
-          color="#06B6D4" 
-          emissive="#06B6D4" 
-          emissiveIntensity={1.0} 
-          wireframe 
-        />
-      </mesh>
+          {/* A secondary crimson wireframe inside for depth */}
+          <mesh scale={0.85}>
+            <icosahedronGeometry args={[1.3, 1]} />
+            <meshStandardMaterial 
+              color="#06B6D4" 
+              emissive="#06B6D4" 
+              emissiveIntensity={1.0} 
+              wireframe 
+            />
+          </mesh>
+        </>
+      )}
 
       {/* The Outer Monolith Shards */}
       <instancedMesh ref={meshRef} args={[undefined, undefined, SHARD_COUNT]}>
