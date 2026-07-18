@@ -10,8 +10,6 @@ import ServiceOrbs from './ServiceOrbs';
 import VaultGallery3D from './VaultGallery3D';
 import AboutPortal from './AboutPortal';
 import ContactBeacon from './ContactBeacon';
-import PostProcessingLayer from './PostProcessingLayer';
-
 /**
  * Global Three.js scene that persists across the entire portfolio lifecycle.
  * Rendered as a fixed backdrop behind all HTML content.
@@ -59,9 +57,6 @@ export default function SceneProvider() {
             <VaultGallery3D />
             <AboutPortal />
             <ContactBeacon />
-
-            {/* Cinematic Post-Processing */}
-            <PostProcessingLayer />
 
             {/* Preload all assets during preloader phase */}
             <Preload all />
