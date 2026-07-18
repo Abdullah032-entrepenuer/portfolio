@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 import styles from './Hero.module.css';
 import { HeroData } from '@/lib/db';
 
@@ -11,21 +12,10 @@ const HeroCanvas = dynamic(() => import('@/components/3d/HeroCanvas'), {
 });
 
 export default function Hero({ data }: { data: HeroData }) {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    // Staggered word reveal
-    const spans = headlineRef.current?.querySelectorAll<HTMLSpanElement>('[data-word]');
-    if (!spans) return;
-    spans.forEach((span, i) => {
-      span.style.animationDelay = `${0.1 + i * 0.08}s`;
-      span.classList.add(styles.wordVisible);
-    });
-  }, [data]);
-
-  const words = data?.words || ['Engineering', 'Digital', 'Luxury.'];
-  const subWords = data?.subWords || [];
+  const words = data?.words || ['Precision', 'Immersive', 'Digital', 'Architecture.'];
+  const subWords = data?.subWords || ['I', 'architect', 'high‑performance', 'digital', 'environments.'];
   const subText = data?.sub || '';
   const techList = data?.tech || [];
 
@@ -43,38 +33,78 @@ export default function Hero({ data }: { data: HeroData }) {
       {/* Content */}
       <div className={`container ${styles.content}`}>
         {/* Badge */}
-        <div className={styles.badge}>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+          className={styles.badge}
+        >
           <span className={styles.badgeDot} />
           <span>Available for Projects</span>
-        </div>
+        </motion.div>
 
         {/* Headline */}
-        <h1 ref={headlineRef} className={`text-hero ${styles.headline}`}>
-          {words.map((word, i) => {
-            const isHighlighted = word === 'Luxury.' || word.toLowerCase().includes('luxury') || word.toLowerCase().includes('digital') || i === words.length - 1;
+        <h1 className={`text-hero ${styles.headline}`}>
+          {words.map((word, wordIndex) => {
+            const isHighlighted = word === 'Luxury.' || word.toLowerCase().includes('luxury') || word.toLowerCase().includes('digital') || wordIndex === words.length - 1;
             return (
-              <span key={i} data-word className={`${styles.word} ${isHighlighted ? 'gradient-neon' : ''}`}>
-                {word}
+              <span key={wordIndex} className={isHighlighted ? 'gradient-neon' : ''} style={{ display: 'inline-flex', overflow: 'hidden', paddingRight: '0.2em' }}>
+                {word.split('').map((char, charIndex) => (
+                  <motion.span
+                    key={charIndex}
+                    initial={{ y: '120%', rotate: 10, opacity: 0 }}
+                    animate={{ y: '0%', rotate: 0, opacity: 1 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.76, 0, 0.24, 1],
+                      delay: 0.3 + (wordIndex * 0.1) + (charIndex * 0.015)
+                    }}
+                    style={{ display: 'inline-block', transformOrigin: 'top left' }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
               </span>
             );
           })}
           <br />
-          <span className={styles.headlineSecond}>
-            {subWords.map((word, i) => (
-              <span key={i} data-word className={styles.word}>
-                {word}
+          <span className={styles.headlineSecond} style={{ overflow: 'hidden', display: 'flex', flexWrap: 'wrap', marginTop: '12px' }}>
+            {subWords.map((word, wordIndex) => (
+              <span key={wordIndex} style={{ display: 'inline-flex', overflow: 'hidden', paddingRight: '0.25em' }}>
+                <motion.span
+                  initial={{ y: '120%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.76, 0, 0.24, 1],
+                    delay: 0.6 + (wordIndex * 0.05)
+                  }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {word}
+                </motion.span>
               </span>
             ))}
           </span>
         </h1>
 
         {/* Subheadline */}
-        <p className={styles.sub}>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.9 }}
+          className={styles.sub}
+        >
           {subText}
-        </p>
+        </motion.p>
 
         {/* CTAs */}
-        <div className={styles.ctas}>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 1.0 }}
+          className={styles.ctas}
+        >
           <button
             id="cta-vault"
             className={`btn btn-primary ${styles.ctaPrimary}`}
@@ -94,21 +124,31 @@ export default function Hero({ data }: { data: HeroData }) {
           >
             Let's Build
           </button>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <div className={styles.scrollIndicator} aria-hidden="true">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className={styles.scrollIndicator} aria-hidden="true"
+        >
           <div className={styles.scrollLine} />
           <span className="text-label">Scroll</span>
-        </div>
+        </motion.div>
       </div>
 
       {/* Tech strip */}
-      <div className={styles.techStrip} aria-label="Technology stack">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        className={styles.techStrip} aria-label="Technology stack"
+      >
         {techList.map((tech) => (
           <span key={tech} className={styles.techTag}>{tech}</span>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

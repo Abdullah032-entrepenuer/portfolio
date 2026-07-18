@@ -2,9 +2,9 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import styles from './Vault.module.css';
 import { ProjectItem as Project } from '@/lib/db';
-
 
 /* ─────────────────── Project Modal ─────────────────── */
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
@@ -215,125 +215,133 @@ function ProjectCard({ project, index, onClick }: { project: Project; index: num
   };
 
   return (
-    <div
-      ref={cardRef}
-      className={`${styles.card} ${index === 0 ? styles.cardFeatured : ''}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setHovered(false); }}
-      onMouseEnter={() => setHovered(true)}
-      onClick={onClick}
-      style={{
-        transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: tilt.x === 0 ? 'transform 0.8s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease' : 'transform 0.08s linear',
-        '--accent': project.accent,
-        '--accent-rgb': project.accentRgb,
-      } as React.CSSProperties}
-      role="button"
-      tabIndex={0}
-      aria-label={`View ${project.title} project details`}
-      onKeyDown={(e) => e.key === 'Enter' && onClick()}
+    <motion.div
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: index * 0.2 }}
+      className={index === 0 ? styles.cardFeaturedWrapper : ''}
     >
-      {/* Top glow on hover */}
       <div
-        className={styles.cardGlow}
-        style={{ opacity: hovered ? 1 : 0, background: `radial-gradient(ellipse 100% 80% at 50% -10%, rgba(${project.accentRgb},0.15), transparent 70%)` }}
-      />
-
-      {/* ── Image area ── */}
-      <div className={styles.cardImg}>
-        {/* Blurred background fills the letterbox bars */}
-        <Image
-          src={project.image}
-          alt=""
-          aria-hidden="true"
-          fill
-          className={styles.cardPhotoBg}
-          sizes="40px"
-        />
-        {/* Main image — contained so full screenshot is visible */}
-        <Image
-          src={project.image}
-          alt={project.imageAlt}
-          fill
-          className={styles.cardPhoto}
-          sizes={index === 0
-            ? '(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px'
-            : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px'}
-        />
-
-        {/* Bottom fade into card body */}
-        <div className={styles.cardImgFade} />
-
-        {/* Accent bottom glow */}
+        ref={cardRef}
+        className={`${styles.card} ${index === 0 ? styles.cardFeatured : ''}`}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setHovered(false); }}
+        onMouseEnter={() => setHovered(true)}
+        onClick={onClick}
+        style={{
+          transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: tilt.x === 0 ? 'transform 0.8s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease' : 'transform 0.08s linear',
+          '--accent': project.accent,
+          '--accent-rgb': project.accentRgb,
+        } as React.CSSProperties}
+        role="button"
+        tabIndex={0}
+        aria-label={`View ${project.title} project details`}
+        onKeyDown={(e) => e.key === 'Enter' && onClick()}
+      >
+        {/* Top glow on hover */}
         <div
-          className={styles.cardImgAccent}
-          style={{ background: `linear-gradient(to top, rgba(${project.accentRgb},0.18) 0%, transparent 55%)` }}
+          className={styles.cardGlow}
+          style={{ opacity: hovered ? 1 : 0, background: `radial-gradient(ellipse 100% 80% at 50% -10%, rgba(${project.accentRgb},0.15), transparent 70%)` }}
         />
 
-        {/* Multi-image count badge */}
-        {project.images.length > 1 && (
-          <div className={styles.cardImgCount} style={{ color: project.accent, borderColor: `rgba(${project.accentRgb},0.35)` }}>
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-              <rect x="0.5" y="2.5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.1"/>
-              <path d="M3 2.5V1.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H8.5" stroke="currentColor" strokeWidth="1.1"/>
-            </svg>
-            {project.images.length}
-          </div>
-        )}
+        {/* ── Image area ── */}
+        <div className={styles.cardImg}>
+          {/* Blurred background fills the letterbox bars */}
+          <Image
+            src={project.image}
+            alt=""
+            aria-hidden="true"
+            fill
+            className={styles.cardPhotoBg}
+            sizes="40px"
+          />
+          {/* Main image — contained so full screenshot is visible */}
+          <Image
+            src={project.image}
+            alt={project.imageAlt}
+            fill
+            className={styles.cardPhoto}
+            sizes={index === 0
+              ? '(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px'
+              : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px'}
+          />
 
-        {/* Hover overlay */}
-        <div className={styles.cardOverlay} style={{ opacity: hovered ? 1 : 0 }}>
-          <div className={styles.cardOverlayBtn} style={{ borderColor: `rgba(${project.accentRgb},0.6)`, color: project.accent }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.4"/>
-              <path d="M10.5 10.5l3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-            </svg>
-            View Project
+          {/* Bottom fade into card body */}
+          <div className={styles.cardImgFade} />
+
+          {/* Accent bottom glow */}
+          <div
+            className={styles.cardImgAccent}
+            style={{ background: `linear-gradient(to top, rgba(${project.accentRgb},0.18) 0%, transparent 55%)` }}
+          />
+
+          {/* Multi-image count badge */}
+          {project.images.length > 1 && (
+            <div className={styles.cardImgCount} style={{ color: project.accent, borderColor: `rgba(${project.accentRgb},0.35)` }}>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                <rect x="0.5" y="2.5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.1"/>
+                <path d="M3 2.5V1.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H8.5" stroke="currentColor" strokeWidth="1.1"/>
+              </svg>
+              {project.images.length}
+            </div>
+          )}
+
+          {/* Hover overlay */}
+          <div className={styles.cardOverlay} style={{ opacity: hovered ? 1 : 0 }}>
+            <div className={styles.cardOverlayBtn} style={{ borderColor: `rgba(${project.accentRgb},0.6)`, color: project.accent }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.4"/>
+                <path d="M10.5 10.5l3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              </svg>
+              View Project
+            </div>
+          </div>
+        </div>
+
+        {/* ── Card body ── */}
+        <div className={styles.cardBody}>
+          {/* Top row */}
+          <div className={styles.cardTopRow}>
+            <span className={styles.cardNum} style={{ color: project.accent }}>{project.num}</span>
+            <span className={styles.cardYear}>{project.year}</span>
+          </div>
+
+          <h3 className={styles.cardTitle}>{project.title}</h3>
+          <p className={styles.cardTagline} style={{ color: project.accent }}>{project.tagline}</p>
+
+          {/* Tags */}
+          <div className={styles.cardTags}>
+            {project.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className={styles.cardTag}
+                style={{ borderColor: `rgba(${project.accentRgb},0.28)`, color: project.accent, background: `rgba(${project.accentRgb},0.05)` }}
+              >
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 3 && (
+              <span className={styles.cardTag} style={{ borderColor: `rgba(${project.accentRgb},0.28)`, color: project.accent, background: `rgba(${project.accentRgb},0.05)` }}>
+                +{project.tags.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Bottom row */}
+          <div className={styles.cardBottom}>
+            <span className={styles.cardRole}>{project.role}</span>
+            {project.link && (
+              <span className={styles.cardLive} style={{ color: project.accent, borderColor: `rgba(${project.accentRgb},0.3)`, background: `rgba(${project.accentRgb},0.06)` }}>
+                <span className={styles.cardLiveDot} style={{ background: project.accent }} />
+                Live
+              </span>
+            )}
           </div>
         </div>
       </div>
-
-      {/* ── Card body ── */}
-      <div className={styles.cardBody}>
-        {/* Top row */}
-        <div className={styles.cardTopRow}>
-          <span className={styles.cardNum} style={{ color: project.accent }}>{project.num}</span>
-          <span className={styles.cardYear}>{project.year}</span>
-        </div>
-
-        <h3 className={styles.cardTitle}>{project.title}</h3>
-        <p className={styles.cardTagline} style={{ color: project.accent }}>{project.tagline}</p>
-
-        {/* Tags */}
-        <div className={styles.cardTags}>
-          {project.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className={styles.cardTag}
-              style={{ borderColor: `rgba(${project.accentRgb},0.28)`, color: project.accent, background: `rgba(${project.accentRgb},0.05)` }}
-            >
-              {tag}
-            </span>
-          ))}
-          {project.tags.length > 3 && (
-            <span className={styles.cardTag} style={{ borderColor: `rgba(${project.accentRgb},0.28)`, color: project.accent, background: `rgba(${project.accentRgb},0.05)` }}>
-              +{project.tags.length - 3}
-            </span>
-          )}
-        </div>
-
-        {/* Bottom row */}
-        <div className={styles.cardBottom}>
-          <span className={styles.cardRole}>{project.role}</span>
-          {project.link && (
-            <span className={styles.cardLive} style={{ color: project.accent, borderColor: `rgba(${project.accentRgb},0.3)`, background: `rgba(${project.accentRgb},0.06)` }}>
-              <span className={styles.cardLiveDot} style={{ background: project.accent }} />
-              Live
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -346,7 +354,13 @@ export default function Vault({ data }: { data: Project[] }) {
     <section id="vault" className={`section ${styles.vault}`} aria-label="Selected works">
       <div className="container">
         {/* Header */}
-        <div className={styles.header}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className={styles.header}
+        >
           <span className="text-label">Selected Works</span>
           <h2 className={`text-h2 ${styles.title}`}>
             The <span className="gradient-neon">Vault</span>
@@ -354,7 +368,7 @@ export default function Vault({ data }: { data: Project[] }) {
           <p className={styles.subtitle}>
             Projects that push the boundary between engineering and experience.
           </p>
-        </div>
+        </motion.div>
 
         {/* Grid */}
         <div className={styles.grid}>
@@ -369,11 +383,17 @@ export default function Vault({ data }: { data: Project[] }) {
         </div>
 
         {/* Footer divider */}
-        <div className={styles.comingSoon}>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className={styles.comingSoon}
+        >
           <div className={styles.comingSoonLine} />
           <span className="text-label">More projects coming soon · Drop your project details below</span>
           <div className={styles.comingSoonLine} />
-        </div>
+        </motion.div>
       </div>
 
       {/* Modal portal */}

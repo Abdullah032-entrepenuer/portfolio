@@ -8,7 +8,7 @@ import ScrollReactor from './ScrollReactor';
 import HeroMonolith from './HeroMonolith';
 import ServiceOrbs from './ServiceOrbs';
 import VaultGallery3D from './VaultGallery3D';
-import AboutPortal from './AboutPortal';
+import QuantumCore3D from './QuantumCore3D';
 import ContactBeacon from './ContactBeacon';
 import ExpertiseMatrix from './ExpertiseMatrix';
 /**
@@ -55,8 +55,8 @@ export default function SceneProvider() {
             {/* Section-specific 3D elements */}
             <HeroMonolith />
             <ServiceOrbs />
+            <QuantumCore3D />
             <VaultGallery3D />
-            <AboutPortal />
             <ExpertiseMatrix />
             <ContactBeacon />
 

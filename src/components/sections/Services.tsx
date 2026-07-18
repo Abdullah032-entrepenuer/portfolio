@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './Services.module.css';
 import { ServiceItem } from '@/lib/db';
 
@@ -37,54 +38,61 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
                       service.accent === 'cyan' ? 'var(--cyan)' : service.accent || 'var(--cyan)';
 
   return (
-    <div
-      ref={cardRef}
-      className={`${styles.card} ${styles[`card-${service.accent}`] || ''} ${hovered ? styles.cardHovered : ''}`}
-      style={tiltStyle}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      data-cursor="pointer"
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: index * 0.15 }}
     >
-      {/* Glow */}
-      <div className={styles.cardGlow} style={{ background: `radial-gradient(circle at 50% 0%, ${accentColor}18, transparent 70%)` }} />
+      <div
+        ref={cardRef}
+        className={`${styles.card} ${styles[`card-${service.accent}`] || ''} ${hovered ? styles.cardHovered : ''}`}
+        style={tiltStyle}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        data-cursor="pointer"
+      >
+        {/* Glow */}
+        <div className={styles.cardGlow} style={{ background: `radial-gradient(circle at 50% 0%, ${accentColor}18, transparent 70%)` }} />
 
-      {/* Header */}
-      <div className={styles.cardHeader}>
-        <div className={styles.cardIcon} style={{ color: accentColor }}>
-          {service.icon}
+        {/* Header */}
+        <div className={styles.cardHeader}>
+          <div className={styles.cardIcon} style={{ color: accentColor }}>
+            {service.icon}
+          </div>
+          <span className={`text-label ${styles.cardLabel}`}>{service.label}</span>
         </div>
-        <span className={`text-label ${styles.cardLabel}`}>{service.label}</span>
+
+        {/* Stat badge */}
+        <div className={styles.statBadge} style={{ borderColor: `${accentColor}30`, color: accentColor }}>
+          {service.stat}
+        </div>
+
+        <h3 className={`text-h3 ${styles.cardTitle}`}>{service.title}</h3>
+        <p className={styles.cardDesc}>{service.desc}</p>
+
+        {/* Tags — revealed on hover */}
+        <div className={`${styles.tags} ${hovered ? styles.tagsVisible : ''}`}>
+          {service.tags.map((tag, i) => (
+            <span
+              key={tag}
+              className={styles.tag}
+              style={{
+                transitionDelay: `${i * 0.04}s`,
+                borderColor: `${accentColor}25`,
+                color: hovered ? accentColor : 'var(--white-muted)',
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Arrow */}
+        <div className={styles.cardArrow} style={{ color: accentColor }}>↗</div>
       </div>
-
-      {/* Stat badge */}
-      <div className={styles.statBadge} style={{ borderColor: `${accentColor}30`, color: accentColor }}>
-        {service.stat}
-      </div>
-
-      <h3 className={`text-h3 ${styles.cardTitle}`}>{service.title}</h3>
-      <p className={styles.cardDesc}>{service.desc}</p>
-
-      {/* Tags — revealed on hover */}
-      <div className={`${styles.tags} ${hovered ? styles.tagsVisible : ''}`}>
-        {service.tags.map((tag, i) => (
-          <span
-            key={tag}
-            className={styles.tag}
-            style={{
-              transitionDelay: `${i * 0.04}s`,
-              borderColor: `${accentColor}25`,
-              color: hovered ? accentColor : 'var(--white-muted)',
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Arrow */}
-      <div className={styles.cardArrow} style={{ color: accentColor }}>↗</div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -96,7 +104,13 @@ export default function Services({ data }: { data: ServiceItem[] }) {
     <section ref={sectionRef} id="services" className={`section ${styles.services}`} aria-label="Services and expertise">
       <div className="container">
         {/* Header */}
-        <div className={styles.header}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className={styles.header}
+        >
           <span className="text-label">What I Build</span>
           <h2 className={`text-h2 ${styles.title}`}>
             Services &amp; <span className="gradient-violet">Expertise</span>
@@ -104,7 +118,7 @@ export default function Services({ data }: { data: ServiceItem[] }) {
           <p className={styles.subtitle}>
             Not just code — complete, scalable business solutions engineered to perform.
           </p>
-        </div>
+        </motion.div>
 
         {/* Grid */}
         <div className={styles.grid}>
