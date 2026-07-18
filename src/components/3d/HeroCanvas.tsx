@@ -1,17 +1,18 @@
 'use client';
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Stars, Float } from '@react-three/drei';
 import * as THREE from 'three';
-
-const SHARD_COUNT = 150;
 
 function KineticMonolith() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
+
+  // Dynamic shard count based on screen size to guarantee mobile performance
+  const SHARD_COUNT = useMemo(() => (typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 150), []);
 
   // Temp vectors for garbage collection optimization
   const tempTargetPos = useMemo(() => new THREE.Vector3(), []);
@@ -176,6 +177,8 @@ function KineticMonolith() {
 
 /* ─────────────── Scene ─────────────── */
 function Scene() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <>
       <ambientLight intensity={0.2} />
@@ -184,10 +187,10 @@ function Scene() {
       <pointLight position={[0, 0, 3]} intensity={1.0} color="#F472B6" />
 
       {/* Environment map for hyper-realistic glass/obsidian reflections */}
-      <Environment preset="city" resolution={128} />
+      <Environment preset="city" resolution={isMobile ? 64 : 128} />
 
       {/* Reduced stars for performance */}
-      <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={0.8} />
+      <Stars radius={100} depth={50} count={isMobile ? 300 : 1000} factor={4} saturation={0} fade speed={0.8} />
       
       <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
         <KineticMonolith />
@@ -201,13 +204,15 @@ function Scene() {
 
 /* ─────────────── HeroCanvas ─────────────── */
 export default function HeroCanvas() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <Canvas
       camera={{ position: [0, 0, 8.5], fov: 50 }}
-      dpr={[1, 1.5]}
+      dpr={isMobile ? [1, 1] : [1, 1.5]}
       performance={{ min: 0.5 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      gl={{ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' }}
     >
       <Scene />
     </Canvas>

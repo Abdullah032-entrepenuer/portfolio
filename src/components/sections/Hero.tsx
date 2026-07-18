@@ -38,6 +38,7 @@ export default function Hero({ data }: { data: HeroData }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
           className={styles.badge}
+          style={{ willChange: 'transform, opacity' }}
         >
           <span className={styles.badgeDot} />
           <span>Available for Projects</span>
@@ -59,7 +60,7 @@ export default function Hero({ data }: { data: HeroData }) {
                       ease: [0.76, 0, 0.24, 1],
                       delay: 0.3 + (wordIndex * 0.1) + (charIndex * 0.015)
                     }}
-                    style={{ display: 'inline-block', transformOrigin: 'top left' }}
+                    style={{ display: 'inline-block', transformOrigin: 'top left', willChange: 'transform, opacity' }}
                   >
                     {char === ' ' ? '\u00A0' : char}
                   </motion.span>
@@ -79,7 +80,7 @@ export default function Hero({ data }: { data: HeroData }) {
                     ease: [0.76, 0, 0.24, 1],
                     delay: 0.6 + (wordIndex * 0.05)
                   }}
-                  style={{ display: 'inline-block' }}
+                  style={{ display: 'inline-block', willChange: 'transform, opacity' }}
                 >
                   {word}
                 </motion.span>
@@ -94,6 +95,7 @@ export default function Hero({ data }: { data: HeroData }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.9 }}
           className={styles.sub}
+          style={{ willChange: 'transform, opacity' }}
         >
           {subText}
         </motion.p>
@@ -104,6 +106,7 @@ export default function Hero({ data }: { data: HeroData }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 1.0 }}
           className={styles.ctas}
+          style={{ willChange: 'transform, opacity' }}
         >
           <button
             id="cta-vault"
@@ -132,6 +135,7 @@ export default function Hero({ data }: { data: HeroData }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
           className={styles.scrollIndicator} aria-hidden="true"
+          style={{ willChange: 'opacity' }}
         >
           <div className={styles.scrollLine} />
           <span className="text-label">Scroll</span>

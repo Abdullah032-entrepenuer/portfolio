@@ -16,7 +16,7 @@ export default function Preloader() {
       const counter = { val: 0 };
       gsap.to(counter, {
         val: 100,
-        duration: 3.2,
+        duration: 1.5,
         ease: 'power3.inOut',
         onUpdate: () => {
           if (counterRef.current) {
@@ -80,8 +80,8 @@ export default function Preloader() {
 
           {/* Content Wrapper */}
           <motion.div 
-            exit={{ opacity: 0, y: -50, scale: 0.95, filter: 'blur(10px)', transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', zIndex: 10, width: '100%', maxWidth: '400px', padding: '0 20px' }}
+            exit={{ opacity: 0, y: -50, scale: 0.95, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', zIndex: 10, width: '100%', maxWidth: '400px', padding: '0 20px', willChange: 'transform, opacity' }}
           >
             
             {/* 3D Text Reveal */}
@@ -99,10 +99,10 @@ export default function Preloader() {
               {text.split('').map((char, i) => (
                 <motion.span
                   key={i}
-                  initial={{ opacity: 0, rotateX: -90, y: 40, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, rotateX: 0, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, rotateX: -90, y: 40 }}
+                  animate={{ opacity: 1, rotateX: 0, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 + i * 0.06, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ display: 'inline-block', transformStyle: 'preserve-3d', transformOrigin: 'bottom center' }}
+                  style={{ display: 'inline-block', transformStyle: 'preserve-3d', transformOrigin: 'bottom center', willChange: 'transform, opacity' }}
                 >
                   {char}
                 </motion.span>
@@ -135,7 +135,7 @@ export default function Preloader() {
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 3.2, ease: [0.76, 0, 0.24, 1] }}
+                transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
                 style={{ position: 'absolute', inset: 0, backgroundColor: 'var(--mint)', transformOrigin: 'left', boxShadow: '0 0 15px var(--mint-glow)' }}
               />
               {/* Scanline passing over the bar */}
