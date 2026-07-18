@@ -6,22 +6,11 @@
   align-items: flex-start;
   justify-content: center;
   overflow: hidden;
-  background: radial-gradient(ellipse 80% 60% at 70% 50%, var(--crimson-dim) 0%, transparent 60%),
-              radial-gradient(ellipse 60% 40% at 30% 60%, var(--mint-dim) 0%, transparent 60%),
-              var(--void);
+  /* Transparent — the global 3D canvas shows through */
+  background: transparent;
 }
 
-.canvasWrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.canvasPlaceholder {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 80% at 70% 50%, var(--crimson-dim) 0%, transparent 70%);
-}
+/* Canvas is now global — no local canvas wrapper needed */
 
 .gradientLeft {
   position: absolute;
@@ -55,8 +44,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: var(--mint-dim);
-  border: 1px solid var(--mint-dim);
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.15);
   border-radius: 100px;
   margin-bottom: 32px;
   font-family: var(--font-display);
@@ -65,7 +54,8 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mint);
-  animation: fadeInUp 0.8s var(--ease-out) 0.1s both;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .badgeDot {
@@ -98,13 +88,6 @@
 
 .word {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: none;
-}
-
-.wordVisible {
-  animation: fadeInUp 0.7s var(--ease-out) both;
 }
 
 .sub {
@@ -113,7 +96,6 @@
   line-height: 1.7;
   max-width: 540px;
   margin-bottom: 44px;
-  animation: fadeInUp 0.8s var(--ease-out) 0.5s both;
 }
 
 .ctas {
@@ -121,7 +103,6 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  animation: fadeInUp 0.8s var(--ease-out) 0.65s both;
 }
 
 .ctaPrimary {
@@ -142,7 +123,6 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  animation: fadeInUp 0.8s var(--ease-out) 1s both;
 }
 
 .scrollLine {

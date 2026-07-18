@@ -18,7 +18,7 @@ export default function Preloader() {
       const counter = { val: 0 };
       gsap.to(counter, {
         val: 100,
-        duration: 2.5,
+        duration: 2.8,
         ease: 'power3.inOut',
         onUpdate: () => {
           if (counterRef.current) {
@@ -29,7 +29,7 @@ export default function Preloader() {
           setTimeout(() => {
             setLoading(false);
             document.body.style.overflow = '';
-          }, 300);
+          }, 400);
         }
       });
     });
@@ -85,6 +85,23 @@ export default function Preloader() {
                 SYSTEM.INIT
               </motion.span>
             </div>
+
+            {/* Subtext */}
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: '#8B5CF6',
+              }}
+            >
+              Initializing 3D Environment
+            </motion.span>
             
             <div style={{
               width: '100%',
@@ -98,11 +115,11 @@ export default function Preloader() {
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 2.5, ease: 'easeInOut' }}
+                transition={{ duration: 2.8, ease: 'easeInOut' }}
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  backgroundColor: 'var(--mint)', // Electric Violet
+                  backgroundColor: 'var(--mint)',
                   transformOrigin: 'left'
                 }}
               />
@@ -129,3 +146,4 @@ export default function Preloader() {
     </AnimatePresence>
   );
 }
+

@@ -34,10 +34,6 @@ export default function Footer() {
               key={link.href}
               href={link.href}
               className={styles.navLink}
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
-              }}
             >
               {link.label}
             </a>

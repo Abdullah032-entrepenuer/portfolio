@@ -1,8 +1,8 @@
-import Hero from '@/components/sections/Hero';
-import Services from '@/components/sections/Services';
-import Vault from '@/components/sections/Vault';
-import About from '@/components/sections/About';
-import Contact from '@/components/sections/Contact';
+import HeroSection from '@/components/sections/HeroSection';
+import ServicesSection from '@/components/sections/ServicesSection';
+import VaultSection from '@/components/sections/VaultSection';
+import AboutSection from '@/components/sections/AboutSection';
+import ContactSection from '@/components/sections/ContactSection';
 import { getPortfolioData } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -12,11 +12,11 @@ export default function Page() {
 
   return (
     <main>
-      <Hero data={data.hero} />
-      <Services data={data.services} />
-      <Vault data={data.projects} />
-      <About data={data.about} />
-      <Contact data={data.contact} />
+      <HeroSection data={data.hero} />
+      <ServicesSection data={data.services} />
+      <VaultSection data={data.projects} />
+      <AboutSection data={data.about} />
+      <ContactSection data={data.contact} />
     </main>
   );
 }

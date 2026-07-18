@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
 import styles from './Navbar.module.css';
+import { useLenis } from '@/providers/LenisProvider';
+import { useScrollContext } from '@/providers/ScrollContext';
 
 
 const navLinks = [
@@ -17,29 +20,41 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastScroll = useRef(0);
+  const navRef = useRef<HTMLElement>(null);
+  const { getInstance } = useLenis();
+  const { subscribe } = useScrollContext();
 
   useEffect(() => {
-    const onScroll = () => {
-      const current = window.scrollY;
-      setScrolled(current > 60);
-      setHidden(current > lastScroll.current && current > 200);
-      lastScroll.current = current;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    // Subscribe to scroll context for hide/show behavior
+    const unsub = subscribe((state) => {
+      setScrolled(state.scrollY > 60);
+      setHidden(state.scrollY > lastScroll.current && state.scrollY > 200);
+      lastScroll.current = state.scrollY;
+    });
+
+    // GSAP entrance
+    if (navRef.current) {
+      gsap.fromTo(navRef.current,
+        { y: -80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 2.8 }
+      );
+    }
+
+    return unsub;
+  }, [subscribe]);
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    const lenis = getInstance();
     const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+    if (lenis && target) {
+      lenis.scrollTo(target as HTMLElement, { offset: 0, duration: 1.2 });
     }
   };
 
   return (
     <>
-      <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''} ${hidden ? styles.navHidden : ''}`}>
+      <nav ref={navRef} className={`${styles.nav} ${scrolled ? styles.navScrolled : ''} ${hidden ? styles.navHidden : ''}`} style={{ opacity: 0 }}>
         <div className={`container ${styles.navInner}`}>
           <Link href="/" className={styles.logo} aria-label="Abdullah Awais Portfolio">
             <span className={styles.logoAA}>AA</span>
@@ -61,7 +76,6 @@ export default function Navbar() {
           </ul>
 
           <div className={styles.rightGroup}>
-
             <button
               className={`btn btn-primary ${styles.ctaBtn}`}
               onClick={() => handleNavClick('#contact')}
@@ -86,7 +100,6 @@ export default function Navbar() {
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ''}`} aria-hidden={!menuOpen}>
         <div className={styles.mobileToggleRow}>
-
         </div>
         <ul className={styles.mobileLinks} role="list">
           {navLinks.map((link, i) => (
