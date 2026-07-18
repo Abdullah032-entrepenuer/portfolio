@@ -13,8 +13,8 @@ function KineticMonolith() {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // Dynamic shard count based on screen size to guarantee mobile performance
-  const SHARD_COUNT = useMemo(() => (isMobile ? 30 : 150), [isMobile]);
+  // Extreme performance: only 12 shards on mobile
+  const SHARD_COUNT = useMemo(() => (isMobile ? 12 : 150), [isMobile]);
 
   // Temp vectors for garbage collection optimization
   const tempTargetPos = useMemo(() => new THREE.Vector3(), []);
@@ -67,18 +67,19 @@ function KineticMonolith() {
   useFrame(({ clock, pointer }) => {
     const time = clock.getElapsedTime();
 
-    // Map mouse pointer to 3D world plane at z=0
-    raycaster.setFromCamera(pointer, camera);
-    raycaster.ray.intersectPlane(plane, targetPointer);
+    if (!isMobile) {
+      raycaster.setFromCamera(pointer, camera);
+      raycaster.ray.intersectPlane(plane, targetPointer);
+    }
 
     if (meshRef.current) {
       for (let i = 0; i < SHARD_COUNT; i++) {
         const data = basePositions[i];
         
-        // Add gentle floating noise to base position
-        const noiseX = Math.sin(time * data.speed + data.offset) * 0.15;
-        const noiseY = Math.cos(time * data.speed * 0.8 + data.offset) * 0.15;
-        const noiseZ = Math.sin(time * data.speed * 1.2 + data.offset) * 0.15;
+        // Fast simplified noise for mobile
+        const noiseX = Math.sin(time * data.speed + data.offset) * (isMobile ? 0.05 : 0.15);
+        const noiseY = Math.cos(time * data.speed * 0.8 + data.offset) * (isMobile ? 0.05 : 0.15);
+        const noiseZ = Math.sin(time * data.speed * 1.2 + data.offset) * (isMobile ? 0.05 : 0.15);
         
         tempNoise.set(noiseX, noiseY, noiseZ);
         tempTargetPos.copy(data.basePos).add(tempNoise);
@@ -107,8 +108,8 @@ function KineticMonolith() {
           data.currentRot.z = THREE.MathUtils.lerp(data.currentRot.z, data.baseRot.z, 0.05);
         }
 
-        // Smoothly lerp current position to target position
-        data.currentPos.lerp(tempTargetPos, 0.08);
+        // Extremely aggressive lerping on mobile to avoid calculations
+        data.currentPos.lerp(tempTargetPos, isMobile ? 1 : 0.08);
 
         dummy.position.copy(data.currentPos);
         dummy.rotation.copy(data.currentRot);
@@ -120,13 +121,13 @@ function KineticMonolith() {
     }
 
     if (groupRef.current) {
-      // Global group rotation for parallax
-      groupRef.current.rotation.y = time * 0.05 + pointer.x * 0.3;
-      groupRef.current.rotation.x = pointer.y * 0.3;
+      // Very slow and simple rotation on mobile to save CPU
+      groupRef.current.rotation.y = time * (isMobile ? 0.02 : 0.05) + (isMobile ? 0 : pointer.x * 0.3);
+      if (!isMobile) groupRef.current.rotation.x = pointer.y * 0.3;
       groupRef.current.updateMatrixWorld();
     }
 
-    if (coreRef.current) {
+    if (coreRef.current && !isMobile) {
       coreRef.current.rotation.y = time * -0.2;
       coreRef.current.rotation.z = time * 0.1;
       const scale = 1.0 + Math.sin(time * 3) * 0.06;
@@ -169,11 +170,11 @@ function KineticMonolith() {
         {/* Polyhedron makes great shard shapes */}
         <tetrahedronGeometry args={[0.5, 0]} />
         {isMobile ? (
-          <meshStandardMaterial 
-            color="#020202" 
-            metalness={0.8}
-            roughness={0.2}
-            envMapIntensity={2.0}
+          <meshBasicMaterial 
+            color="#06B6D4" 
+            wireframe
+            transparent
+            opacity={0.3}
           />
         ) : (
           <meshPhysicalMaterial 
@@ -197,19 +198,23 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.2} />
-      <pointLight position={[5, 5, 5]} intensity={2.0} color="#8B5CF6" />
-      <pointLight position={[-5, -3, -5]} intensity={1.5} color="#06B6D4" />
-      <pointLight position={[0, 0, 3]} intensity={1.0} color="#F472B6" />
-
-      {/* Environment map for hyper-realistic glass/obsidian reflections */}
-      <Environment preset="city" resolution={isMobile ? 64 : 128} />
-
-      {/* Completely disable stars on mobile to save performance */}
-      {!isMobile && <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={0.8} />}
+      {!isMobile && (
+        <>
+          <pointLight position={[5, 5, 5]} intensity={2.0} color="#8B5CF6" />
+          <pointLight position={[-5, -3, -5]} intensity={1.5} color="#06B6D4" />
+          <pointLight position={[0, 0, 3]} intensity={1.0} color="#F472B6" />
+          <Environment preset="city" resolution={128} />
+          <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={0.8} />
+        </>
+      )}
       
-      <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+      {isMobile ? (
         <KineticMonolith />
-      </Float>
+      ) : (
+        <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+          <KineticMonolith />
+        </Float>
+      )}
     </>
   );
 }
@@ -221,10 +226,15 @@ export default function HeroCanvas() {
   return (
     <Canvas
       camera={{ position: [0, 0, 8.5], fov: 50 }}
-      dpr={isMobile ? [0.5, 1] : [1, 1.5]}
+      dpr={isMobile ? 0.5 : [1, 1.5]}
       performance={{ min: 0.1 }}
       style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-      gl={{ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' }}
+      gl={{ 
+        antialias: !isMobile, 
+        alpha: true, 
+        powerPreference: isMobile ? 'low-power' : 'high-performance',
+        precision: isMobile ? 'lowp' : 'highp'
+      }}
     >
       <Scene />
     </Canvas>

@@ -11,12 +11,15 @@ export default function Preloader() {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     window.scrollTo(0, 0);
+    
+    const isMobile = window.innerWidth < 768;
+    const duration = isMobile ? 0.6 : 1.5; // Much faster on mobile to reduce main-thread blocking
 
     const ctx = gsap.context(() => {
       const counter = { val: 0 };
       gsap.to(counter, {
         val: 100,
-        duration: 1.5,
+        duration: duration,
         ease: 'power3.inOut',
         onUpdate: () => {
           if (counterRef.current) {
@@ -27,7 +30,7 @@ export default function Preloader() {
           setTimeout(() => {
             setLoading(false);
             document.body.style.overflow = '';
-          }, 600);
+          }, isMobile ? 200 : 600); // Shorter exit delay on mobile
         }
       });
     });
@@ -39,6 +42,11 @@ export default function Preloader() {
   }, []);
 
   const text = "SYSTEM.INIT";
+  const [isMobileState, setIsMobileState] = useState(true);
+  
+  useEffect(() => {
+    setIsMobileState(window.innerWidth < 768);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -56,27 +64,29 @@ export default function Preloader() {
             overflow: 'hidden'
           }}
         >
-          {/* Abstract 3D Background Rings */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 360, rotateZ: 360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-            exit={{ opacity: 0, scale: 1.5, transition: { duration: 1 } }}
-            style={{
-              position: 'absolute',
-              width: '50vw',
-              height: '50vw',
-              minWidth: '300px',
-              minHeight: '300px',
-              border: '1px dashed rgba(139, 92, 246, 0.08)',
-              borderRadius: '50%',
-              transformStyle: 'preserve-3d',
-              zIndex: 1
-            }}
-          >
-            <div style={{ position: 'absolute', inset: '-10%', border: '1px solid rgba(6, 182, 212, 0.05)', borderRadius: '50%', transform: 'rotateX(60deg) rotateY(30deg)' }} />
-            <div style={{ position: 'absolute', inset: '10%', border: '1px solid rgba(139, 92, 246, 0.05)', borderRadius: '50%', transform: 'rotateX(-60deg) rotateY(-30deg)' }} />
-          </motion.div>
+          {/* Abstract 3D Background Rings (Disabled on Mobile for speed) */}
+          {!isMobileState && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, rotateX: 360, rotateZ: 360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+              exit={{ opacity: 0, scale: 1.5, transition: { duration: 1 } }}
+              style={{
+                position: 'absolute',
+                width: '50vw',
+                height: '50vw',
+                minWidth: '300px',
+                minHeight: '300px',
+                border: '1px dashed rgba(139, 92, 246, 0.08)',
+                borderRadius: '50%',
+                transformStyle: 'preserve-3d',
+                zIndex: 1
+              }}
+            >
+              <div style={{ position: 'absolute', inset: '-10%', border: '1px solid rgba(6, 182, 212, 0.05)', borderRadius: '50%', transform: 'rotateX(60deg) rotateY(30deg)' }} />
+              <div style={{ position: 'absolute', inset: '10%', border: '1px solid rgba(139, 92, 246, 0.05)', borderRadius: '50%', transform: 'rotateX(-60deg) rotateY(-30deg)' }} />
+            </motion.div>
+          )}
 
           {/* Content Wrapper */}
           <motion.div 
