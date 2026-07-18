@@ -2,8 +2,48 @@
 
 import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Stars, Float } from '@react-three/drei';
+import { Environment, Stars, Float, useTexture, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
+
+function ProfileHologram() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const texture = useTexture('/profile.jpg');
+  
+  // Set texture properties for best look
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearMipMapLinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  
+  return (
+    <group position={isMobile ? [0, 0, 0] : [2, 0, 1]}>
+      {isMobile ? (
+        <mesh position={[0, 0, -2]}>
+          <planeGeometry args={[2.5, 2.5]} />
+          <meshBasicMaterial 
+            map={texture} 
+            transparent 
+            opacity={0.8} 
+            side={THREE.DoubleSide} 
+          />
+        </mesh>
+      ) : (
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+          <RoundedBox args={[2.5, 2.5, 0.1]} radius={0.1} smoothness={4}>
+            <meshPhysicalMaterial 
+              map={texture}
+              metalness={0.2}
+              roughness={0.1}
+              clearcoat={1.0}
+              clearcoatRoughness={0.1}
+              transmission={0.2}
+              ior={1.5}
+            />
+          </RoundedBox>
+        </Float>
+      )}
+    </group>
+  );
+}
 
 function KineticMonolith() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -208,6 +248,9 @@ function Scene() {
         </>
       )}
       
+      {/* Profile Image integrated into 3D scene */}
+      <ProfileHologram />
+
       {isMobile ? (
         <KineticMonolith />
       ) : (
