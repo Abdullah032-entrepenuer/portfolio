@@ -138,6 +138,33 @@ export default function Hero({ data }: { data: HeroData }) {
         </motion.div>
       </div>
 
+      {/* Floating Skills Widget (Right Side) */}
+      <div className={styles.heroSkills} aria-hidden="true">
+        {[
+          { name: 'React / Next.js', icon: '⚡' },
+          { name: 'WebGL / Three.js', icon: '◈' },
+          { name: 'System Architecture', icon: '◎' },
+          { name: 'UI / UX Design', icon: '✦' }
+        ].map((skill, index) => (
+          <motion.div
+            key={skill.name}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 + (index * 0.15), ease: [0.23, 1, 0.32, 1] }}
+            className={styles.skillCardWrapper}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: index * 0.4 }}
+              className={styles.skillCard}
+            >
+              <div className={styles.skillIcon}>{skill.icon}</div>
+              <span>{skill.name}</span>
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+
       {/* Tech strip */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
