@@ -1,9 +1,9 @@
 {
   "hero": {
-    "words": ["Engineering", "Digital", "Luxury."],
-    "subWords": ["Bridging", "the", "gap", "between", "high‑performance", "code", "and", "high‑fidelity", "design."],
-    "sub": "Full‑Stack Engineer with a strong focus on Front‑end excellence and immersive 3D web experiences.",
-    "tech": ["React", "Next.js", "Figma", "Node.js", "Three.js", "TypeScript", "WebGL", "TailwindCSS"]
+    "words": ["Precision", "Immersive", "Digital", "Architecture."],
+    "subWords": ["I", "architect", "high‑performance", "digital", "environments."],
+    "sub": "I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences.",
+    "tech": ["React", "Next.js", "Three.js", "WebGL", "System Design", "TypeScript"]
   },
   "services": [
     {
@@ -184,11 +184,11 @@
     }
   ],
   "about": {
-    "title": "Not just a developer. An engineer who ships.",
+    "title": "Precision Engineering.<br />Immersive Interface.<br /><span class=\"gradient-violet\">Digital Architecture.</span>",
     "bioParagraphs": [
-      "I'm Abdullah Awais — a Full-Stack Engineer with a relentless focus on Front-end development. I build high-performance web applications that don't just function, they captivate.",
-      "With deep expertise in React, Next.js, and immersive 3D web experiences, I bridge the gap between complex engineering and elegant, intuitive UI/UX design. Every project I take on is engineered to scale, crafted to convert, and visually stunning.",
-      "Beyond code, I have a deep passion for Figma prototyping, clean architecture, and building products that genuinely improve people's lives. Every project is a chance to push the boundaries of what the modern web can do."
+      "I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences.",
+      "With deep expertise in React, Next.js, and Three.js, I don't just build websites—I engineer interactive data visualizations and digital luxury experiences that captivate and convert.",
+      "Every system I design is built to scale. Every interface I craft is engineered for performance. This is the intersection of logic and aesthetic."
     ],
     "stats": [
       { "value": "3+", "label": "Years Experience" },

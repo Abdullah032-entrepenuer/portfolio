@@ -74,24 +74,6 @@ export default function About({ data }: { data: AboutData }) {
               ))}
             </div>
 
-            {/* Skill bars */}
-            <div className={styles.skills} aria-label="Skill proficiency levels">
-              <span className="text-label" style={{ marginBottom: '20px', display: 'block' }}>Core Proficiencies</span>
-              {skills.map((skill, i) => (
-                <div key={skill.name} className={styles.skillRow} style={{ '--delay': `${i * 0.08}s` } as React.CSSProperties}>
-                  <div className={styles.skillMeta}>
-                    <span className={styles.skillName}>{skill.name}</span>
-                    <span className={styles.skillPct}>{skill.level}%</span>
-                  </div>
-                  <div className={styles.skillTrack} role="progressbar" aria-valuenow={skill.level} aria-valuemin={0} aria-valuemax={100} aria-label={`${skill.name} proficiency`}>
-                    <div
-                      className={styles.skillFill}
-                      style={{ '--w': `${skill.level}%` } as React.CSSProperties}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

@@ -52,6 +52,7 @@
   --selection-bg: var(--mint);
   --selection-text: #000000;
 
+  --font-heading: var(--font-playfair, 'Playfair Display', serif);
   --font-display: var(--font-space-grotesk, 'Space Grotesk', sans-serif);
   --font-body: var(--font-inter, 'Inter', sans-serif);
 
@@ -112,7 +113,7 @@ body {
   background-color: var(--void);
   color: var(--text-primary);
   font-family: var(--font-body);
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
   cursor: none;
 }
@@ -159,26 +160,26 @@ button {
 .font-display { font-family: var(--font-display); }
 
 .text-hero {
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 7vw, 6.5rem);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .text-h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
 .text-h3 {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .text-label {

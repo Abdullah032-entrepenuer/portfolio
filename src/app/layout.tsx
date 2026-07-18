@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Space_Grotesk, Inter } from 'next/font/google';
+import { Space_Grotesk, Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Preloader from '@/components/ui/Preloader';
 
@@ -12,6 +12,12 @@ const spaceGrotesk = Space_Grotesk({
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
   display: 'swap',
 });
 
@@ -56,7 +62,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable}`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable}`}
       data-theme="dark"
       style={{ colorScheme: 'dark' }}
     >
