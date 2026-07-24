@@ -20,7 +20,7 @@ export default function EliteHero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-cyan opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-electric-cyan"></span>
           </span>
-          <span className="text-xs font-mono tracking-[0.2em] text-electric-cyan uppercase">Systems Online</span>
+          <span className="text-xs font-mono tracking-[0.2em] text-electric-cyan uppercase">Abdullah Awais · Full-Stack Software Engineer</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/30 leading-[1.05]">
@@ -29,7 +29,7 @@ export default function EliteHero() {
         </h1>
         
         <p className="max-w-2xl text-lg md:text-xl text-white/60 font-light mb-12 leading-relaxed tracking-wide">
-          I architect zero-latency digital environments. From WebGPU computational pipelines to immersive React Three Fiber spatial interfaces, I build systems that scale at the edge.
+          I am a Full-Stack Software Engineer specializing in zero-latency digital environments. From WebGPU computational pipelines to immersive React Three Fiber spatial interfaces, I build systems that scale at the edge.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4">
