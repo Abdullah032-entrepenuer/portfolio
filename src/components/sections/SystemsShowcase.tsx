@@ -15,11 +15,32 @@ export default function SystemsShowcase() {
       link: "#"
     },
     {
-      title: "RIVAAN / AutoCare Platform",
+      title: "RIVAAN Platform",
       description: "Enterprise-scale production applications showcasing rigorous state management, authentication, and SSR hydration optimizations.",
-      metrics: ["Next.js 14", "Server Actions", "100/100 Lighthouse"],
+      metrics: ["Next.js 14", "Server Actions", "Lighthouse"],
       gradient: "from-purple-500/20 to-transparent",
       link: "#"
+    },
+    {
+      title: "Synapse AI",
+      description: "Interactive AI-powered 3D knowledge mapping. Generates interconnected concept graphs explored in custom 3D web-space or 2D flowcharts.",
+      metrics: ["React Three Fiber", "Knowledge Graph", "AI"],
+      gradient: "from-blue-500/20 to-transparent",
+      link: "https://synapse-server-5bb8.onrender.com/"
+    },
+    {
+      title: "Auto Care",
+      description: "Live e-commerce platform for auto parts vendors featuring smart oil-grade recommendations, category browsing, and secure checkout.",
+      metrics: ["E-Commerce", "React", "Logistics"],
+      gradient: "from-green-500/20 to-transparent",
+      link: "https://www.auto-care.me"
+    },
+    {
+      title: "Research Publications",
+      description: "Published scientific research identifiers. View the original works through their Digital Object Identifiers (DOI).",
+      metrics: ["DOI", "Zenodo", "Publications"],
+      gradient: "from-rose-500/20 to-transparent",
+      link: "https://doi.org/10.5281/zenodo.21526081"
     }
   ];
 

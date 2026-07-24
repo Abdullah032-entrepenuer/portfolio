@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { Preload, PerformanceMonitor } from '@react-three/drei';
 import Environment3D from './Environment3D';
 import ScrollReactor from './ScrollReactor';
+import HeroMonolith from './HeroMonolith';
 import ServiceOrbs from './ServiceOrbs';
 import VaultGallery3D from './VaultGallery3D';
 import QuantumCore3D from './QuantumCore3D';
@@ -52,6 +53,7 @@ export default function SceneProvider() {
             <ScrollReactor />
 
             {/* Section-specific 3D elements */}
+            <HeroMonolith />
             <ServiceOrbs />
             <QuantumCore3D />
             <VaultGallery3D />
