@@ -12,7 +12,7 @@ export default function SystemsShowcase() {
       description: "Multi-threaded 3D rendering architecture bypassing the main thread for locked 60 FPS under heavy composite loads.",
       metrics: ["60 FPS Locked", "0.04 ms² Var", "Workers"],
       gradient: "from-electric-gold/20 to-transparent",
-      link: "https://doi.org/10.5281/zenodo.21526081"
+      link: "https://zenodo.org/records/21527199"
     },
     {
       title: "Synapse AI",
