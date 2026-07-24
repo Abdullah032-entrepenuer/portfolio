@@ -110,16 +110,16 @@ export default function AboutSection({ data }: { data: AboutData }) {
               </div>
 
               {/* Profile Image Frame */}
-              <div className="relative z-10 w-64 h-80 rounded-2xl overflow-hidden border border-white/20 shadow-2xl mb-6">
+              <div className="relative z-10 w-64 h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl mb-6 bg-gradient-to-b from-white/5 to-obsidian-900/60 backdrop-blur-md flex items-center justify-center">
                 <Image
-                  src="/profile.jpg"
+                  src="/profile-nobg.png"
                   alt="Abdullah Awais — Full-Stack Developer & Senior Engineer"
                   fill
-                  className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  className="object-contain object-bottom group-hover:scale-105 transition-transform duration-700 drop-shadow-[0_10px_25px_rgba(0,240,255,0.25)]"
                   priority
                   sizes="(max-width: 768px) 100vw, 320px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-obsidian-900/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-obsidian-900/40 via-transparent to-transparent pointer-events-none" />
               </div>
 
               {/* Floating Badge */}
