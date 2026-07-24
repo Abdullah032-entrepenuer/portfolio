@@ -5,21 +5,14 @@ export default function SystemsShowcase() {
       description: "Local-first retrieval-augmented generation running entirely on-device via WebGPU. Bypasses round-trip cloud inference for instantaneous localized intelligence.",
       metrics: ["0 ms TBT", "100k Vectors", "WGSL", "WebGPU"],
       gradient: "from-electric-cyan/20 to-transparent",
-      link: "#"
+      link: "https://doi.org/10.5281/zenodo.21526081"
     },
     {
       title: "OffscreenCanvas Spatial Visualizer",
       description: "Multi-threaded 3D rendering architecture bypassing the main thread for locked 60 FPS under heavy composite loads.",
       metrics: ["60 FPS Locked", "0.04 ms² Var", "Workers"],
       gradient: "from-electric-gold/20 to-transparent",
-      link: "#"
-    },
-    {
-      title: "RIVAAN Platform",
-      description: "Enterprise-scale production applications showcasing rigorous state management, authentication, and SSR hydration optimizations.",
-      metrics: ["Next.js 14", "Server Actions", "Lighthouse"],
-      gradient: "from-purple-500/20 to-transparent",
-      link: "#"
+      link: "https://doi.org/10.5281/zenodo.21526081"
     },
     {
       title: "Synapse AI",
@@ -34,13 +27,6 @@ export default function SystemsShowcase() {
       metrics: ["E-Commerce", "React", "Logistics"],
       gradient: "from-green-500/20 to-transparent",
       link: "https://www.auto-care.me"
-    },
-    {
-      title: "Research Publications",
-      description: "Published scientific research identifiers. View the original works through their Digital Object Identifiers (DOI).",
-      metrics: ["DOI", "Zenodo", "Publications"],
-      gradient: "from-rose-500/20 to-transparent",
-      link: "https://doi.org/10.5281/zenodo.21526081"
     }
   ];
 
