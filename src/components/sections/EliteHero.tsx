@@ -17,8 +17,8 @@ export default function EliteHero() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 mt-20 md:mt-0">
-        <div className="flex flex-wrap items-center gap-4 mb-8">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+        <div className="flex flex-wrap items-center gap-4 mb-8 animate-blur-in" style={{ animationDelay: '0.1s' }}>
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:border-electric-cyan/40 transition-colors">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-cyan opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-electric-cyan"></span>
@@ -31,22 +31,22 @@ export default function EliteHero() {
           <TelemetryHUD />
         </div>
         
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/30 leading-[1.05]">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/30 leading-[1.05] animate-blur-in" style={{ animationDelay: '0.25s' }}>
           Engineering High-Performance <br className="hidden md:block" /> 
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-electric-cyan to-blue-500">Spatial Web</span> & Edge AI.
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-electric-cyan via-blue-400 to-electric-gold animate-pulse">Spatial Web</span> & Edge AI.
         </h1>
         
-        <p className="max-w-2xl text-lg md:text-xl text-white/60 font-light mb-12 leading-relaxed tracking-wide">
+        <p className="max-w-2xl text-lg md:text-xl text-white/60 font-light mb-12 leading-relaxed tracking-wide animate-blur-in" style={{ animationDelay: '0.4s' }}>
           I am a Full-Stack Software Engineer specializing in zero-latency digital environments. From WebGPU computational pipelines to immersive React Three Fiber spatial interfaces, I build systems that scale at the edge.
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link href="#systems" className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:scale-[1.02] hover:bg-gray-100 transition-all flex items-center justify-center gap-2">
+        <div className="flex flex-col sm:flex-row gap-4 animate-blur-in" style={{ animationDelay: '0.55s' }}>
+          <Link href="#systems" className="px-8 py-4 bg-electric-cyan text-obsidian-900 font-bold rounded-xl hover:scale-105 hover:bg-cyan-300 transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,240,255,0.4)] group">
             Explore Systems
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
-          <a href="https://github.com/Abdullah032-entrepenuer" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-transparent border border-white/10 text-white font-medium rounded-lg hover:bg-white/5 hover:border-white/20 transition-all text-center">
-            View GitHub
+          <a href="https://github.com/Abdullah032-entrepenuer" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-xl hover:bg-white/10 hover:border-white/30 hover:scale-105 transition-all duration-300 text-center">
+            View GitHub ↗
           </a>
         </div>
       </div>

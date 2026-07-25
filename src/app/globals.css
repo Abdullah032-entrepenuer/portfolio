@@ -354,10 +354,31 @@ button {
   50% { opacity: 0; }
 }
 
-@keyframes borderRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--duration) linear infinite;
+}
+
+@keyframes blurIn {
+  0% {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(30px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-blur-in {
+  animation: blurIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ============================================

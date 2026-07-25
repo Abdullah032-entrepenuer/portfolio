@@ -4,6 +4,7 @@ import { useState } from 'react';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import BorderBeam from '@/components/ui/BorderBeam';
 import ArchitectureDrawer, { ArchitectureItem } from '@/components/ui/ArchitectureDrawer';
+import { playHoverSound, playClickSound } from '@/lib/soundEffects';
 
 type Category = 'all' | 'research' | 'ai' | 'products';
 
@@ -206,7 +207,11 @@ export default function SystemsShowcase() {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveCategory(tab.id as Category)}
+                  onClick={() => {
+                    playClickSound();
+                    setActiveCategory(tab.id as Category);
+                  }}
+                  onMouseEnter={() => playHoverSound()}
                   className={`px-4 py-2 rounded-lg text-xs font-mono transition-all duration-300 ${
                     activeCategory === tab.id
                       ? 'bg-electric-cyan text-obsidian-900 font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
@@ -224,7 +229,7 @@ export default function SystemsShowcase() {
             {filteredSystems.map((sys) => (
               <SpotlightCard
                 key={sys.id}
-                className="p-8 md:p-10 flex flex-col justify-between min-h-[400px]"
+                className="p-8 md:p-10 flex flex-col justify-between min-h-[400px] hover:border-electric-cyan/40 transition-colors"
                 spotlightColor={
                   sys.category === 'research'
                     ? 'rgba(0, 240, 255, 0.15)'
@@ -266,7 +271,7 @@ export default function SystemsShowcase() {
                 <div className="relative z-10 space-y-6">
                   <div className="flex flex-wrap gap-2">
                     {sys.metrics.map((metric) => (
-                      <span key={metric} className="px-3 py-1 rounded-md bg-obsidian-900 border border-white/10 text-[11px] font-mono text-white/70 uppercase tracking-wide">
+                      <span key={metric} className="px-3 py-1 rounded-md bg-obsidian-900 border border-white/10 text-[11px] font-mono text-white/70 uppercase tracking-wide hover:border-electric-cyan/30 hover:text-electric-cyan transition-colors">
                         {metric}
                       </span>
                     ))}
@@ -274,8 +279,12 @@ export default function SystemsShowcase() {
 
                   <div className="flex flex-wrap gap-3">
                     <button
-                      onClick={() => setSelectedDrawerItem(architectureDetails[sys.id])}
-                      className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-mono text-white transition-all flex items-center gap-2"
+                      onClick={() => {
+                        playClickSound();
+                        setSelectedDrawerItem(architectureDetails[sys.id]);
+                      }}
+                      onMouseEnter={() => playHoverSound()}
+                      className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-mono text-white transition-all hover:scale-105 flex items-center gap-2"
                     >
                       ⚡ Inspect Code & Specs
                     </button>
@@ -283,7 +292,9 @@ export default function SystemsShowcase() {
                       href={sys.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2.5 rounded-xl bg-electric-cyan/10 hover:bg-electric-cyan/20 border border-electric-cyan/20 text-xs font-mono text-electric-cyan transition-all flex items-center gap-2"
+                      onClick={() => playClickSound()}
+                      onMouseEnter={() => playHoverSound()}
+                      className="px-4 py-2.5 rounded-xl bg-electric-cyan/10 hover:bg-electric-cyan/20 border border-electric-cyan/20 text-xs font-mono text-electric-cyan transition-all hover:scale-105 flex items-center gap-2"
                     >
                       {sys.actionText} ↗
                     </a>
