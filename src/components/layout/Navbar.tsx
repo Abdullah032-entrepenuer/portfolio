@@ -7,6 +7,7 @@ import styles from './Navbar.module.css';
 import { useLenis } from '@/providers/LenisProvider';
 import { useScrollContext } from '@/providers/ScrollContext';
 import CommandPalette from '@/components/ui/CommandPalette';
+import { toggleAudioMute, getIsMuted, playHoverSound, playClickSound } from '@/lib/soundEffects';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [isAudioMuted, setIsAudioMuted] = useState(true);
   const lastScroll = useRef(0);
   const navRef = useRef<HTMLElement>(null);
   const { getInstance } = useLenis();
@@ -78,16 +80,39 @@ export default function Navbar() {
 
           <div className={styles.rightGroup}>
             <button
-              onClick={() => setPaletteOpen(true)}
+              onClick={() => {
+                const muted = toggleAudioMute();
+                setIsAudioMuted(muted);
+                if (!muted) playClickSound();
+              }}
+              className="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-1.5"
+              aria-label="Toggle Audio Feedback"
+              title={isAudioMuted ? 'Unmute Audio SFX' : 'Mute Audio SFX'}
+            >
+              <span>{isAudioMuted ? '🔇' : '🔊'}</span>
+              <span className="text-[10px] text-white/40 hidden sm:inline">{isAudioMuted ? 'SFX OFF' : 'SFX ON'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                playClickSound();
+                setPaletteOpen(true);
+              }}
+              onMouseEnter={() => playHoverSound()}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 hover:text-white hover:bg-white/10 transition-colors"
               aria-label="Open Command Palette"
             >
               <span>⌘K</span>
               <span className="text-[10px] text-white/40">CLI</span>
             </button>
+
             <button
               className={`btn btn-primary ${styles.ctaBtn}`}
-              onClick={() => handleNavClick('#contact')}
+              onClick={() => {
+                playClickSound();
+                handleNavClick('#contact');
+              }}
+              onMouseEnter={() => playHoverSound()}
               aria-label="Let's Build"
             >
               Let&apos;s Build

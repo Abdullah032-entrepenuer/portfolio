@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import MagneticCursor from '@/components/ui/MagneticCursor';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import ScrollProgress from '@/components/ui/ScrollProgress';
 import { ScrollProvider } from '@/providers/ScrollContext';
 import { LenisProvider } from '@/providers/LenisProvider';
 
@@ -15,6 +16,7 @@ export default function PortfolioLayout({
   return (
     <ScrollProvider>
       <LenisProvider>
+        <ScrollProgress />
         {/* Sleek, high-performance ambient cyber grid background */}
         <div className="fixed inset-0 pointer-events-none z-0 bg-obsidian-900 overflow-hidden">
           {/* Subtle Cyber Grid */}

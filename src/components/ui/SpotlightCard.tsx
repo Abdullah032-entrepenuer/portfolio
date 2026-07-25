@@ -16,18 +16,30 @@ export default function SpotlightCard({
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
-    setPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    setPosition({ x, y });
+
+    // Calculate 3D tilt
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -6; // max 6deg tilt
+    const rotateY = ((x - centerX) / centerX) * 6;
+
+    setTilt({ rotateX, rotateY });
   };
 
   const handleMouseEnter = () => setOpacity(1);
-  const handleMouseLeave = () => setOpacity(0);
+  const handleMouseLeave = () => {
+    setOpacity(0);
+    setTilt({ rotateX: 0, rotateY: 0 });
+  };
 
   return (
     <div
@@ -35,6 +47,10 @@ export default function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+        transition: 'transform 0.15s ease-out',
+      }}
       className={`relative overflow-hidden rounded-3xl border border-white/10 bg-obsidian-800/40 backdrop-blur-xl transition-all duration-300 ${className}`}
     >
       {/* Dynamic Cursor Spotlight */}
