@@ -27,23 +27,39 @@ function BeaconRings() {
 
   return (
     <group scale={1.3}>
-      {/* Outer Rotating Ring 1 */}
-      <Torus ref={torus1Ref} args={[1.5, 0.02, 16, 100]}>
-        <meshBasicMaterial color="#00F0FF" transparent opacity={0.6} />
+      {/* Outer Metallic Chrome Ring 1 */}
+      <Torus ref={torus1Ref} args={[1.5, 0.04, 32, 100]}>
+        <meshPhysicalMaterial
+          color="#00F0FF"
+          metalness={0.9}
+          roughness={0.1}
+          clearcoat={1.0}
+          emissive="#00F0FF"
+          emissiveIntensity={0.5}
+        />
       </Torus>
 
-      {/* Outer Rotating Ring 2 */}
-      <Torus ref={torus2Ref} args={[1.2, 0.03, 16, 100]}>
-        <meshBasicMaterial color="#FFD700" transparent opacity={0.5} />
+      {/* Outer Metallic Gold Ring 2 */}
+      <Torus ref={torus2Ref} args={[1.2, 0.05, 32, 100]}>
+        <meshPhysicalMaterial
+          color="#FFD700"
+          metalness={0.95}
+          roughness={0.05}
+          clearcoat={1.0}
+          emissive="#FFD700"
+          emissiveIntensity={0.4}
+        />
       </Torus>
 
-      {/* Pulsing Core */}
-      <Icosahedron ref={coreRef} args={[0.6, 0]}>
-        <meshStandardMaterial
+      {/* Pulsing 3D Physical Glass Core */}
+      <Icosahedron ref={coreRef} args={[0.65, 0]}>
+        <meshPhysicalMaterial
           color="#00F0FF"
           wireframe
+          roughness={0.1}
+          metalness={0.8}
           emissive="#00F0FF"
-          emissiveIntensity={0.8}
+          emissiveIntensity={1.2}
         />
       </Icosahedron>
     </group>
@@ -58,8 +74,10 @@ export default function BeaconMesh() {
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        <ambientLight intensity={0.8} />
-        <pointLight position={[5, 5, 5]} color="#00F0FF" intensity={2} />
+        <ambientLight intensity={1} />
+        <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
+        <pointLight position={[5, 5, 5]} color="#00F0FF" intensity={3} />
+        <pointLight position={[-5, -5, -5]} color="#FFD700" intensity={2} />
         <BeaconRings />
       </Canvas>
     </div>
