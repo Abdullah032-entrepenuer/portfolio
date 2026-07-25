@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import styles from './Navbar.module.css';
 import { useLenis } from '@/providers/LenisProvider';
 import { useScrollContext } from '@/providers/ScrollContext';
-
+import CommandPalette from '@/components/ui/CommandPalette';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -19,6 +19,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
   const lastScroll = useRef(0);
   const navRef = useRef<HTMLElement>(null);
   const { getInstance } = useLenis();
@@ -77,6 +78,14 @@ export default function Navbar() {
 
           <div className={styles.rightGroup}>
             <button
+              onClick={() => setPaletteOpen(true)}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Open Command Palette"
+            >
+              <span>⌘K</span>
+              <span className="text-[10px] text-white/40">CLI</span>
+            </button>
+            <button
               className={`btn btn-primary ${styles.ctaBtn}`}
               onClick={() => handleNavClick('#contact')}
               aria-label="Let's Build"
@@ -84,6 +93,8 @@ export default function Navbar() {
               Let&apos;s Build
             </button>
           </div>
+
+          <CommandPalette isOpen={paletteOpen} onClose={() => setPaletteOpen(false)} />
 
           <button
             className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}

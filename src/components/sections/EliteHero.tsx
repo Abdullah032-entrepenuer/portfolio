@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import TelemetryHUD from '@/components/ui/TelemetryHUD';
 
 const ParticleMesh = dynamic(() => import('@/components/3d/ParticleMesh'), { ssr: false });
 
@@ -15,12 +16,16 @@ export default function EliteHero() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 mt-20 md:mt-0">
-        <div className="inline-flex items-center gap-3 px-4 py-2 mb-8 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-cyan opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-electric-cyan"></span>
-          </span>
-          <span className="text-xs font-mono tracking-[0.2em] text-electric-cyan uppercase">Abdullah Awais · Full-Stack Software Engineer</span>
+        <div className="flex flex-wrap items-center gap-4 mb-8">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-cyan opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-electric-cyan"></span>
+            </span>
+            <span className="text-xs font-mono tracking-[0.2em] text-electric-cyan uppercase">Abdullah Awais · Full-Stack Software Engineer</span>
+          </div>
+
+          <TelemetryHUD />
         </div>
         
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/30 leading-[1.05]">
