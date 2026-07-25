@@ -81,24 +81,8 @@ export default function Navbar() {
           <div className={styles.rightGroup}>
             <button
               onClick={() => {
-                const muted = toggleAudioMute();
-                setIsAudioMuted(muted);
-                if (!muted) playClickSound();
-              }}
-              className="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-1.5"
-              aria-label="Toggle Audio Feedback"
-              title={isAudioMuted ? 'Unmute Audio SFX' : 'Mute Audio SFX'}
-            >
-              <span>{isAudioMuted ? '🔇' : '🔊'}</span>
-              <span className="text-[10px] text-white/40 hidden sm:inline">{isAudioMuted ? 'SFX OFF' : 'SFX ON'}</span>
-            </button>
-
-            <button
-              onClick={() => {
-                playClickSound();
                 setPaletteOpen(true);
               }}
-              onMouseEnter={() => playHoverSound()}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 hover:text-white hover:bg-white/10 transition-colors"
               aria-label="Open Command Palette"
             >

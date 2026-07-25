@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import TelemetryHUD from '@/components/ui/TelemetryHUD';
 import TextScramble from '@/components/ui/TextScramble';
 
 const ParticleMesh = dynamic(() => import('@/components/3d/ParticleMesh'), { ssr: false });
@@ -27,8 +26,6 @@ export default function EliteHero() {
               <TextScramble text="Abdullah Awais · Full-Stack Software Engineer" />
             </span>
           </div>
-
-          <TelemetryHUD />
         </div>
         
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/30 leading-[1.05] animate-blur-in" style={{ animationDelay: '0.25s' }}>
