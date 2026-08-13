@@ -6,10 +6,10 @@ import ContactButton from '@/components/ui/ContactButton';
 import Image from 'next/image';
 
 const cornerImages = [
-  { src: 'https://images.unsplash.com/photo-1614729939124-03290b8ede94?q=80&w=400&auto=format&fit=crop', position: 'top-10 left-10 md:top-20 md:left-20' }, // Moon-ish
+  { src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop', position: 'top-10 left-10 md:top-20 md:left-20' }, // Moon-ish
   { src: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=400&auto=format&fit=crop', position: 'top-10 right-10 md:top-20 md:right-20' }, // 3D object
   { src: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=400&auto=format&fit=crop', position: 'bottom-10 left-10 md:bottom-20 md:left-20' }, // Lego-ish
-  { src: 'https://images.unsplash.com/photo-1633398814782-777e467d0263?q=80&w=400&auto=format&fit=crop', position: 'bottom-10 right-10 md:bottom-20 md:right-20' }, // 3D group
+  { src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop', position: 'bottom-10 right-10 md:bottom-20 md:right-20' }, // 3D group
 ];
 
 export default function AboutSection() {
