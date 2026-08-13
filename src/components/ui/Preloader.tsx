@@ -77,14 +77,14 @@ export default function Preloader() {
                 height: '50vw',
                 minWidth: '300px',
                 minHeight: '300px',
-                border: '1px dashed rgba(139, 92, 246, 0.08)',
+                border: '1px dashed rgba(215, 226, 234, 0.08)',
                 borderRadius: '50%',
                 transformStyle: 'preserve-3d',
                 zIndex: 1
               }}
             >
-              <div style={{ position: 'absolute', inset: '-10%', border: '1px solid rgba(6, 182, 212, 0.05)', borderRadius: '50%', transform: 'rotateX(60deg) rotateY(30deg)' }} />
-              <div style={{ position: 'absolute', inset: '10%', border: '1px solid rgba(139, 92, 246, 0.05)', borderRadius: '50%', transform: 'rotateX(-60deg) rotateY(-30deg)' }} />
+              <div style={{ position: 'absolute', inset: '-10%', border: '1px solid rgba(215, 226, 234, 0.1)', borderRadius: '50%', transform: 'rotateX(60deg) rotateY(30deg)' }} />
+              <div style={{ position: 'absolute', inset: '10%', border: '1px solid rgba(100, 105, 115, 0.15)', borderRadius: '50%', transform: 'rotateX(-60deg) rotateY(-30deg)' }} />
             </motion.div>
           )}
 
@@ -96,11 +96,13 @@ export default function Preloader() {
             
             {/* 3D Text Reveal */}
             <h1 style={{
-              fontFamily: 'var(--font-display)',
+              fontFamily: 'var(--font-kanit)',
               fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
               fontWeight: 700,
               letterSpacing: '-0.02em',
-              color: '#FAFAFA',
+              background: 'linear-gradient(180deg, #646973 0%, #BBCCD7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
               lineHeight: 1,
               display: 'flex',
               gap: '2px',
@@ -125,18 +127,18 @@ export default function Preloader() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1 }}
               style={{
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-kanit)',
                 fontSize: '0.65rem',
                 fontWeight: 500,
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: 'var(--mint)',
+                color: '#D7E2EA',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}
             >
-              <span style={{ width: '6px', height: '6px', backgroundColor: 'var(--mint)', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 10px var(--mint)' }} />
+              <span style={{ width: '6px', height: '6px', backgroundColor: '#D7E2EA', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 10px rgba(215, 226, 234, 0.5)' }} />
               Initializing 3D Environment
             </motion.div>
             
@@ -146,7 +148,7 @@ export default function Preloader() {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
-                style={{ position: 'absolute', inset: 0, backgroundColor: 'var(--mint)', transformOrigin: 'left', boxShadow: '0 0 15px var(--mint-glow)' }}
+                style={{ position: 'absolute', inset: 0, backgroundColor: '#D7E2EA', transformOrigin: 'left', boxShadow: '0 0 15px rgba(215, 226, 234, 0.5)' }}
               />
               {/* Scanline passing over the bar */}
               <motion.div
@@ -161,15 +163,15 @@ export default function Preloader() {
                width: '100%',
                display: 'flex',
                justifyContent: 'space-between',
-               fontFamily: 'var(--font-display)',
+               fontFamily: 'var(--font-kanit)',
                fontSize: '0.75rem',
                fontWeight: 600,
                letterSpacing: '0.15em',
-               color: 'rgba(250, 250, 250, 0.4)'
+               color: 'rgba(215, 226, 234, 0.4)'
             }}>
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>LXD // AURA</motion.span>
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>ABDULLAH // SYSTEM</motion.span>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} style={{ display: 'flex', gap: '4px' }}>
-                <span ref={counterRef} style={{ color: 'var(--text-primary)' }}>000</span>
+                <span ref={counterRef} style={{ color: '#D7E2EA' }}>000</span>
                 <span>%</span>
               </motion.div>
             </div>

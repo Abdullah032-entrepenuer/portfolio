@@ -113,7 +113,7 @@ function ProjectCard({ project, index, totalCards, progress }: { project: any, i
       </div>
 
       {/* Right Content / Images Layout (Horizontal Scroll) */}
-      <div className="w-full md:w-2/3 h-full flex overflow-x-auto overflow-y-hidden gap-4 p-4 md:p-8 bg-black/20 snap-x snap-mandatory scrollbar-hide">
+      <div className="w-full md:w-2/3 h-full flex overflow-x-auto overflow-y-hidden gap-4 p-4 md:p-8 bg-black/20 snap-x snap-mandatory custom-scrollbar">
         {project.images.map((img: string, idx: number) => (
           <div key={idx} className="relative w-[85%] sm:w-[60%] shrink-0 h-full rounded-xl md:rounded-2xl overflow-hidden snap-center">
             <Image src={img} alt={`Project image ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-700" />
