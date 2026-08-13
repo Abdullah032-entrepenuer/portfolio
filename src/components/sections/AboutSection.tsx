@@ -5,37 +5,28 @@ import AnimatedText from '@/components/ui/AnimatedText';
 import ContactButton from '@/components/ui/ContactButton';
 import Image from 'next/image';
 
-const cornerImages = [
-  { src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop', position: 'top-10 left-10 md:top-20 md:left-20' }, // Moon-ish
-  { src: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=400&auto=format&fit=crop', position: 'top-10 right-10 md:top-20 md:right-20' }, // 3D object
-  { src: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=400&auto=format&fit=crop', position: 'bottom-10 left-10 md:bottom-20 md:left-20' }, // Lego-ish
-  { src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop', position: 'bottom-10 right-10 md:bottom-20 md:right-20' }, // 3D group
-];
 
 export default function AboutSection() {
   return (
     <section id="about" className="relative w-full min-h-screen flex flex-col items-center justify-center py-32 px-8 bg-[#0C0C0C] overflow-hidden">
       
-      {/* Corner Images */}
-      {cornerImages.map((img, i) => (
-        <div key={i} className={`absolute z-0 ${img.position} hidden md:block`}>
-          <FadeIn delay={i * 0.2}>
-            <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl opacity-60 hover:opacity-100 transition-opacity duration-500">
-              <Image src={img.src} alt="Decorative 3D element" fill className="object-cover" />
-            </div>
-          </FadeIn>
-        </div>
-      ))}
+      {/* Background glow for depth */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+        <div className="w-[40rem] h-[40rem] bg-white/5 rounded-full blur-3xl mix-blend-screen" />
+      </div>
 
       {/* Main Content */}
-      <div className="z-10 flex flex-col items-center max-w-4xl text-center">
+      <div className="z-10 flex flex-col items-center max-w-5xl text-center">
         <FadeIn yOffset={30}>
-          <h2 className="hero-heading text-5xl md:text-8xl font-bold uppercase mb-12 tracking-tighter">
+          <h2 className="text-[#D7E2EA] text-sm md:text-base font-mono uppercase tracking-[0.3em] mb-4 opacity-70">
             About Me
           </h2>
+          <h3 className="hero-heading text-4xl md:text-6xl font-black uppercase mb-16 tracking-tighter">
+            Digital Architect
+          </h3>
         </FadeIn>
         
-        <div className="text-xl md:text-3xl lg:text-4xl font-medium leading-snug tracking-tight mb-16 text-left md:text-center w-full">
+        <div className="text-lg md:text-2xl lg:text-3xl font-light leading-relaxed tracking-wide mb-16 text-center w-full text-white/90">
           <AnimatedText 
             text="I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences. With deep expertise in React, Next.js, and Three.js, I engineer interactive data visualizations and digital luxury experiences that captivate and convert. Every system I design is built to scale. Every interface I craft is engineered for performance. This is the intersection of logic and aesthetic." 
           />
