@@ -3,11 +3,11 @@
 import FadeIn from '@/components/ui/FadeIn';
 
 const services = [
-  { num: '01', title: '3D Modeling' },
-  { num: '02', title: 'Rendering' },
-  { num: '03', title: 'Motion Design' },
-  { num: '04', title: 'Branding' },
-  { num: '05', title: 'Web Design' },
+  { num: '01', title: 'Full-Stack Systems' },
+  { num: '02', title: '3D Web & WebGL' },
+  { num: '03', title: 'App Engineering' },
+  { num: '04', title: 'Cloud Engineering' },
+  { num: '05', title: 'UI / UX Design' },
 ];
 
 export default function ServicesSection() {

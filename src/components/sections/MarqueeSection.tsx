@@ -4,22 +4,20 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
 
-const row1Images = [
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1581822261290-991b38693d1b?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=600&auto=format&fit=crop',
+const imagesRow1 = [
+  '/coursecraft-1.jpeg',
+  '/coursecraft-2.jpeg',
+  '/synapse-1.png',
+  '/synapse-2.png',
+  '/dairy-farm-1.png',
 ];
 
-const row2Images = [
-  'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
+const imagesRow2 = [
+  '/dairy-farm-2.png',
+  '/car-bidding-1.jpeg',
+  '/car-bidding-2.jpeg',
+  '/auto-care-1.jpeg',
+  '/auto-care-2.jpeg',
 ];
 
 export default function MarqueeSection() {
@@ -38,16 +36,16 @@ export default function MarqueeSection() {
       
       {/* Row 1 */}
       <motion.div style={{ x: x1 }} className="flex gap-6 w-max">
-        {[...row1Images, ...row1Images, ...row1Images].map((src, i) => (
-          <div key={i} className="relative w-48 h-32 md:w-80 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl bg-white/5 border border-white/5">
-            <Image src={src} alt="3D Render" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
+        {[...imagesRow1, ...imagesRow1, ...imagesRow1].map((src, i) => (
+          <div key={i} className="relative w-48 h-32 md:w-80 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden glass border-white/5">
+            <Image src={src} alt="3D Render" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity" />
           </div>
         ))}
       </motion.div>
 
       {/* Row 2 */}
-      <motion.div style={{ x: x2 }} className="flex gap-6 w-max">
-        {[...row2Images, ...row2Images, ...row2Images].map((src, i) => (
+      <motion.div style={{ x: x2 }} className="flex gap-6 w-max -ml-24">
+        {[...imagesRow2, ...imagesRow2, ...imagesRow2].map((src, i) => (
           <div key={i} className="relative w-48 h-32 md:w-80 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl bg-white/5 border border-white/5">
             <Image src={src} alt="3D Render" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
           </div>

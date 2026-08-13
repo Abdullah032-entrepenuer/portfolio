@@ -8,29 +8,47 @@ import LiveProjectButton from '@/components/ui/LiveProjectButton';
 const projects = [
   {
     num: '01',
-    category: 'Nextlevel Studio',
+    category: 'CourseCraft',
     images: [
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+      '/coursecraft-1.jpeg',
+      '/coursecraft-2.jpeg',
+      '/coursecraft-3.jpeg',
     ]
   },
   {
     num: '02',
-    category: 'Creative Labs',
+    category: 'Synapse',
     images: [
-      'https://images.unsplash.com/photo-1581822261290-991b38693d1b?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800&auto=format&fit=crop',
+      '/synapse-1.png',
+      '/synapse-2.png',
+      '/synapse-3.png',
     ]
   },
   {
     num: '03',
-    category: 'Motion Dynamics',
+    category: 'Dairy Farm',
     images: [
-      'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+      '/dairy-farm-1.png',
+      '/dairy-farm-2.png',
+      '/dairy-farm-3.png',
+    ]
+  },
+  {
+    num: '04',
+    category: 'Car Bidding',
+    images: [
+      '/car-bidding-1.jpeg',
+      '/car-bidding-2.jpeg',
+      '/car-bidding-3.jpeg',
+    ]
+  },
+  {
+    num: '05',
+    category: 'Auto Care',
+    images: [
+      '/auto-care-1.jpeg',
+      '/auto-care-2.jpeg',
+      '/auto-care-3.jpeg',
     ]
   }
 ];

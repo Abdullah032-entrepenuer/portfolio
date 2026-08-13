@@ -27,13 +27,13 @@ export default function HeroSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
         <FadeIn delay={0.4} duration={1}>
           <Magnet strength={0.2}>
-            <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+            <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-[#111111]">
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10" />
               <Image 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
+                src="/profile-nobg.png"
                 alt="Abdullah Awais"
                 fill
-                className="object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
+                className="object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
               />
             </div>
           </Magnet>

@@ -37,7 +37,7 @@ export default function AboutSection() {
         
         <div className="text-xl md:text-3xl lg:text-4xl font-medium leading-snug tracking-tight mb-16 text-left md:text-center w-full">
           <AnimatedText 
-            text="I'm a self-taught multidisciplinary creator specializing in 3D design and motion graphics. My passion lies in crafting visually compelling and dynamic experiences that push the boundaries of digital art. With a keen eye for detail and a love for innovation, I bring ideas to life through a blend of technical skill and artistic vision." 
+            text="I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences. With deep expertise in React, Next.js, and Three.js, I engineer interactive data visualizations and digital luxury experiences that captivate and convert. Every system I design is built to scale. Every interface I craft is engineered for performance. This is the intersection of logic and aesthetic." 
           />
         </div>
 
