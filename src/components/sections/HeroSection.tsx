@@ -14,8 +14,8 @@ export default function HeroSection() {
     offset: ['start start', 'end start']
   });
   
-  // Start on the right side and move to the center (-50% of its own width centers it due to left-1/2)
-  const imageX = useTransform(scrollYProgress, [0, 1], ['15vw', '-50%']);
+  // Start completely on the right side (35vw) so the name is unobstructed, and move to center (-50%)
+  const imageX = useTransform(scrollYProgress, [0, 1], ['35vw', '-50%']);
 
   return (
     <section ref={containerRef} className="relative w-full h-screen flex flex-col justify-between pt-32 pb-12 px-8 md:px-16 overflow-x-clip bg-[#0C0C0C]">

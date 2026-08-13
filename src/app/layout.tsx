@@ -33,8 +33,9 @@ export default function RootLayout({
       className={`${kanit.variable}`}
       data-theme="dark"
       style={{ colorScheme: 'dark' }}
+      suppressHydrationWarning
     >
-      <body className="font-sans antialiased text-[#D7E2EA] bg-[#0C0C0C]">
+      <body className="font-sans antialiased text-[#D7E2EA] bg-[#0C0C0C]" suppressHydrationWarning>
         <Preloader />
         {children}
       </body>
