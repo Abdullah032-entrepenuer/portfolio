@@ -30,36 +30,36 @@ function BeaconRings() {
       {/* Outer Metallic Chrome Ring 1 */}
       <Torus ref={torus1Ref} args={[1.5, 0.04, 32, 100]}>
         <meshPhysicalMaterial
-          color="#00F0FF"
+          color="#D7E2EA"
           metalness={0.9}
           roughness={0.1}
           clearcoat={1.0}
-          emissive="#00F0FF"
-          emissiveIntensity={0.5}
+          emissive="#D7E2EA"
+          emissiveIntensity={0.2}
         />
       </Torus>
 
-      {/* Outer Metallic Gold Ring 2 */}
+      {/* Outer Metallic Ring 2 */}
       <Torus ref={torus2Ref} args={[1.2, 0.05, 32, 100]}>
         <meshPhysicalMaterial
-          color="#FFD700"
+          color="#646973"
           metalness={0.95}
           roughness={0.05}
           clearcoat={1.0}
-          emissive="#FFD700"
-          emissiveIntensity={0.4}
+          emissive="#646973"
+          emissiveIntensity={0.2}
         />
       </Torus>
 
       {/* Pulsing 3D Physical Glass Core */}
       <Icosahedron ref={coreRef} args={[0.65, 0]}>
         <meshPhysicalMaterial
-          color="#00F0FF"
+          color="#D7E2EA"
           wireframe
           roughness={0.1}
           metalness={0.8}
-          emissive="#00F0FF"
-          emissiveIntensity={1.2}
+          emissive="#D7E2EA"
+          emissiveIntensity={0.5}
         />
       </Icosahedron>
     </group>
@@ -76,8 +76,8 @@ export default function BeaconMesh() {
       >
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
-        <pointLight position={[5, 5, 5]} color="#00F0FF" intensity={3} />
-        <pointLight position={[-5, -5, -5]} color="#FFD700" intensity={2} />
+        <pointLight position={[5, 5, 5]} color="#D7E2EA" intensity={3} />
+        <pointLight position={[-5, -5, -5]} color="#646973" intensity={2} />
         <BeaconRings />
       </Canvas>
     </div>

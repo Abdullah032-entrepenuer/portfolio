@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 export default function ContactButton() {
   return (
     <motion.a
-      href="mailto:abdullahawais034@gmail.com"
+      href="https://wa.me/923250995477"
+      target="_blank"
+      rel="noopener noreferrer"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className="relative px-8 py-4 rounded-full text-white font-medium text-lg tracking-wide uppercase overflow-hidden inline-block"

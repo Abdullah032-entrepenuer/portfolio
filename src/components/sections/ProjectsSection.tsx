@@ -112,21 +112,13 @@ function ProjectCard({ project, index, totalCards, progress }: { project: any, i
         </div>
       </div>
 
-      {/* Right Content / Images Layout (2 left, 1 right) */}
-      <div className="w-full md:w-2/3 h-full flex flex-col sm:flex-row gap-4 p-4 md:p-8 bg-black/20">
-        <div className="w-full sm:w-1/2 flex flex-col gap-4 h-full">
-          <div className="relative w-full h-1/2 rounded-xl md:rounded-2xl overflow-hidden">
-            <Image src={project.images[0]} alt="Project thumbnail" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+      {/* Right Content / Images Layout (Horizontal Scroll) */}
+      <div className="w-full md:w-2/3 h-full flex overflow-x-auto overflow-y-hidden gap-4 p-4 md:p-8 bg-black/20 snap-x snap-mandatory scrollbar-hide">
+        {project.images.map((img: string, idx: number) => (
+          <div key={idx} className="relative w-[85%] sm:w-[60%] shrink-0 h-full rounded-xl md:rounded-2xl overflow-hidden snap-center">
+            <Image src={img} alt={`Project image ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-700" />
           </div>
-          <div className="relative w-full h-1/2 rounded-xl md:rounded-2xl overflow-hidden">
-            <Image src={project.images[1]} alt="Project thumbnail" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-          </div>
-        </div>
-        <div className="w-full sm:w-1/2 h-full">
-          <div className="relative w-full h-full rounded-xl md:rounded-2xl overflow-hidden">
-            <Image src={project.images[2]} alt="Project main" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-          </div>
-        </div>
+        ))}
       </div>
     </motion.div>
   );
