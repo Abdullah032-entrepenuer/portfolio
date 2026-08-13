@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // 7-day browser/CDN cache for images
     minimumCacheTTL: 604800,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      }
+    ],
   },
   // Gzip/Brotli compress responses
   compress: true,
