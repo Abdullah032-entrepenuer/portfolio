@@ -20,9 +20,9 @@ const config: Config = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
+        sans: ['var(--font-kanit)', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
-        display: ['var(--font-space-grotesk)', 'sans-serif'],
+        display: ['var(--font-kanit)', 'sans-serif'],
       },
       backgroundImage: {
         'glass-gradient': 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%)',
