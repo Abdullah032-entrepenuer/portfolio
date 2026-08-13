@@ -127,8 +127,8 @@ export default function Preloader() {
             </motion.div>
           )}
 
-          {/* Sparks Effect */}
-          {!isMobileState && <Sparks />}
+          {/* Sparks Effect (Enabled on all devices for the engineering feel) */}
+          <Sparks />
 
           {/* Content Wrapper */}
           <motion.div 
