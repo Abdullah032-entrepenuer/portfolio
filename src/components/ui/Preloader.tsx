@@ -4,6 +4,45 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 
+// Engineering Sparkles Effect
+const Sparks = () => {
+  const sparks = Array.from({ length: 30 });
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
+      {sparks.map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{
+            opacity: 0,
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000) + 200,
+            scale: Math.random() * 0.5 + 0.5
+          }}
+          animate={{
+            opacity: [0, 1, 0],
+            y: `-=${Math.random() * 300 + 200}`,
+            x: `+=${(Math.random() - 0.5) * 100}`
+          }}
+          transition={{
+            duration: Math.random() * 2 + 1.5,
+            repeat: Infinity,
+            delay: Math.random() * 2,
+            ease: "easeOut"
+          }}
+          style={{
+            position: 'absolute',
+            width: '3px',
+            height: '3px',
+            backgroundColor: '#D7E2EA',
+            borderRadius: '50%',
+            boxShadow: '0 0 8px 2px rgba(215, 226, 234, 0.8)'
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function Preloader() {
   const [loading, setLoading] = useState(true);
   const counterRef = useRef<HTMLDivElement>(null);
@@ -87,6 +126,9 @@ export default function Preloader() {
               <div style={{ position: 'absolute', inset: '10%', border: '1px solid rgba(100, 105, 115, 0.15)', borderRadius: '50%', transform: 'rotateX(-60deg) rotateY(-30deg)' }} />
             </motion.div>
           )}
+
+          {/* Sparks Effect */}
+          {!isMobileState && <Sparks />}
 
           {/* Content Wrapper */}
           <motion.div 

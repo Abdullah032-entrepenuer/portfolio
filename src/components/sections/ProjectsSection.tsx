@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import LiveProjectButton from '@/components/ui/LiveProjectButton';
 
@@ -87,14 +87,34 @@ export default function ProjectsSection() {
 
 function ProjectCard({ project, index, totalCards, progress }: { project: any, index: number, totalCards: number, progress: any }) {
   // Sticky stacking logic
-  // Card sticks to top. As you scroll past it, it scales down slightly.
   const targetScale = 1 - ((totalCards - 1 - index) * 0.05);
   const rangeStart = index / totalCards;
   const rangeEnd = (index + 1) / totalCards;
   
   const scale = useTransform(progress, [rangeStart, 1], [1, targetScale]);
-  // Add a slight top offset for stacked effect
   const topOffset = `calc(15vh + ${index * 40}px)`;
+
+  // Drag to scroll logic
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   return (
     <motion.div 
@@ -113,9 +133,16 @@ function ProjectCard({ project, index, totalCards, progress }: { project: any, i
       </div>
 
       {/* Right Content / Images Layout (Horizontal Scroll) */}
-      <div className="w-full md:w-2/3 h-full flex overflow-x-auto overflow-y-hidden gap-4 p-4 md:p-8 bg-black/20 snap-x snap-mandatory custom-scrollbar">
+      <div 
+        ref={scrollRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        className={`w-full md:w-2/3 h-full flex overflow-x-auto overflow-y-hidden gap-4 p-4 md:p-8 bg-black/20 snap-x snap-mandatory custom-scrollbar ${isDown ? 'cursor-grabbing' : 'cursor-grab'}`}
+      >
         {project.images.map((img: string, idx: number) => (
-          <div key={idx} className="relative w-[85%] sm:w-[60%] shrink-0 h-full rounded-xl md:rounded-2xl overflow-hidden snap-center">
+          <div key={idx} className="relative w-[85%] sm:w-[60%] shrink-0 h-full rounded-xl md:rounded-2xl overflow-hidden snap-center pointer-events-none">
             <Image src={img} alt={`Project image ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-700" />
           </div>
         ))}
