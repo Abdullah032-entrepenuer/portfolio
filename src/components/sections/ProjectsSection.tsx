@@ -18,6 +18,7 @@ const projects = [
   {
     num: '02',
     category: 'Synapse',
+    link: 'https://synapse-server-5bb8.onrender.com/',
     images: [
       '/synapse-1.png',
       '/synapse-2.png',
@@ -45,6 +46,7 @@ const projects = [
   {
     num: '05',
     category: 'Auto Care',
+    link: 'https://www.auto-care.me',
     images: [
       '/auto-care-1.jpeg',
       '/auto-care-2.jpeg',
@@ -106,7 +108,7 @@ function ProjectCard({ project, index, totalCards, progress }: { project: any, i
           <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter text-[#D7E2EA] mb-8">{project.category}</h3>
         </div>
         <div>
-          <LiveProjectButton />
+          {project.link && <LiveProjectButton href={project.link} />}
         </div>
       </div>
 

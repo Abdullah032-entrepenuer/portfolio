@@ -4,15 +4,26 @@ import FadeIn from '@/components/ui/FadeIn';
 import Magnet from '@/components/ui/Magnet';
 import ContactButton from '@/components/ui/ContactButton';
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 export default function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
+  
+  // Start at -50% (center of the screen due to left-1/2), and move to 50% (right side)
+  const imageX = useTransform(scrollYProgress, [0, 1], ['-50%', '50%']);
+
   return (
-    <section className="relative w-full h-screen flex flex-col justify-between pt-32 pb-12 px-8 md:px-16 overflow-x-clip bg-[#0C0C0C]">
+    <section ref={containerRef} className="relative w-full h-screen flex flex-col justify-between pt-32 pb-12 px-8 md:px-16 overflow-x-clip bg-[#0C0C0C]">
       
       {/* Top / Main Heading */}
       <div className="z-10 mt-10">
         <FadeIn yOffset={30}>
-          <h1 className="hero-heading text-6xl md:text-8xl lg:text-[10rem] font-bold leading-none tracking-tighter uppercase">
+          <h1 className="hero-heading text-6xl md:text-8xl lg:text-[11rem] font-black leading-[0.9] tracking-tighter uppercase drop-shadow-2xl">
             Abdullah <br /> Awais
           </h1>
         </FadeIn>
@@ -24,10 +35,13 @@ export default function HeroSection() {
       </div>
 
       {/* Center Absolute Portrait */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
+      <motion.div 
+        style={{ x: imageX, y: '-50%' }}
+        className="absolute top-1/2 left-1/2 z-20 pointer-events-auto origin-center"
+      >
         <FadeIn delay={0.4} duration={1}>
           <Magnet strength={0.2}>
-            <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-[#111111]">
+            <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-black">
               <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10" />
               <Image 
                 src="/profile-nobg.png"
@@ -38,7 +52,7 @@ export default function HeroSection() {
             </div>
           </Magnet>
         </FadeIn>
-      </div>
+      </motion.div>
 
       {/* Bottom Row */}
       <div className="z-10 flex flex-col md:flex-row justify-between items-end gap-8 mt-auto">
