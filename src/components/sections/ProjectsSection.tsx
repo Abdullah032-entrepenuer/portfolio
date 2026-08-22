@@ -8,15 +8,6 @@ import LiveProjectButton from '@/components/ui/LiveProjectButton';
 const projects = [
   {
     num: '01',
-    category: 'CourseCraft',
-    images: [
-      '/coursecraft-1.jpeg',
-      '/coursecraft-2.jpeg',
-      '/coursecraft-3.jpeg',
-    ]
-  },
-  {
-    num: '02',
     category: 'Synapse',
     link: 'https://synapse-server-5bb8.onrender.com/',
     images: [
@@ -26,31 +17,31 @@ const projects = [
     ]
   },
   {
-    num: '03',
-    category: 'Dairy Farm',
-    images: [
-      '/dairy-farm-1.png',
-      '/dairy-farm-2.png',
-      '/dairy-farm-3.png',
-    ]
-  },
-  {
-    num: '04',
-    category: 'Car Bidding',
-    images: [
-      '/car-bidding-1.jpeg',
-      '/car-bidding-2.jpeg',
-      '/car-bidding-3.jpeg',
-    ]
-  },
-  {
-    num: '05',
+    num: '02',
     category: 'Auto Care',
     link: 'https://www.auto-care.me',
     images: [
       '/auto-care-1.jpeg',
       '/auto-care-2.jpeg',
       '/auto-care-3.jpeg',
+    ]
+  },
+  {
+    num: '03',
+    category: 'Research: WebGPU Vector Compute',
+    link: '#', // TODO: Replace with your actual research link
+    images: [
+      '/coursecraft-1.jpeg', 
+      '/coursecraft-2.jpeg',
+    ]
+  },
+  {
+    num: '04',
+    category: 'Research: Docs-as-Code Scaling',
+    link: '#', // TODO: Replace with your actual research link
+    images: [
+      '/car-bidding-1.jpeg', 
+      '/dairy-farm-1.png',
     ]
   }
 ];
@@ -66,7 +57,7 @@ export default function ProjectsSection() {
     <section ref={containerRef} id="projects" className="w-full bg-[#0C0C0C] rounded-t-[4rem] md:rounded-t-[6rem] -mt-20 relative z-30 pt-32 pb-32">
       <div className="max-w-7xl mx-auto px-8 md:px-16 mb-24">
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-[#D7E2EA]">
-          Project
+          Projects & Research
         </h2>
       </div>
 
