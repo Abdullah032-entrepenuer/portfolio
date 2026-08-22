@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
-export default function LiveProjectButton({ href }: { href: string }) {
+export default function LiveProjectButton({ href, label = 'Live Project' }: { href: string, label?: string }) {
   return (
     <motion.a
       href={href}
@@ -13,7 +13,7 @@ export default function LiveProjectButton({ href }: { href: string }) {
       whileTap={{ scale: 0.95 }}
       className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#D7E2EA] text-[#D7E2EA] uppercase text-sm tracking-wider font-medium transition-colors duration-300"
     >
-      Live Project
+      {label}
       <ArrowUpRight className="w-4 h-4" />
     </motion.a>
   );
