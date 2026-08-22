@@ -43,6 +43,15 @@ const projects = [
       '/car-bidding-1.jpeg', 
       '/dairy-farm-1.png',
     ]
+  },
+  {
+    num: '05',
+    category: 'Research: 3D Spatial Computing',
+    link: '#', // TODO: Replace with your actual research link
+    images: [
+      '/synapse-1.png', 
+      '/synapse-3.png',
+    ]
   }
 ];
 
