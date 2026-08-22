@@ -181,7 +181,7 @@ export default function Preloader() {
               }}
             >
               <span style={{ width: '6px', height: '6px', backgroundColor: '#D7E2EA', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 10px rgba(215, 226, 234, 0.5)' }} />
-              Rendering 3D Portfolio Space
+              Compiling Documentation Build
             </motion.div>
             
             {/* Elite Segmented Progress Bar */}
@@ -211,7 +211,7 @@ export default function Preloader() {
                letterSpacing: '0.15em',
                color: 'rgba(215, 226, 234, 0.4)'
             }}>
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>AWAIS // 3D CREATOR</motion.span>
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>AWAIS // TECHNICAL WRITER</motion.span>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} style={{ display: 'flex', gap: '4px' }}>
                 <span ref={counterRef} style={{ color: '#D7E2EA' }}>000</span>
                 <span>%</span>

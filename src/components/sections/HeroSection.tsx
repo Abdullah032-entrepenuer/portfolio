@@ -29,7 +29,7 @@ export default function HeroSection() {
         </FadeIn>
         <FadeIn yOffset={30} delay={0.2}>
           <p className="text-[#D7E2EA] text-xl md:text-3xl font-light mt-4 tracking-wide uppercase">
-            Software Developer <br /> & Architect
+            Technical Writer <br /> & Software Architect
           </p>
         </FadeIn>
       </div>
@@ -58,7 +58,7 @@ export default function HeroSection() {
       <div className="z-10 flex flex-col md:flex-row justify-between items-end gap-8 mt-auto">
         <FadeIn delay={0.6} yOffset={20} className="max-w-md">
           <p className="text-[#D7E2EA]/70 text-sm md:text-base leading-relaxed">
-            I craft immersive, high-performance digital experiences blending 3D engineering with modern web architecture. Elevating ideas into interactive realities.
+            I craft pristine, developer-first documentation and system architectures. Bridging the gap between complex engineering logic and crystal-clear knowledge.
           </p>
         </FadeIn>
         <FadeIn delay={0.8} yOffset={20}>

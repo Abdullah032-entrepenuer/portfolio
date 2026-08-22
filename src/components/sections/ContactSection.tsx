@@ -23,8 +23,8 @@ const budgetOptions = [
 ];
 
 const projectTypes = [
-  'Full-Stack Web App',
-  '3D / WebGL Experience',
+  'API Reference / Documentation',
+  'System Architecture Design',
   'E-Commerce Platform',
   'Technical Documentation',
   'Consultation',

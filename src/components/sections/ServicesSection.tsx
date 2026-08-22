@@ -3,10 +3,10 @@
 import FadeIn from '@/components/ui/FadeIn';
 
 const services = [
-  { num: '01', title: 'Full Stack' },
-  { num: '02', title: 'Software Documentation' },
-  { num: '03', title: '3D Web' },
-  { num: '04', title: 'Figma to React' },
+  { num: '01', title: 'API Documentation' },
+  { num: '02', title: 'System Architecture' },
+  { num: '03', title: 'Docs-as-Code' },
+  { num: '04', title: 'Full Stack Dev' },
 ];
 
 export default function ServicesSection() {

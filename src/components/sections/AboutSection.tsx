@@ -22,13 +22,13 @@ export default function AboutSection() {
             About Me
           </h2>
           <h3 className="hero-heading text-4xl md:text-6xl font-black uppercase mb-16 tracking-tighter">
-            Digital Architect
+            Docs Engineer
           </h3>
         </FadeIn>
         
         <div className="text-lg md:text-2xl lg:text-3xl font-light leading-relaxed tracking-wide mb-16 text-center w-full text-white/90">
           <AnimatedText 
-            text="I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences. With deep expertise in React, Next.js, and Three.js, I engineer interactive data visualizations and digital luxury experiences that captivate and convert. Every system I design is built to scale. Every interface I craft is engineered for performance. This is the intersection of logic and aesthetic." 
+            text="I translate complex backend architectures and scalable systems into precise, maintainable documentation. As a hybrid Software Developer and Technical Writer, I build Docs-as-Code pipelines, craft API references, and design system blueprints that developers actually want to read. I don't just write about code—I read it, refactor it, and structure it so your engineering team can scale faster and build better." 
           />
         </div>
 
