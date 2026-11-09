@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Torus, Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
@@ -10,56 +10,53 @@ function BeaconRings() {
   const torus2Ref = useRef<THREE.Mesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (torus1Ref.current) {
-      torus1Ref.current.rotation.x += delta * 0.5;
-      torus1Ref.current.rotation.y += delta * 0.8;
+      torus1Ref.current.rotation.x += delta * 0.45;
+      torus1Ref.current.rotation.y += delta * 0.7;
     }
     if (torus2Ref.current) {
-      torus2Ref.current.rotation.y -= delta * 0.6;
-      torus2Ref.current.rotation.z += delta * 0.4;
+      torus2Ref.current.rotation.y -= delta * 0.55;
+      torus2Ref.current.rotation.z += delta * 0.35;
     }
     if (coreRef.current) {
-      coreRef.current.rotation.x += delta * 0.3;
-      coreRef.current.rotation.y += delta * 0.3;
+      coreRef.current.rotation.x += delta * 0.25;
+      coreRef.current.rotation.y += delta * 0.25;
     }
   });
 
   return (
-    <group scale={1.3}>
-      {/* Outer Metallic Chrome Ring 1 */}
-      <Torus ref={torus1Ref} args={[1.5, 0.04, 32, 100]}>
+    <group scale={1.25}>
+      <Torus ref={torus1Ref} args={[1.45, 0.035, 24, 80]}>
         <meshPhysicalMaterial
-          color="#D7E2EA"
+          color="#10B981"
           metalness={0.9}
-          roughness={0.1}
+          roughness={0.12}
           clearcoat={1.0}
-          emissive="#D7E2EA"
-          emissiveIntensity={0.2}
+          emissive="#10B981"
+          emissiveIntensity={0.25}
         />
       </Torus>
 
-      {/* Outer Metallic Ring 2 */}
-      <Torus ref={torus2Ref} args={[1.2, 0.05, 32, 100]}>
+      <Torus ref={torus2Ref} args={[1.15, 0.04, 24, 80]}>
         <meshPhysicalMaterial
-          color="#646973"
+          color="#6366F1"
           metalness={0.95}
-          roughness={0.05}
+          roughness={0.08}
           clearcoat={1.0}
-          emissive="#646973"
-          emissiveIntensity={0.2}
+          emissive="#6366F1"
+          emissiveIntensity={0.25}
         />
       </Torus>
 
-      {/* Pulsing 3D Physical Glass Core */}
-      <Icosahedron ref={coreRef} args={[0.65, 0]}>
+      <Icosahedron ref={coreRef} args={[0.6, 0]}>
         <meshPhysicalMaterial
-          color="#D7E2EA"
+          color="#10B981"
           wireframe
           roughness={0.1}
           metalness={0.8}
-          emissive="#D7E2EA"
-          emissiveIntensity={0.5}
+          emissive="#10B981"
+          emissiveIntensity={0.45}
         />
       </Icosahedron>
     </group>
@@ -67,19 +64,49 @@ function BeaconRings() {
 }
 
 export default function BeaconMesh() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="w-full h-full min-h-[250px] relative flex items-center justify-center">
-      <Canvas
-        camera={{ position: [0, 0, 4.5], fov: 50 }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Interactive 3D Spatial Architecture Visualization"
+      className="w-full h-full min-h-[220px] aspect-[16/9] relative flex items-center justify-center"
+    >
+      <Suspense
+        fallback={
+          <div className="w-24 h-24 rounded-full border border-dashed border-[#10B981]/30 animate-spin" />
+        }
       >
-        <ambientLight intensity={1} />
-        <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
-        <pointLight position={[5, 5, 5]} color="#D7E2EA" intensity={3} />
-        <pointLight position={[-5, -5, -5]} color="#646973" intensity={2} />
-        <BeaconRings />
-      </Canvas>
+        <Canvas
+          frameloop={isInView ? 'always' : 'never'}
+          camera={{ position: [0, 0, 4.5], fov: 50 }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        >
+          <ambientLight intensity={1} />
+          <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
+          <pointLight position={[5, 5, 5]} color="#10B981" intensity={3} />
+          <pointLight position={[-5, -5, -5]} color="#6366F1" intensity={2} />
+          <BeaconRings />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }

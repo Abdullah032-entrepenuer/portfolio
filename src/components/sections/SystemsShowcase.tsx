@@ -2,41 +2,146 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { FiExternalLink, FiCpu, FiLayers } from 'react-icons/fi';
 import SpotlightCard from '@/components/ui/SpotlightCard';
-import BorderBeam from '@/components/ui/BorderBeam';
 import ArchitectureDrawer, { ArchitectureItem } from '@/components/ui/ArchitectureDrawer';
+import FadeIn from '@/components/ui/FadeIn';
 
-type Category = 'all' | 'research' | 'ai' | 'products';
+type FilterId = 'all' | 'production' | 'spatial' | 'research';
 
-interface ShowcaseProject {
+interface SystemItem {
   id: string;
-  category: Category;
-  categoryLabel: string;
+  num: string;
   title: string;
-  tagline: string;
-  description: string;
+  categoryBadge: string;
+  filterGroups: FilterId[];
+  telemetryBadges: string[];
+  summary: string;
+  stack: string[];
   image?: string;
-  metrics: string[];
-  gradient: string;
-  link: string | null;
-  actionText: string;
-  doiBadge?: string;
-  featured?: boolean;
+  imageAlt?: string;
+  primaryCta: {
+    label: string;
+    href: string;
+  };
+  secondaryCtaLabel: string;
+  accent: 'emerald' | 'violet';
 }
 
 const architectureDetails: Record<string, ArchitectureItem> = {
+  synapse: {
+    id: 'synapse',
+    title: '01 // SYNAPSE — Autonomous Multi-Agent 3D Spatial Knowledge Engine',
+    subtitle:
+      'Groq LPU-accelerated multi-agent RAG synthesizing unstructured corpora into 60 FPS React Three Fiber force-directed 3D graphs.',
+    link: 'https://synapse-server-5bb8.onrender.com/',
+    linkLabel: 'Launch Live Engine (synapse)',
+    specifications: [
+      { label: 'LLM Inference Engine', value: 'Sub-Second Groq LPU' },
+      { label: 'Spatial Scene Target', value: '60 FPS R3F Force Graph' },
+      { label: 'Retrieval Pipeline', value: 'Autonomous Multi-Agent RAG' },
+      { label: 'State Synchronization', value: 'Zustand + WebGL Buffers' },
+    ],
+    architectureDiagram: `[Unstructured Corpus] ──► [Multi-Agent Chunker & Entity Extractor]
+                                   │
+                    ┌──────────────┴──────────────┐
+                    ▼                             ▼
+        [Groq LPU Semantic Graph]      [Hybrid Vector Embeddings]
+                    └──────────────┬──────────────┘
+                                   ▼
+           [R3F InstancedMesh 3D Force-Directed Layout @ 60 FPS]`,
+    codeSnippet: `// Synapse Multi-Agent Graph Synthesis & 3D Force-Directed R3F Buffer Update
+export async function synthesizeSpatialKnowledgeGraph(corpus: string) {
+  const [entities, relations] = await Promise.all([
+    groqAgent.extractEntities(corpus, { model: 'llama-3.3-70b-versatile' }),
+    groqAgent.extractSemanticEdges(corpus, { temperature: 0.1 }),
+  ]);
+
+  return computeForceDirectedLayout3D(entities, relations, {
+    iterations: 120,
+    repulsionStrength: -180,
+    springLength: 2.4,
+  });
+}`,
+  },
+  autocare: {
+    id: 'autocare',
+    title: '02 // AUTOCARE (auto-care.me) — AI Automotive Marketplace & 3D Configurator',
+    subtitle:
+      'End-to-end automotive marketplace with real-time service bidding, AI maintenance diagnostics, and an interactive R3F 3D PBR customization studio.',
+    link: 'https://www.auto-care.me',
+    linkLabel: 'Visit Live Platform (auto-care.me)',
+    specifications: [
+      { label: '3D Configurator', value: 'Real-Time 3D PBR Studio' },
+      { label: 'Diagnostics Engine', value: 'AI Maintenance Diagnostics' },
+      { label: 'Marketplace Core', value: 'Live Bidding & Scheduling' },
+      { label: 'Production Stack', value: 'Next.js · Node · MongoDB · R3F' },
+    ],
+    architectureDiagram: `[Vehicle Telemetry / User Input] ──► [AI Maintenance Diagnostics Engine]
+                                              │
+       ┌──────────────────────────────────────┴───────────────────────────┐
+       ▼                                                                  ▼
+[R3F 3D PBR Paint & Component Studio]                     [Real-Time Service Bidding Engine]`,
+    codeSnippet: `// AutoCare Real-Time PBR Metallic-Roughness Material & AI Diagnostic Resolver
+export function applyVehiclePBRPreset(mesh: THREE.Mesh, finish: PaintPreset) {
+  const mat = mesh.material as THREE.MeshPhysicalMaterial;
+  mat.color.set(finish.hex);
+  mat.metalness = finish.metalness;       // 0.88 Metallic Flake
+  mat.roughness = finish.roughness;       // 0.12 Micro-surface
+  mat.clearcoat = 1.0;
+  mat.clearcoatRoughness = 0.04;
+  mat.needsUpdate = true;
+}`,
+  },
+  'dhaba-3d': {
+    id: 'dhaba-3d',
+    title: '03 // DHABA-3D (dhaba-3d.com) — Interactive 3D Spatial E-Commerce Platform',
+    subtitle:
+      'Spatial 3D e-commerce storefront integrating a headless MedusaJS backend with interactive WebGL inspection and GSAP camera choreography.',
+    link: 'https://dhaba-3d.com',
+    linkLabel: 'Visit Live Storefront (dhaba-3d.com)',
+    specifications: [
+      { label: 'Commerce Engine', value: 'Headless MedusaJS Engine' },
+      { label: '3D Product View', value: 'Interactive WebGL Inspection' },
+      { label: 'Rendering Strategy', value: 'Next.js App Router SSR/ISR' },
+      { label: 'Camera Physics', value: 'GSAP Scroll & Orbit Choreography' },
+    ],
+    architectureDiagram: `[Next.js App Router SSR] ◄──► [Headless MedusaJS Commerce API]
+           │                                 │
+           ▼                                 ▼
+[R3F WebGL Product Stage + GSAP]    [Low-Latency Cart & Checkout Sync]`,
+    codeSnippet: `// Dhaba-3D Camera Choreography & Headless MedusaJS Variant Synchronization
+export function transitionCameraToProductStage(
+  camera: THREE.PerspectiveCamera,
+  stageTarget: THREE.Vector3
+) {
+  gsap.to(camera.position, {
+    x: stageTarget.x + 1.8,
+    y: stageTarget.y + 0.9,
+    z: stageTarget.z + 3.2,
+    duration: 1.1,
+    ease: 'power3.inOut',
+  });
+}`,
+  },
   'edge-rag': {
     id: 'edge-rag',
-    title: 'Zero-Latency Edge RAG Engine',
-    subtitle: 'Local-first retrieval-augmented generation running entirely on-device via WebGPU',
-    link: 'https://doi.org/10.5281/zenodo.21526081',
+    title: '04 // RESEARCH — Zero-Latency Edge RAG via WebGPU Compute Shaders (PeerJ CS)',
+    subtitle:
+      'Decentralized client-side vector search via WebGPU compute shaders and OffscreenCanvas spatial thread isolation.',
+    link: 'https://zenodo.org/records/21527199',
+    linkLabel: 'Read PeerJ CS / Zenodo Preprint',
     specifications: [
-      { label: 'Vector Index Size', value: '100,000 Embeddings' },
-      { label: 'Time To First Token', value: '0 ms (Local WGSL)' },
-      { label: 'Compute Backend', value: 'WebGPU (F16 Matrix Multiply)' },
-      { label: 'Publication ID', value: 'DOI: 10.5281/zenodo.21526081' },
+      { label: 'VRAM Vector Capacity', value: '100k+ Quantized Vectors' },
+      { label: 'Cloud Network Overhead', value: '0ms (100% On-Device GPU)' },
+      { label: 'Render Isolation', value: 'OffscreenCanvas Worker Thread' },
+      { label: 'Compute Kernel', value: 'WGSL @workgroup_size(64)' },
     ],
-    codeSnippet: `// WebGPU WGSL Cosine Similarity Kernel (On-Device Vector Search)
+    architectureDiagram: `[Main UI Thread: Zero Blocking]
+       │ (SharedArrayBuffer / Atomics)
+       ├──► [Web Worker 1: WebGPU WGSL Compute Shader (100k+ Cosine Sim in VRAM)]
+       └──► [Web Worker 2: OffscreenCanvas Three.js 60 FPS Spatial Graph]`,
+    codeSnippet: `// WebGPU WGSL Quantized Cosine Similarity Kernel (100k+ Vectors in Browser VRAM)
 @group(0) @binding(0) var<storage, read> queryVector: array<f32>;
 @group(0) @binding(1) var<storage, read> dbVectors: array<f32>;
 @group(0) @binding(2) var<storage, read_write> scores: array<f32>;
@@ -44,424 +149,415 @@ const architectureDetails: Record<string, ArchitectureItem> = {
 @compute @workgroup_size(64)
 fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
   let index = global_id.x;
-  var dotProduct: f32 = 0.0;
-  var queryNorm: f32 = 0.0;
-  var vectorNorm: f32 = 0.0;
-
+  var dot: f32 = 0.0;
+  var qNorm: f32 = 0.0;
+  var vNorm: f32 = 0.0;
   for (var i: u32 = 0u; i < 384u; i = i + 1u) {
     let q = queryVector[i];
     let v = dbVectors[index * 384u + i];
-    dotProduct += q * v;
-    queryNorm += q * q;
-    vectorNorm += v * v;
+    dot += q * v;
+    qNorm += q * q;
+    vNorm += v * v;
   }
-  scores[index] = dotProduct / (sqrt(queryNorm) * sqrt(vectorNorm));
+  scores[index] = dot / (sqrt(qNorm) * sqrt(vNorm));
 }`,
   },
-  'spatial-vis': {
-    id: 'spatial-vis',
-    title: 'OffscreenCanvas Spatial Visualizer',
-    subtitle: 'Multi-threaded 3D rendering architecture bypassing main UI thread',
-    link: 'https://zenodo.org/records/21527199',
+  'webgl-sync': {
+    id: 'webgl-sync',
+    title: '05 // RESEARCH — Asynchronous State Synchronization in WebGL Spatial Graphs',
+    subtitle:
+      'Synchronizing high-frequency streaming generative AI token outputs with complex WebGL/Three.js scene graphs without React reconciliation bottlenecks.',
+    link: 'https://zenodo.org/records/21526081',
+    linkLabel: 'Read Preprint & Benchmark Telemetry',
     specifications: [
-      { label: 'Frame Target', value: '60 FPS Locked' },
-      { label: 'Frame Variance', value: '0.04 ms²' },
-      { label: 'Thread Sync', value: 'SharedArrayBuffer + Atomics' },
-      { label: 'Zenodo Record', value: 'ID: 21527199' },
+      { label: 'State Mutation Latency', value: 'Sub-Millisecond Sync' },
+      { label: 'Frame Stability', value: 'Zero Frame Drops (60 FPS)' },
+      { label: 'Ingestion Stream', value: 'Streaming LLM Token SSE/WS' },
+      { label: 'Memory Architecture', value: 'Double-Buffered Float32Arrays' },
     ],
-    codeSnippet: `// Web Worker Thread - OffscreenCanvas Rendering Loop
-import * as THREE from 'three';
-
-self.onmessage = (evt) => {
-  if (evt.data.type === 'init') {
-    const canvas = evt.data.canvas;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, canvas.width / canvas.height, 0.1, 1000);
-    
-    function render(time) {
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-  }
-};`,
-  },
-  'synapse': {
-    id: 'synapse',
-    title: 'Synapse AI Knowledge Mapping Platform',
-    subtitle: '3D spatial graph generation & dynamic 2D flowchart engine',
-    link: 'https://synapse-server-5bb8.onrender.com/',
-    specifications: [
-      { label: 'Frontend Engine', value: 'React Three Fiber / R3F' },
-      { label: 'Graph Layout', value: '3D Force-Directed Graph' },
-      { label: 'State Sync', value: 'Zustand + WebSockets' },
-      { label: 'Deployment', value: 'Render Production Node' },
-    ],
-    codeSnippet: `// Synapse 3D Force-Directed Node Connection Compute
-export function updateGraphPhysics(nodes: Node[], links: Link[]) {
-  links.forEach(link => {
-    const source = nodes[link.source];
-    const target = nodes[link.target];
-    const dx = target.x - source.x;
-    const dy = target.y - source.y;
-    const dz = target.z - source.z;
-    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
-    const force = (dist - link.distance) * 0.05;
-    
-    source.vx += (dx / dist) * force;
-    target.vx -= (dx / dist) * force;
-  });
+    architectureDiagram: `[Streaming LLM Token SSE] ──► [Lock-Free Ring Buffer Parser]
+                                       │
+                                       ▼ (Bypasses React VDOM Reconciliation)
+                        [Direct Float32BufferAttribute GPU Upload]
+                                       │
+                                       ▼
+                        [WebGL Instanced Spatial Scene Graph @ 60 FPS]`,
+    codeSnippet: `// Lock-Free Streaming LLM Graph Mutation (Bypassing React VDOM Reconciliation)
+export function commitStreamDeltaToInstancedMesh(
+  mesh: THREE.InstancedMesh,
+  nodeIndex: number,
+  x: number,
+  y: number,
+  z: number,
+  dummy: THREE.Object3D
+) {
+  dummy.position.set(x, y, z);
+  dummy.updateMatrix();
+  mesh.setMatrixAt(nodeIndex, dummy.matrix);
+  mesh.instanceMatrix.needsUpdate = true;
 }`,
-  },
-  'coursecraft': {
-    id: 'coursecraft',
-    title: 'CourseCraft E-Learning Platform',
-    subtitle: 'Full-Stack EdTech with automated certificate generation',
-    link: '#',
-    specifications: [
-      { label: 'Payment Gateway', value: 'Stripe API' },
-      { label: 'Certificates', value: 'Automated PDF Generation' },
-      { label: 'Backend Stack', value: 'PHP / Node.js / MySQL' },
-      { label: 'Security', value: 'JWT + Role-Based ACL' },
-    ],
-    codeSnippet: `// CourseCraft Automated Certificate Generation System
-export async function generateCompletionCertificate(userId: string, courseId: string) {
-  const user = await db.user.findUnique({ where: { id: userId } });
-  const course = await db.course.findUnique({ where: { id: courseId } });
-  
-  const certId = \`CERT-\${Date.now()}-\${Math.random().toString(36).substring(7).toUpperCase()}\`;
-  const pdfBuffer = await renderCertificatePDF({ name: user.name, course: course.title, id: certId });
-  
-  return { certId, downloadUrl: await uploadToStorage(pdfBuffer) };
-}`,
-  },
-  'auto-care': {
-    id: 'auto-care',
-    title: 'Auto Care Production E-Commerce',
-    subtitle: 'High-throughput auto parts store with oil recommendation engine',
-    link: 'https://www.auto-care.me',
-    specifications: [
-      { label: 'Framework', value: 'React + Node.js' },
-      { label: 'Ordering', value: 'Instant WhatsApp Direct Link' },
-      { label: 'Recommendation', value: 'Vehicle Oil-Grade Engine' },
-      { label: 'Status', value: 'Live Production' },
-    ],
-    codeSnippet: `// Smart Vehicle Oil-Grade Matching Algorithm
-export function recommendOilGrade(make: string, model: string, year: number, mileage: number) {
-  const baseSpec = vehicleDatabase[make]?.[model]?.[year];
-  if (mileage > 150000) {
-    return { grade: '10W-40 High Mileage', synth: 'Full Synthetic' };
-  }
-  return { grade: baseSpec?.recommendedOil || '5W-30', synth: 'Synthetic Blend' };
-}`,
-  },
-  'dairy-farm': {
-    id: 'dairy-farm',
-    title: 'Dairy Farm Management Dashboard',
-    subtitle: 'AgriTech livestock tracking, milk production analytics & revenue system',
-    link: '#',
-    specifications: [
-      { label: 'Real-Time Charts', value: 'Recharts / Chart.js' },
-      { label: 'Livestock DB', value: 'MongoDB Aggregations' },
-      { label: 'Analytics', value: 'Daily Production & Yields' },
-      { label: 'Access Control', value: 'Role-Based Manager Auth' },
-    ],
-    codeSnippet: `// Livestock Milk Production Aggregation Pipeline
-export async function getDailyProductionSummary(farmId: string, startDate: Date, endDate: Date) {
-  return await MilkRecord.aggregate([
-    { $match: { farmId, date: { $gte: startDate, $lte: endDate } } },
-    { $group: { _id: "$date", totalLiters: { $sum: "$amount" }, avgQuality: { $avg: "$fatPercentage" } } },
-    { $sort: { _id: 1 } }
-  ]);
-}`,
-  },
-  'car-bidding': {
-    id: 'car-bidding',
-    title: 'Car Bidding Auction Marketplace',
-    subtitle: 'Real-time vehicle auctions with live WebSocket bids',
-    link: '#',
-    specifications: [
-      { label: 'Real-Time Sync', value: 'WebSockets / Socket.io' },
-      { label: 'Auction Engine', value: 'High-Concurrency Lock DB' },
-      { label: 'UI Framework', value: 'Next.js 14 + Tailwind' },
-      { label: 'Verification', value: 'Vehicle Ownership Proof' },
-    ],
-    codeSnippet: `// Real-Time High-Concurrency Bid Event Dispatcher
-socket.on('submit_bid', async ({ auctionId, userId, amount }) => {
-  const currentHighest = await getHighestBid(auctionId);
-  if (amount <= currentHighest.amount) {
-    return socket.emit('bid_rejected', { reason: 'Bid must be higher than current peak' });
-  }
-  const newBid = await recordBid({ auctionId, userId, amount });
-  io.to(auctionId).emit('bid_updated', newBid);
-});`,
   },
 };
 
+const systemsList: SystemItem[] = [
+  {
+    id: 'synapse',
+    num: '01',
+    title: '01 // SYNAPSE — Autonomous Multi-Agent 3D Spatial Knowledge Engine',
+    categoryBadge: 'Production AI & Spatial Web',
+    filterGroups: ['all', 'production', 'spatial'],
+    telemetryBadges: [
+      'Sub-Second Groq LPU Inference',
+      '60 FPS R3F Force Graph',
+      'Autonomous Multi-Agent RAG',
+    ],
+    summary:
+      'Architected an autonomous multi-agent knowledge synthesis platform that ingests unstructured corpora and synthesizes them into interactive, real-time 3D force-directed knowledge graphs. Combines Groq hardware acceleration with custom hybrid RAG pipelines and spatial clustering.',
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'React Three Fiber',
+      'Three.js',
+      'Groq API',
+      'Multi-Agent RAG',
+      'Tailwind CSS',
+    ],
+    image: '/synapse-1.png',
+    imageAlt:
+      'Synapse Autonomous Multi-Agent 3D Spatial Knowledge Engine rendering a 60 FPS force-directed graph in React Three Fiber',
+    primaryCta: {
+      label: 'Launch Live Engine',
+      href: 'https://synapse-server-5bb8.onrender.com/',
+    },
+    secondaryCtaLabel: 'Inspect System Architecture',
+    accent: 'emerald',
+  },
+  {
+    id: 'autocare',
+    num: '02',
+    title: '02 // AUTOCARE (auto-care.me) — AI Automotive Marketplace & 3D Configurator',
+    categoryBadge: 'Production Full-Stack & 3D Web',
+    filterGroups: ['all', 'production', 'spatial'],
+    telemetryBadges: [
+      'Real-Time 3D PBR Studio',
+      'AI Maintenance Diagnostics',
+      'Live Bidding Engine',
+    ],
+    summary:
+      'Engineered an end-to-end automotive management marketplace featuring real-time service bidding workflows, automated scheduling, AI-driven vehicle maintenance diagnostics, and an interactive React Three Fiber 3D studio for real-time paint and component customization.',
+    stack: [
+      'Next.js',
+      'Node.js',
+      'Express',
+      'MongoDB',
+      'React Three Fiber',
+      'WebGL',
+      'AI Diagnostics',
+    ],
+    image: '/auto-care-1.jpeg',
+    imageAlt:
+      'AutoCare AI Automotive Marketplace and real-time 3D PBR vehicle studio on auto-care.me',
+    primaryCta: {
+      label: 'Visit auto-care.me',
+      href: 'https://www.auto-care.me',
+    },
+    secondaryCtaLabel: 'Inspect System Architecture',
+    accent: 'emerald',
+  },
+  {
+    id: 'dhaba-3d',
+    num: '03',
+    title: '03 // DHABA-3D (dhaba-3d.com) — Interactive 3D Spatial E-Commerce Platform',
+    categoryBadge: 'Production Full-Stack & 3D Web',
+    filterGroups: ['all', 'production', 'spatial'],
+    telemetryBadges: [
+      'Headless MedusaJS Engine',
+      'Interactive WebGL Inspection',
+      'SSR Optimized',
+    ],
+    summary:
+      'Built and launched a spatial 3D e-commerce storefront integrating a headless MedusaJS commerce backend with interactive 3D product inspection, camera choreography, and low-latency cart state synchronization.',
+    stack: ['Next.js', 'TypeScript', 'React Three Fiber', 'MedusaJS', 'Tailwind CSS', 'GSAP'],
+    image: '/dhaba3d.png',
+    imageAlt:
+      'Dhaba-3D Interactive 3D Spatial E-Commerce storefront integrating headless MedusaJS and WebGL inspection',
+    primaryCta: {
+      label: 'Visit dhaba-3d.com',
+      href: 'https://dhaba-3d.com',
+    },
+    secondaryCtaLabel: 'Inspect System Architecture',
+    accent: 'emerald',
+  },
+  {
+    id: 'edge-rag',
+    num: '04',
+    title: '04 // RESEARCH — Zero-Latency Edge RAG via WebGPU Compute Shaders (PeerJ CS)',
+    categoryBadge: 'Published Research & Edge AI',
+    filterGroups: ['all', 'research'],
+    telemetryBadges: [
+      '100k+ Vectors in VRAM',
+      '0ms Cloud Network Overhead',
+      'OffscreenCanvas Thread Isolation',
+    ],
+    summary:
+      'Authored manuscript ("Zero-latency edge RAG: decentralized client-side vector search via WebGPU compute shaders and OffscreenCanvas spatial thread isolation"). Eliminates cloud vector DB latency and server costs by executing quantized cosine similarity searches directly inside browser GPU compute shaders while isolating 3D rendering on worker threads.',
+    stack: [
+      'WebGPU (WGSL)',
+      'WebAssembly',
+      'OffscreenCanvas',
+      'Client-Side RAG',
+      'Vector Quantization',
+    ],
+    primaryCta: {
+      label: 'Read Preprint',
+      href: 'https://zenodo.org/records/21527199',
+    },
+    secondaryCtaLabel: 'View Benchmark Telemetry',
+    accent: 'violet',
+  },
+  {
+    id: 'webgl-sync',
+    num: '05',
+    title: '05 // RESEARCH — Asynchronous State Synchronization in WebGL Spatial Graphs',
+    categoryBadge: 'Published Research & Spatial Computing',
+    filterGroups: ['all', 'spatial', 'research'],
+    telemetryBadges: [
+      'Sub-Millisecond State Sync',
+      'Zero Frame Drops',
+      'Streaming LLM Graph Mutation',
+    ],
+    summary:
+      'Architectural benchmarking and reference implementation for synchronizing high-frequency streaming generative AI token outputs with complex WebGL/Three.js scene graphs without triggering React reconciliation bottlenecks.',
+    stack: ['WebGL', 'Three.js', 'Concurrent State Buffers', 'WebSockets / SSE', 'TypeScript'],
+    primaryCta: {
+      label: 'Read Preprint',
+      href: 'https://zenodo.org/records/21526081',
+    },
+    secondaryCtaLabel: 'View Architecture Diagram',
+    accent: 'violet',
+  },
+];
+
+const filterTabs: { id: FilterId; label: string }[] = [
+  { id: 'all', label: 'All Systems [5]' },
+  { id: 'production', label: 'Production AI & Full-Stack [3]' },
+  { id: 'spatial', label: 'Spatial 3D & WebGL [4]' },
+  { id: 'research', label: 'Published Research [2]' },
+];
+
 export default function SystemsShowcase() {
-  const [activeCategory, setActiveCategory] = useState<Category>('all');
-  const [selectedDrawerItem, setSelectedDrawerItem] = useState<ArchitectureItem | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterId>('all');
+  const [drawerItem, setDrawerItem] = useState<ArchitectureItem | null>(null);
 
-  const projects: ShowcaseProject[] = [
-    {
-      id: 'edge-rag',
-      category: 'research',
-      categoryLabel: 'Flagship Research Publication',
-      title: 'Zero-Latency Edge RAG Engine',
-      tagline: 'On-Device WebGPU Vector Search Engine',
-      description: 'Local-first retrieval-augmented generation running entirely on-device via WebGPU. Published paper on bypassing cloud round-trips for instant local vector search.',
-      metrics: ['0 ms TBT', '100k Vectors', 'WGSL Shaders', 'WebGPU Core'],
-      gradient: 'from-electric-cyan/30 via-blue-500/10 to-transparent',
-      link: 'https://doi.org/10.5281/zenodo.21526081',
-      actionText: 'View DOI Publication',
-      doiBadge: 'DOI: 10.5281/zenodo.21526081',
-      featured: true,
-    },
-    {
-      id: 'synapse',
-      category: 'ai',
-      categoryLabel: 'AI & 3D WebGL Platform',
-      title: 'Synapse AI',
-      tagline: 'Think in Three Dimensions.',
-      description: 'Interactive AI-powered 3D knowledge mapping and concept graph visualization platform explored in custom 3D web-space or 2D flowcharts.',
-      image: '/synapse-1.png',
-      metrics: ['React Three Fiber', 'Knowledge Graph', 'AI Core'],
-      gradient: 'from-purple-500/30 via-cyan-500/10 to-transparent',
-      link: 'https://synapse-server-5bb8.onrender.com/',
-      actionText: 'Launch Live Synapse Platform',
-      featured: true,
-    },
-    {
-      id: 'spatial-vis',
-      category: 'research',
-      categoryLabel: 'Research Publication',
-      title: 'OffscreenCanvas Spatial Visualizer',
-      tagline: 'Multi-Threaded 3D WebGL Pipeline',
-      description: 'Multi-threaded 3D rendering architecture bypassing the main thread for locked 60 FPS under heavy composite spatial loads.',
-      metrics: ['60 FPS Locked', '0.04 ms² Var', 'Web Workers'],
-      gradient: 'from-electric-gold/20 to-transparent',
-      link: 'https://zenodo.org/records/21527199',
-      actionText: 'View DOI Record',
-      doiBadge: 'Zenodo ID: 21527199',
-      featured: false,
-    },
-    {
-      id: 'auto-care',
-      category: 'products',
-      categoryLabel: 'E-Commerce & Logistics',
-      title: 'Auto Care Platform',
-      tagline: 'Your one-stop shop for quality auto parts.',
-      description: 'Live e-commerce platform connecting users to auto parts vendors with smart oil-grade recommendations and WhatsApp checkout.',
-      image: '/auto-care-1.jpeg',
-      metrics: ['React', 'E-Commerce', 'Logistics', 'WhatsApp'],
-      gradient: 'from-green-500/20 to-transparent',
-      link: 'https://www.auto-care.me',
-      actionText: 'Visit Live Auto Care Store',
-      featured: false,
-    },
-    {
-      id: 'coursecraft',
-      category: 'products',
-      categoryLabel: 'EdTech & E-Learning',
-      title: 'CourseCraft',
-      tagline: 'Learn job-ready skills. Earn real certificates.',
-      description: 'Full-stack e-learning platform featuring user auth, instructor admin dashboard, Stripe payments, and automated certificate generation.',
-      image: '/coursecraft-1.jpeg',
-      metrics: ['PHP', 'MySQL', 'Stripe', 'Certificates'],
-      gradient: 'from-orange-500/20 to-transparent',
-      link: null,
-      actionText: 'View Architecture Specs',
-      featured: false,
-    },
-    {
-      id: 'dairy-farm',
-      category: 'products',
-      categoryLabel: 'AgriTech & Analytics',
-      title: 'Dairy Farm Management',
-      tagline: 'Modernizing agriculture with real-time tech.',
-      description: 'Comprehensive AgriTech dashboard for dairy farms — tracking livestock, milk yields, production analytics, sales, and revenue.',
-      image: '/dairy-farm-2.png',
-      metrics: ['React', 'Node.js', 'MongoDB', 'Analytics'],
-      gradient: 'from-emerald-500/20 to-transparent',
-      link: null,
-      actionText: 'View System Specs',
-      featured: false,
-    },
-    {
-      id: 'car-bidding',
-      category: 'products',
-      categoryLabel: 'Marketplace & Auctions',
-      title: 'Car Bidding Platform',
-      tagline: 'Find your ultimate ride.',
-      description: 'Real-time vehicle auction marketplace with live WebSocket bidding, verified ownership records, and instant payment settlement.',
-      image: '/car-bidding-1.jpeg',
-      metrics: ['Next.js 14', 'WebSockets', 'Real-Time', 'Auctions'],
-      gradient: 'from-indigo-500/20 to-transparent',
-      link: null,
-      actionText: 'View Bidding Engine Specs',
-      featured: false,
-    },
-  ];
-
-  const filteredProjects = activeCategory === 'all'
-    ? projects
-    : projects.filter((p) => p.category === activeCategory);
+  const visibleSystems = systemsList.filter((item) =>
+    item.filterGroups.includes(activeFilter)
+  );
 
   return (
     <>
-      <section id="systems" className="py-32 bg-obsidian-900 border-t border-white/5 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          
-          {/* Header & Category Filter Bar */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-            <div>
-              <span className="text-sm font-mono tracking-widest text-electric-cyan uppercase mb-3 block">
-                Work & Systems Showcase
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-                Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-cyan via-blue-400 to-electric-gold">Excellence</span>.
-              </h2>
-            </div>
+      <section
+        id="systems"
+        aria-labelledby="systems-heading"
+        className="relative w-full py-28 md:py-36 px-6 md:px-12 bg-[#050507] border-t border-white/[0.07]"
+      >
+        {/* Anchor for #research */}
+        <div id="research" className="absolute -top-20" aria-hidden="true" />
+        {/* Anchor for #projects */}
+        <div id="projects" className="absolute -top-20" aria-hidden="true" />
 
-            {/* Category Filter Tabs */}
-            <div className="flex flex-wrap gap-2 p-1.5 rounded-xl bg-obsidian-800/80 border border-white/10 backdrop-blur-md">
-              {[
-                { id: 'all', label: `All Systems (${projects.length})` },
-                { id: 'research', label: 'Research Papers (2)' },
-                { id: 'ai', label: 'AI & WebGL (1)' },
-                { id: 'products', label: 'Production Apps (4)' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveCategory(tab.id as Category)}
-                  className={`px-4 py-2 rounded-lg text-xs font-mono transition-all duration-300 ${
-                    activeCategory === tab.id
-                      ? 'bg-electric-cyan text-obsidian-900 font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+        <div className="max-w-7xl mx-auto">
+          {/* Header + Category Filter Bar */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
+            <FadeIn yOffset={20}>
+              <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-[#10B981] mb-4">
+                <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                <span>02 // FLAGSHIP PRODUCTION SYSTEMS &amp; PEER-REVIEWED RESEARCH</span>
+              </div>
+              <h2
+                id="systems-heading"
+                className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-[1.1]"
+              >
+                Production Platforms &amp;{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] via-[#6366F1] to-[#8B5CF6]">
+                  Published Systems.
+                </span>
+              </h2>
+            </FadeIn>
+
+            {/* Category Filter Bar */}
+            <div
+              role="tablist"
+              aria-label="Filter production systems and research"
+              className="flex flex-wrap gap-2 p-1.5 rounded-2xl bg-[#0B0C10] border border-white/10 self-start lg:self-auto"
+            >
+              {filterTabs.map((tab) => {
+                const isActive = activeFilter === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActiveFilter(tab.id)}
+                    className={`px-3.5 py-2 rounded-xl font-mono text-xs transition-all duration-200 ${
+                      isActive
+                        ? 'bg-[#10B981] text-[#050507] font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                        : 'text-white/65 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Dramatic Work Display Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, idx) => {
-              const isLargeCard = idx === 0 && activeCategory === 'all';
+          {/* Systems Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
+            {visibleSystems.map((item, idx) => {
+              const isResearch = item.accent === 'violet';
+              const spanClass =
+                visibleSystems.length === 5 && idx === 0
+                  ? 'lg:col-span-12'
+                  : 'lg:col-span-6';
 
               return (
-                <SpotlightCard
-                  key={project.id}
-                  className={`p-8 flex flex-col justify-between min-h-[420px] hover:border-electric-cyan/40 transition-all duration-500 group ${
-                    isLargeCard ? 'md:col-span-2 lg:col-span-2 min-h-[480px]' : ''
-                  }`}
-                  spotlightColor={
-                    project.category === 'research'
-                      ? 'rgba(0, 240, 255, 0.18)'
-                      : project.category === 'ai'
-                      ? 'rgba(139, 92, 246, 0.18)'
-                      : 'rgba(255, 215, 0, 0.18)'
-                  }
-                >
-                  {/* Rotating Border Beam for Featured items */}
-                  {project.featured && (
-                    <BorderBeam
-                      size={350}
-                      duration={8}
-                      colorFrom={project.category === 'research' ? '#00F0FF' : '#8B5CF6'}
-                      colorTo={project.category === 'research' ? '#FFD700' : '#00F0FF'}
-                    />
-                  )}
-
-                  <div>
-                    {/* Top Badges */}
-                    <div className="flex justify-between items-start mb-6">
-                      <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-electric-cyan tracking-wider uppercase">
-                        {project.categoryLabel}
-                      </span>
-                      {project.doiBadge && (
-                        <span className="px-3 py-1 rounded-full bg-electric-cyan/10 border border-electric-cyan/20 text-[10px] font-mono text-electric-cyan">
-                          {project.doiBadge}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Screenshot Preview Window */}
-                    {project.image && (
-                      <div className="relative w-full h-52 rounded-2xl overflow-hidden mb-6 border border-white/10 group-hover:border-electric-cyan/30 transition-all duration-500 shadow-2xl">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                          sizes="(max-width: 768px) 100vw, 600px"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-obsidian-900/20 to-transparent pointer-events-none" />
-                      </div>
-                    )}
-
-                    <div className="text-xs font-mono text-electric-gold mb-2">{project.tagline}</div>
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-electric-cyan transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                    <p className="text-white/60 leading-relaxed mb-8 font-light text-sm md:text-base">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Footer Metrics & Actions */}
-                  <div className="relative z-10 space-y-6 pt-4 border-t border-white/5">
-                    <div className="flex flex-wrap gap-2">
-                      {project.metrics.map((metric) => (
-                        <span
-                          key={metric}
-                          className="px-3 py-1 rounded-md bg-obsidian-900 border border-white/10 text-[11px] font-mono text-white/70 uppercase tracking-wide hover:border-electric-cyan/30 hover:text-electric-cyan transition-colors"
+                <div key={item.id} className={spanClass}>
+                  <SpotlightCard
+                    className="p-6 sm:p-8 h-full"
+                    spotlightColor={
+                      isResearch ? 'rgba(139, 92, 246, 0.14)' : 'rgba(16, 185, 129, 0.14)'
+                    }
+                    borderColor={
+                      isResearch ? 'rgba(139, 92, 246, 0.5)' : 'rgba(16, 185, 129, 0.5)'
+                    }
+                  >
+                    <div
+                      className={`grid grid-cols-1 ${
+                        visibleSystems.length === 5 && idx === 0 && item.image
+                          ? 'xl:grid-cols-12 gap-8 items-center'
+                          : 'gap-6'
+                      }`}
+                    >
+                      {/* Screenshot or Research Compute Visual */}
+                      {item.image ? (
+                        <div
+                          className={`relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-[#050507] border border-white/10 group ${
+                            visibleSystems.length === 5 && idx === 0 ? 'xl:col-span-6' : ''
+                          }`}
                         >
-                          {metric}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        onClick={() => setSelectedDrawerItem(architectureDetails[project.id])}
-                        className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-mono text-white transition-all hover:scale-105 flex items-center gap-2"
-                      >
-                        ⚡ Inspect Code & Specs
-                      </button>
-
-                      {project.link ? (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2.5 rounded-xl bg-electric-cyan/10 hover:bg-electric-cyan/20 border border-electric-cyan/20 text-xs font-mono text-electric-cyan transition-all hover:scale-105 flex items-center gap-2"
-                        >
-                          {project.actionText} ↗
-                        </a>
+                          <Image
+                            src={item.image}
+                            alt={item.imageAlt || item.title}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 600px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10] via-transparent to-transparent opacity-70" />
+                          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md border border-white/10 font-mono text-[11px] text-[#10B981]">
+                            {item.categoryBadge}
+                          </div>
+                        </div>
                       ) : (
-                        <span className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/5 text-xs font-mono text-white/40 flex items-center gap-2">
-                          Client Production Platform
-                        </span>
+                        <div className="flex items-center justify-between gap-4 pb-3 border-b border-white/[0.07]">
+                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#6366F1]/15 border border-[#6366F1]/40 font-mono text-xs text-[#A5B4FC]">
+                            <FiCpu size={13} className="text-[#8B5CF6]" />
+                            <span>{item.categoryBadge}</span>
+                          </span>
+                          <span className="font-mono text-xs text-white/40">
+                            PEER-REVIEWED MANUSCRIPT
+                          </span>
+                        </div>
                       )}
+
+                      {/* Content Column */}
+                      <div
+                        className={`flex flex-col justify-between ${
+                          visibleSystems.length === 5 && idx === 0 && item.image
+                            ? 'xl:col-span-6'
+                            : ''
+                        }`}
+                      >
+                        <div>
+                          {/* Quantified Telemetry Badges */}
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {item.telemetryBadges.map((badge) => (
+                              <span
+                                key={badge}
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[11px] font-medium border ${
+                                  isResearch
+                                    ? 'bg-[#6366F1]/10 border-[#6366F1]/35 text-[#C4B5FD]'
+                                    : 'bg-[#10B981]/10 border-[#10B981]/35 text-[#10B981]'
+                                }`}
+                              >
+                                <span
+                                  className={`h-1.5 w-1.5 rounded-full ${
+                                    isResearch ? 'bg-[#8B5CF6]' : 'bg-[#10B981]'
+                                  }`}
+                                />
+                                {badge}
+                              </span>
+                            ))}
+                          </div>
+
+                          <h3 className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight mb-3">
+                            {item.title}
+                          </h3>
+
+                          <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-6">
+                            {item.summary}
+                          </p>
+                        </div>
+
+                        {/* Tech Stack Pills & CTAs */}
+                        <div className="space-y-5 pt-4 border-t border-white/[0.07]">
+                          <div className="flex flex-wrap gap-1.5">
+                            {item.stack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-2.5 py-1 rounded-md bg-[#050507] border border-white/[0.08] font-mono text-[11px] text-white/75"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-3">
+                            <a
+                              href={item.primaryCta.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
+                                isResearch
+                                  ? 'bg-[#6366F1] text-white hover:bg-[#8B5CF6] shadow-[0_0_20px_rgba(99,102,241,0.3)]'
+                                  : 'bg-[#10B981] text-[#050507] hover:bg-[#34D399] shadow-[0_0_20px_rgba(16,185,129,0.25)]'
+                              }`}
+                            >
+                              <span>{item.primaryCta.label}</span>
+                              <FiExternalLink size={13} />
+                            </a>
+
+                            <button
+                              type="button"
+                              onClick={() => setDrawerItem(architectureDetails[item.id])}
+                              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/15 font-mono text-xs text-white transition-all"
+                            >
+                              <FiLayers size={13} className="text-[#10B981]" />
+                              <span>{item.secondaryCtaLabel}</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </SpotlightCard>
+                  </SpotlightCard>
+                </div>
               );
             })}
           </div>
-
         </div>
       </section>
 
-      {/* Code Inspector Drawer */}
-      <ArchitectureDrawer
-        item={selectedDrawerItem}
-        onClose={() => setSelectedDrawerItem(null)}
-      />
+      <ArchitectureDrawer item={drawerItem} onClose={() => setDrawerItem(null)} />
     </>
   );
 }

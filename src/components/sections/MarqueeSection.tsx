@@ -5,53 +5,75 @@ import { useRef } from 'react';
 import Image from 'next/image';
 
 const imagesRow1 = [
-  '/coursecraft-1.jpeg',
-  '/coursecraft-2.jpeg',
   '/synapse-1.png',
+  '/auto-care-1.jpeg',
+  '/dhaba3d.png',
   '/synapse-2.png',
-  '/dairy-farm-1.png',
+  '/auto-care-2.jpeg',
 ];
 
 const imagesRow2 = [
-  '/dairy-farm-2.png',
+  '/synapse-3.png',
+  '/auto-care-3.jpeg',
   '/car-bidding-1.jpeg',
-  '/car-bidding-2.jpeg',
-  '/auto-care-1.jpeg',
-  '/auto-care-2.jpeg',
+  '/coursecraft-1.jpeg',
+  '/dairy-farm-2.png',
 ];
 
 export default function MarqueeSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start']
+    offset: ['start end', 'end start'],
   });
 
-  const x1 = useTransform(scrollYProgress, [0, 1], ['0%', '-50%']);
-  const x2 = useTransform(scrollYProgress, [0, 1], ['-50%', '0%']);
+  const x1 = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
+  const x2 = useTransform(scrollYProgress, [0, 1], ['-35%', '0%']);
 
   return (
-    <section ref={containerRef} className="py-24 bg-[#0C0C0C] overflow-hidden flex flex-col gap-6">
-      
+    <section
+      ref={containerRef}
+      aria-hidden="true"
+      className="py-16 bg-[#050507] border-y border-white/[0.06] overflow-hidden flex flex-col gap-5 select-none"
+    >
       {/* Row 1 */}
-      <motion.div style={{ x: x1 }} className="flex gap-6 w-max">
-        {[...imagesRow1, ...imagesRow1, ...imagesRow1].map((src, i) => (
-          <div key={i} className="relative w-48 h-32 md:w-80 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden glass border-white/5">
-            <Image src={src} alt="3D Render" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity" />
+      <motion.div style={{ x: x1 }} className="flex gap-5 w-max">
+        {[...imagesRow1, ...imagesRow1].map((src, i) => (
+          <div
+            key={i}
+            className="relative w-56 h-36 md:w-80 md:h-48 aspect-[16/10] flex-shrink-0 rounded-2xl overflow-hidden bg-[#0B0C10] border border-white/[0.07]"
+          >
+            <Image
+              src={src}
+              alt=""
+              role="presentation"
+              fill
+              sizes="(max-width: 768px) 224px, 320px"
+              className="object-cover opacity-75 hover:opacity-100 transition-opacity duration-300"
+            />
           </div>
         ))}
       </motion.div>
 
       {/* Row 2 */}
-      <motion.div style={{ x: x2 }} className="flex gap-6 w-max -ml-24">
-        {[...imagesRow2, ...imagesRow2, ...imagesRow2].map((src, i) => (
-          <div key={i} className="relative w-48 h-32 md:w-80 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl bg-white/5 border border-white/5">
-            <Image src={src} alt="3D Render" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
+      <motion.div style={{ x: x2 }} className="flex gap-5 w-max -ml-24">
+        {[...imagesRow2, ...imagesRow2].map((src, i) => (
+          <div
+            key={i}
+            className="relative w-56 h-36 md:w-80 md:h-48 aspect-[16/10] flex-shrink-0 rounded-2xl overflow-hidden bg-[#0B0C10] border border-white/[0.07]"
+          >
+            <Image
+              src={src}
+              alt=""
+              role="presentation"
+              fill
+              sizes="(max-width: 768px) 224px, 320px"
+              className="object-cover opacity-75 hover:opacity-100 transition-opacity duration-300"
+            />
           </div>
         ))}
       </motion.div>
-
     </section>
   );
 }

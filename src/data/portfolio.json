@@ -1,337 +1,286 @@
 {
   "hero": {
     "words": [
-      "Precision",
-      "Immersive",
-      "Digital",
-      "Architecture."
+      "Engineering",
+      "Autonomous",
+      "AI",
+      "Systems."
     ],
     "subWords": [
-      "I",
-      "architect",
-      "high‑performance",
-      "digital",
-      "environments."
+      "Full‑Stack",
+      "AI",
+      "&",
+      "Spatial",
+      "Web",
+      "Architect."
     ],
-    "sub": "I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences.",
+    "sub": "I am Abdullah Awais—a Full-Stack AI Engineer and Published Systems Researcher. I build production Next.js platforms, sub-second Multi-Agent RAG pipelines, and 60 FPS 3D WebGL/WebGPU interfaces that scale from browser VRAM to distributed cloud clusters.",
     "tech": [
-      "React",
       "Next.js",
-      "Three.js",
-      "WebGL",
-      "System Design",
-      "TypeScript"
+      "TypeScript",
+      "Multi-Agent RAG",
+      "WebGPU (WGSL)",
+      "React Three Fiber",
+      "PostgreSQL / PostGIS",
+      "Groq LPU",
+      "Three.js"
     ]
   },
   "services": [
     {
-      "id": "mern",
+      "id": "ai-rag",
       "icon": "⚡",
-      "label": "Core Engineering",
-      "title": "Front‑End Focused Full‑Stack",
-      "desc": "End-to-end web applications built on React, Next.js, and Node.js. My primary focus is delivering pixel-perfect, highly interactive front-end UIs backed by scalable REST APIs.",
+      "label": "AI & Edge Compute",
+      "title": "AI & Edge RAG Engineering",
+      "desc": "Autonomous multi-agent orchestration, client-side WebGPU vector search, Groq hardware acceleration, and decentralized knowledge synthesis pipelines.",
       "tags": [
-        "MongoDB",
-        "Express.js",
-        "React",
-        "Node.js",
-        "Next.js",
-        "REST APIs",
-        "TypeScript"
+        "Multi-Agent RAG",
+        "WebGPU Compute",
+        "Groq LPU",
+        "Vector Quantization",
+        "Semantic Graphs"
       ],
       "accent": "neon",
-      "stat": "50+ Projects"
+      "stat": "Sub-Second LPU"
     },
     {
-      "id": "3d",
+      "id": "spatial-web",
       "icon": "◈",
-      "label": "Immersive Experiences",
-      "title": "3D Web & WebGL Engineering",
-      "desc": "Interactive 3D experiences powered by Three.js and React Three Fiber. Product configurators, immersive e-commerce, and WebGL-powered storytelling that converts visitors into buyers.",
+      "label": "3D & Spatial Web",
+      "title": "Spatial Web & 3D Graphics",
+      "desc": "60 FPS locked React Three Fiber experiences, interactive 3D PBR product studios, custom GLSL/WGSL shaders, and OffscreenCanvas thread isolation.",
       "tags": [
-        "Three.js",
         "React Three Fiber",
-        "WebGL",
-        "GSAP",
-        "Shader Programming",
-        "R3F Drei"
+        "Three.js",
+        "WGSL / GLSL",
+        "OffscreenCanvas",
+        "GSAP Physics"
       ],
       "accent": "violet",
-      "stat": "WebGL Expert"
+      "stat": "60 FPS Locked"
     },
     {
-      "id": "docs",
+      "id": "fullstack-gis",
       "icon": "◎",
-      "label": "Technical Leadership",
-      "title": "Software Documentation & Architecture",
-      "desc": "Comprehensive technical documentation, system design, and software specifications that bridge the gap between complex engineering and stakeholder clarity. Clear thinking, scalable systems.",
+      "label": "Production Architecture",
+      "title": "Full-Stack & Spatial GIS",
+      "desc": "Production Next.js platforms, type-safe PostgreSQL/PostGIS databases, Kysely ORM, Redis caching, real-time WebSockets, and headless MedusaJS commerce.",
       "tags": [
-        "System Design",
-        "API Docs",
-        "SRS / BRD",
-        "Tech Writing",
-        "Architecture Diagrams",
-        "Agile"
+        "Next.js App Router",
+        "TypeScript",
+        "PostgreSQL",
+        "PostGIS",
+        "MedusaJS",
+        "Redis"
       ],
       "accent": "cyan",
-      "stat": "Tech Lead"
+      "stat": "Full-Stack Core"
     },
     {
-      "id": "mobile",
-      "icon": "📱",
-      "label": "App Engineering",
-      "title": "Cross-Platform Mobile Apps",
-      "desc": "High-performance native and cross-platform mobile apps built with React Native and Flutter. Smooth gestures, offline support, and App Store / Google Play deployment.",
-      "tags": [
-        "React Native",
-        "Flutter",
-        "iOS & Android",
-        "App Store",
-        "Mobile UI",
-        "Push Notifications"
-      ],
-      "accent": "neon",
-      "stat": "iOS / Android"
-    },
-    {
-      "id": "devops",
+      "id": "systems-infra",
       "icon": "☁",
-      "label": "Cloud Engineering",
-      "title": "DevOps & Cloud Architecture",
-      "desc": "Scalable, secure cloud deployment on AWS, Docker, and Kubernetes. Automated CI/CD pipelines, serverless infrastructure, database optimization, and high availability systems.",
+      "label": "Infrastructure & DevRel",
+      "title": "Systems Infrastructure & DevRel",
+      "desc": "Containerized virtualization, Nix flakes, Docker pipelines, open-source SDK architecture, and comprehensive Docs-as-Code engineering specifications.",
       "tags": [
-        "AWS",
         "Docker",
+        "Nix Flakes",
         "CI/CD",
-        "Kubernetes",
-        "Serverless",
-        "Security",
-        "GitHub Actions"
+        "SDK Architecture",
+        "Docs-as-Code"
       ],
       "accent": "violet",
-      "stat": "Cloud Architect"
-    },
-    {
-      "id": "figma",
-      "icon": "✦",
-      "label": "UI / UX Design",
-      "title": "Figma Prototyping & Design",
-      "desc": "High-fidelity UI/UX design and interactive prototyping using Figma. I translate complex product requirements into beautiful, user-centric interfaces that seamlessly transition into production-grade front-end code.",
-      "tags": [
-        "Figma",
-        "UI Design",
-        "UX Research",
-        "Wireframing",
-        "Prototyping",
-        "Design Systems"
-      ],
-      "accent": "cyan",
-      "stat": "Pixel Perfect"
+      "stat": "Deterministic"
     }
   ],
   "projects": [
     {
-      "id": "coursecraft",
-      "num": "01",
-      "label": "EdTech · Full‑Stack · E‑Learning",
-      "title": "CourseCraft",
-      "tagline": "Learn job-ready skills. Earn real certificates.",
-      "desc": "A full-stack e-learning platform offering free and paid courses across technology, business, and design. Features user authentication, instructor admin dashboard, Stripe payments, certificate generation on completion, and a modern learning experience.",
-      "image": "/coursecraft-1.jpeg",
-      "images": [
-        "/coursecraft-1.jpeg",
-        "/coursecraft-2.jpeg",
-        "/coursecraft-3.jpeg",
-        "/coursecraft-4.jpeg",
-        "/coursecraft-5.jpeg",
-        "/coursecraft-6.jpeg",
-        "/coursecraft-7.jpeg"
-      ],
-      "imageAlt": "CourseCraft e-learning platform homepage",
-      "tags": [
-        "PHP",
-        "MySQL",
-        "JavaScript",
-        "Stripe",
-        "Certificate Generation"
-      ],
-      "accent": "#F97316",
-      "accentRgb": "249,115,22",
-      "year": "2025",
-      "role": "Full‑Stack Developer",
-      "link": null
-    },
-    {
       "id": "synapse",
-      "num": "02",
-      "label": "AI · 3D WebGL · Knowledge Graph",
-      "title": "Synapse",
-      "tagline": "Think in Three Dimensions.",
-      "desc": "An interactive AI-powered 3D knowledge mapping and visualization platform. Synapse takes any topic and generates an interconnected concept graph, allowing users to explore relationships in a custom 3D web-space or a 2D flowchart with dynamic drag-and-merge functionality.",
+      "num": "01",
+      "label": "Production AI & Spatial Web",
+      "title": "SYNAPSE — Autonomous Multi-Agent 3D Spatial Knowledge Engine",
+      "tagline": "Sub-Second Groq LPU Inference · 60 FPS R3F Force Graph",
+      "desc": "Architected an autonomous multi-agent knowledge synthesis platform that ingests unstructured corpora and synthesizes them into interactive, real-time 3D force-directed knowledge graphs.",
       "image": "/synapse-1.png",
       "images": [
         "/synapse-1.png",
         "/synapse-2.png",
         "/synapse-3.png"
       ],
-      "imageAlt": "Synapse AI 3D Knowledge Map platform",
+      "imageAlt": "Synapse Autonomous Multi-Agent 3D Spatial Knowledge Engine in React Three Fiber",
       "tags": [
-        "React",
-        "Three.js",
+        "Next.js",
+        "TypeScript",
         "React Three Fiber",
-        "AI Integration",
-        "2D Flowchart"
-      ],
-      "accent": "#8B5CF6",
-      "accentRgb": "139,92,246",
-      "year": "2026",
-      "role": "Full‑Stack Developer",
-      "link": "https://synapse-server-5bb8.onrender.com/"
-    },
-    {
-      "id": "dairy-farm",
-      "num": "03",
-      "label": "AgriTech · Full‑Stack",
-      "title": "Dairy Farm Management",
-      "tagline": "Modernizing agriculture with tech.",
-      "desc": "A comprehensive system for dairy farms — track livestock, monitor milk production, manage sales & revenue, and track expenses through a beautiful real-time dashboard with role-based access.",
-      "image": "/dairy-farm-2.png",
-      "images": [
-        "/dairy-farm-2.png",
-        "/dairy-farm-3.png",
-        "/dairy-farm-4.png",
-        "/dairy-farm-5.png",
-        "/dairy-farm-1.png"
-      ],
-      "imageAlt": "Dairy Farm Management Dashboard",
-      "tags": [
-        "React",
-        "Node.js",
-        "MongoDB",
-        "Dashboard",
-        "Charts"
+        "Three.js",
+        "Groq API",
+        "Multi-Agent RAG"
       ],
       "accent": "#10B981",
       "accentRgb": "16,185,129",
-      "year": "2025",
-      "role": "Full‑Stack Developer",
-      "link": null
+      "year": "2026",
+      "role": "Founding Architect",
+      "link": "https://synapse-server-5bb8.onrender.com/"
     },
     {
-      "id": "car-bidding",
-      "num": "04",
-      "label": "Marketplace · Auctions",
-      "title": "Car Bidding Platform",
-      "tagline": "Find your ultimate ride.",
-      "desc": "A real-time auction marketplace for prestigious vehicles. Live bidding, secure payments, verified ownership records, and a sleek marketplace UI for a seamless buying experience.",
-      "image": "/car-bidding-1.jpeg",
-      "images": [
-        "/car-bidding-1.jpeg",
-        "/car-bidding-2.jpeg",
-        "/car-bidding-3.jpeg",
-        "/car-bidding-4.jpeg"
-      ],
-      "imageAlt": "Car Bidding Platform Homepage",
-      "tags": [
-        "Next.js",
-        "WebSockets",
-        "Payment Gateway",
-        "Real-Time"
-      ],
-      "accent": "#3B82F6",
-      "accentRgb": "59,130,246",
-      "year": "2025",
-      "role": "Full‑Stack Developer",
-      "link": null
-    },
-    {
-      "id": "auto-care",
-      "num": "05",
-      "label": "E‑Commerce · Auto Parts",
-      "title": "Auto Care",
-      "tagline": "Your one-stop shop for quality auto parts.",
-      "desc": "A live e-commerce platform connecting users to trusted auto parts vendors. Features smart oil-grade recommendations, category browsing, secure checkout, coupon system, and real-time WhatsApp support.",
+      "id": "autocare",
+      "num": "02",
+      "label": "Production Full-Stack & 3D Web",
+      "title": "AUTOCARE (auto-care.me) — AI Automotive Marketplace & 3D Studio",
+      "tagline": "Real-Time 3D PBR Studio · AI Maintenance Diagnostics",
+      "desc": "Engineered an end-to-end automotive management marketplace featuring real-time service bidding workflows, automated scheduling, AI-driven vehicle maintenance diagnostics, and an interactive R3F 3D studio for real-time paint and component customization.",
       "image": "/auto-care-1.jpeg",
       "images": [
         "/auto-care-1.jpeg",
         "/auto-care-2.jpeg",
-        "/auto-care-3.jpeg",
-        "/auto-care-4.jpeg",
-        "/auto-care-5.jpeg"
+        "/auto-care-3.jpeg"
       ],
-      "imageAlt": "Auto Care E-Commerce Store",
+      "imageAlt": "Auto Care AI Automotive Marketplace & 3D Configurator",
       "tags": [
-        "React",
-        "E-Commerce",
-        "Logistics",
-        "Oil Recommender"
+        "Next.js",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "React Three Fiber",
+        "WebGL"
       ],
-      "accent": "#C8FF00",
-      "accentRgb": "200,255,0",
+      "accent": "#10B981",
+      "accentRgb": "16,185,129",
       "year": "2025",
-      "role": "Full‑Stack Developer",
+      "role": "Lead Systems Engineer",
       "link": "https://www.auto-care.me"
+    },
+    {
+      "id": "dhaba-3d",
+      "num": "03",
+      "label": "Production Full-Stack & 3D Web",
+      "title": "DHABA-3D (dhaba-3d.com) — Interactive 3D Spatial E-Commerce",
+      "tagline": "Headless MedusaJS Engine · Interactive WebGL Inspection",
+      "desc": "Built and launched a spatial 3D e-commerce storefront integrating a headless MedusaJS commerce backend with interactive 3D product inspection, camera choreography, and low-latency cart state synchronization.",
+      "image": "/dhaba3d.png",
+      "images": [
+        "/dhaba3d.png"
+      ],
+      "imageAlt": "Dhaba-3D Interactive 3D Spatial E-Commerce Platform",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React Three Fiber",
+        "MedusaJS",
+        "Tailwind CSS",
+        "GSAP"
+      ],
+      "accent": "#10B981",
+      "accentRgb": "16,185,129",
+      "year": "2026",
+      "role": "Full-Stack Architect",
+      "link": "https://dhaba-3d.com"
+    },
+    {
+      "id": "edge-rag",
+      "num": "04",
+      "label": "Published Research & Edge AI",
+      "title": "RESEARCH — Zero-Latency Edge RAG via WebGPU Compute Shaders",
+      "tagline": "100k+ Vectors in VRAM · 0ms Cloud Network Overhead",
+      "desc": "Authored manuscript published on Zenodo and submitted to PeerJ CS. Eliminates cloud vector DB latency and server costs by executing quantized cosine similarity searches directly inside browser GPU compute shaders while isolating 3D rendering on worker threads.",
+      "image": "/synapse-2.png",
+      "images": [
+        "/synapse-2.png"
+      ],
+      "imageAlt": "WebGPU Compute Shader Vector Search Benchmark Telemetry",
+      "tags": [
+        "WebGPU (WGSL)",
+        "WebAssembly",
+        "OffscreenCanvas",
+        "Client-Side RAG",
+        "Quantization"
+      ],
+      "accent": "#8B5CF6",
+      "accentRgb": "139,92,246",
+      "year": "2026",
+      "role": "Primary Researcher",
+      "link": "https://zenodo.org/records/21527199"
+    },
+    {
+      "id": "webgl-sync",
+      "num": "05",
+      "label": "Published Research & Spatial Computing",
+      "title": "RESEARCH — Asynchronous State Synchronization in WebGL Spatial Graphs",
+      "tagline": "Sub-Millisecond State Sync · Zero Frame Drops",
+      "desc": "Architectural benchmarking and reference implementation for synchronizing high-frequency streaming generative AI token outputs with complex WebGL/Three.js scene graphs without triggering React reconciliation bottlenecks.",
+      "image": "/synapse-3.png",
+      "images": [
+        "/synapse-3.png"
+      ],
+      "imageAlt": "Asynchronous State Synchronization in WebGL Spatial Graphs Topology",
+      "tags": [
+        "WebGL",
+        "Three.js",
+        "Concurrent State Buffers",
+        "WebSockets / SSE",
+        "TypeScript"
+      ],
+      "accent": "#8B5CF6",
+      "accentRgb": "139,92,246",
+      "year": "2026",
+      "role": "Systems Researcher",
+      "link": "https://zenodo.org/records/21526081"
     }
   ],
   "about": {
-    "title": "Precision Engineering.<br />Immersive Interface.<br /><span class=\"gradient-violet\">Digital Architecture.</span>",
+    "title": "Full-Stack Velocity Meets<br /><span class=\"gradient-violet\">Peer-Reviewed Systems Rigor.</span>",
     "bioParagraphs": [
-      "I architect high-performance digital environments. From server-side logic to immersive WebGL interfaces, I bridge the gap between abstract code and tactile user experiences.",
-      "With deep expertise in React, Next.js, and Three.js, I don't just build websites—I engineer interactive data visualizations and digital luxury experiences that captivate and convert.",
-      "Every system I design is built to scale. Every interface I craft is engineered for performance. This is the intersection of logic and aesthetic."
+      "Most engineers either build surface-level CRUD wrappers or stay locked in theoretical research. I bridge both worlds.",
+      "As a Full-Stack AI Engineer, Spatial Web Developer, and Technical Architect, I ship revenue-ready Next.js applications, real-time 3D React Three Fiber experiences, and decentralized edge RAG engines—while authoring the rigorous system blueprints, SDKs, and Docs-as-Code pipelines that allow engineering teams to scale without friction."
     ],
     "stats": [
       {
-        "value": "3+",
-        "label": "Years Experience"
+        "value": "100k+",
+        "label": "Vectors in Browser VRAM"
       },
       {
-        "value": "50+",
-        "label": "Projects Delivered"
+        "value": "60 FPS",
+        "label": "Locked R3F Spatial Scenes"
       },
       {
-        "value": "1",
-        "label": "Tech Society Led"
+        "value": "2",
+        "label": "Published Systems Papers"
       },
       {
-        "value": "∞",
-        "label": "Problems Solved"
+        "value": "<180ms",
+        "label": "Sub-Second Groq LPU RAG"
       }
     ],
     "skills": [
       {
-        "name": "React / Next.js",
+        "name": "Full-Stack Next.js / TypeScript",
+        "level": 98
+      },
+      {
+        "name": "React Three Fiber & Three.js",
         "level": 95
       },
       {
-        "name": "Node.js / Express",
+        "name": "Multi-Agent RAG & Groq LPU",
+        "level": 94
+      },
+      {
+        "name": "WebGPU (WGSL) Compute",
         "level": 90
       },
       {
-        "name": "MongoDB / Databases",
-        "level": 85
-      },
-      {
-        "name": "Three.js / WebGL",
-        "level": 80
-      },
-      {
-        "name": "System Architecture",
-        "level": 88
-      },
-      {
-        "name": "Technical Writing",
+        "name": "PostgreSQL / PostGIS / Kysely",
         "level": 92
       },
       {
-        "name": "Figma / UI Design",
-        "level": 90
+        "name": "System Architecture & Specs",
+        "level": 96
       }
     ],
     "floatingBadge": {
-      "icon": "◈",
-      "title": "Senior Engineer",
-      "sub": "Front‑End Focused"
+      "icon": "⚡",
+      "title": "Principal Systems Engineer",
+      "sub": "Full-Stack AI & Spatial Web"
     }
   },
   "contact": {

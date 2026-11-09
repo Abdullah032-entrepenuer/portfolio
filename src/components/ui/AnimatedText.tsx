@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 import { useRef } from 'react';
 
 interface AnimatedTextProps {
@@ -12,44 +12,55 @@ export default function AnimatedText({ text, className = '' }: AnimatedTextProps
   const containerRef = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 80%', 'end 50%'],
+    offset: ['start 85%', 'end 45%'],
   });
 
-  const words = text.split(' ');
+  const words = text.trim().split(/\s+/);
 
   return (
-    <p ref={containerRef} className={className} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3em' }}>
+    <p
+      ref={containerRef}
+      className={`leading-relaxed ${className}`}
+    >
       {words.map((word, i) => {
         const start = i / words.length;
-        const end = start + (1 / words.length);
+        const end = start + 1 / words.length;
         return (
-          <Word key={i} word={word} progress={scrollYProgress} range={[start, end]} />
+          <Word
+            key={i}
+            word={word}
+            progress={scrollYProgress}
+            range={[start, end]}
+            isLast={i === words.length - 1}
+          />
         );
       })}
     </p>
   );
 }
 
-function Word({ word, progress, range }: { word: string; progress: any; range: [number, number] }) {
-  const characters = word.split('');
-  const amount = range[1] - range[0];
-  const step = amount / characters.length;
+function Word({
+  word,
+  progress,
+  range,
+  isLast,
+}: {
+  word: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+  isLast: boolean;
+}) {
+  const opacity = useTransform(progress, range, [0.28, 1]);
 
   return (
-    <span style={{ position: 'relative', display: 'inline-block' }}>
-      <span style={{ opacity: 0.2 }}>{word}</span>
-      <span style={{ position: 'absolute', left: 0, top: 0, display: 'flex' }}>
-        {characters.map((char, i) => {
-          const start = range[0] + (i * step);
-          const end = range[0] + ((i + 1) * step);
-          const opacity = useTransform(progress, [start, end], [0, 1]);
-          return (
-            <motion.span key={i} style={{ opacity }}>
-              {char}
-            </motion.span>
-          );
-        })}
-      </span>
-    </span>
+    <>
+      <motion.span
+        style={{ opacity }}
+        className="inline-block transition-colors duration-200"
+      >
+        {word}
+      </motion.span>
+      {!isLast && ' '}
+    </>
   );
 }

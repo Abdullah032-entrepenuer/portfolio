@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FiSearch, FiTerminal, FiExternalLink, FiCopy, FiCheck, FiArrowRight, FiCornerDownLeft } from 'react-icons/fi';
+import { FiSearch, FiTerminal, FiCheck, FiCornerDownLeft } from 'react-icons/fi';
 
 interface CommandOption {
   id: string;
   label: string;
   category: string;
-  shortcut?: string;
   action: () => void;
 }
 
@@ -22,10 +21,6 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        isOpen ? onClose() : null; // Toggle in navbar
-      }
       if (e.key === 'Escape' && isOpen) {
         onClose();
       }
@@ -45,7 +40,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   const commands: CommandOption[] = [
     {
       id: 'nav-systems',
-      label: 'Jump to Systems Showcase & Research',
+      label: 'Jump to Flagship Production Systems & Research',
       category: 'Navigation',
       action: () => {
         document.querySelector('#systems')?.scrollIntoView({ behavior: 'smooth' });
@@ -53,17 +48,8 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       },
     },
     {
-      id: 'nav-services',
-      label: 'Jump to Core Capabilities',
-      category: 'Navigation',
-      action: () => {
-        document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' });
-        onClose();
-      },
-    },
-    {
       id: 'nav-about',
-      label: 'Jump to Person Behind Code (About)',
+      label: 'Jump to 01 // The Engineering Advantage (4-Pillar Matrix)',
       category: 'Navigation',
       action: () => {
         document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
@@ -72,7 +58,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
     },
     {
       id: 'nav-contact',
-      label: 'Jump to Contact / Project Brief',
+      label: 'Jump to Dual-Mode Conversion Funnel (Hire / Commission)',
       category: 'Navigation',
       action: () => {
         document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -80,21 +66,18 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       },
     },
     {
-      id: 'doi-1',
-      label: 'Copy Zenodo DOI: 10.5281/zenodo.21526081',
-      category: 'Research Papers',
-      action: () => handleCopy('https://doi.org/10.5281/zenodo.21526081'),
-    },
-    {
-      id: 'doi-2',
-      label: 'Copy Zenodo Record: 21527199',
-      category: 'Research Papers',
-      action: () => handleCopy('https://zenodo.org/records/21527199'),
+      id: 'download-resume',
+      label: 'Download ATS Resume (PDF)',
+      category: 'Career & Hiring',
+      action: () => {
+        window.open('/abdullah_awais_resume.pdf', '_blank');
+        onClose();
+      },
     },
     {
       id: 'open-synapse',
-      label: 'Launch Synapse AI Platform (Live)',
-      category: 'External Apps',
+      label: 'Launch SYNAPSE — Autonomous Multi-Agent 3D Knowledge Engine',
+      category: 'Production Systems',
       action: () => {
         window.open('https://synapse-server-5bb8.onrender.com/', '_blank');
         onClose();
@@ -102,66 +85,104 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
     },
     {
       id: 'open-autocare',
-      label: 'Launch Auto Care Store (Live)',
-      category: 'External Apps',
+      label: 'Visit AUTOCARE (auto-care.me) — AI Automotive Marketplace & 3D Studio',
+      category: 'Production Systems',
       action: () => {
         window.open('https://www.auto-care.me', '_blank');
         onClose();
       },
     },
     {
+      id: 'open-dhaba3d',
+      label: 'Visit DHABA-3D (dhaba-3d.com) — Interactive 3D Spatial E-Commerce',
+      category: 'Production Systems',
+      action: () => {
+        window.open('https://dhaba-3d.com', '_blank');
+        onClose();
+      },
+    },
+    {
+      id: 'doi-edge-rag',
+      label: 'Read Preprint: Zero-Latency Edge RAG via WebGPU Compute Shaders',
+      category: 'Published Research',
+      action: () => {
+        window.open('https://zenodo.org/records/21527199', '_blank');
+        onClose();
+      },
+    },
+    {
+      id: 'doi-webgl-sync',
+      label: 'Read Preprint: Asynchronous State Sync in WebGL Spatial Graphs',
+      category: 'Published Research',
+      action: () => {
+        window.open('https://zenodo.org/records/21526081', '_blank');
+        onClose();
+      },
+    },
+    {
       id: 'email-copy',
-      label: 'Copy Email Address: abdullahawais034@gmail.com',
-      category: 'Actions',
+      label: 'Copy Direct Email: abdullahawais034@gmail.com',
+      category: 'Direct Contact',
       action: () => handleCopy('abdullahawais034@gmail.com'),
     },
   ];
 
-  const filteredCommands = commands.filter((cmd) =>
-    cmd.label.toLowerCase().includes(query.toLowerCase()) ||
-    cmd.category.toLowerCase().includes(query.toLowerCase())
+  const filteredCommands = commands.filter(
+    (cmd) =>
+      cmd.label.toLowerCase().includes(query.toLowerCase()) ||
+      cmd.category.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
-    <div 
-      className="fixed inset-0 z-[120] bg-black/70 backdrop-blur-md flex items-start justify-center pt-24 px-4"
+    <div
+      className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-start justify-center pt-24 px-4"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command Palette"
     >
-      <div 
-        className="w-full max-w-xl bg-obsidian-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+      <div
+        className="w-full max-w-xl bg-[#0B0C10] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header */}
-        <div className="flex items-center px-4 py-4 border-b border-white/10 bg-obsidian-800/50">
-          <FiSearch className="text-electric-cyan text-lg mr-3" />
+        <div className="flex items-center px-4 py-4 border-b border-white/10 bg-[#050507]/60">
+          <FiSearch className="text-[#10B981] text-lg mr-3 shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type a command or jump to section (e.g. 'systems', 'doi', 'synapse')..."
+            placeholder="Type a command or jump to system (e.g. 'synapse', 'rag', 'resume')..."
             className="w-full bg-transparent text-white placeholder-white/40 text-sm focus:outline-none font-mono"
             autoFocus
           />
-          <kbd className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-white/50">ESC</kbd>
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-white/50 hover:text-white"
+          >
+            ESC
+          </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-2 space-y-1">
+        <div className="max-h-96 overflow-y-auto p-2 space-y-1 custom-scrollbar">
           {filteredCommands.length === 0 ? (
             <div className="p-8 text-center text-xs font-mono text-white/40">
-              No matching CLI commands found.
+              No matching system commands found.
             </div>
           ) : (
             filteredCommands.map((cmd) => (
               <button
                 key={cmd.id}
+                type="button"
                 onClick={cmd.action}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-electric-cyan/10 hover:border-electric-cyan/20 border border-transparent transition-all group text-left"
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#10B981]/10 hover:border-[#10B981]/30 border border-transparent transition-all group text-left"
               >
                 <div className="flex items-center gap-3">
-                  <FiTerminal className="text-white/40 group-hover:text-electric-cyan transition-colors" />
+                  <FiTerminal className="text-white/40 group-hover:text-[#10B981] transition-colors shrink-0" />
                   <div>
-                    <div className="text-sm font-medium text-white group-hover:text-electric-cyan transition-colors">
+                    <div className="text-sm font-medium text-white group-hover:text-[#10B981] transition-colors">
                       {cmd.label}
                     </div>
                     <div className="text-[10px] font-mono text-white/40 uppercase">
@@ -170,9 +191,9 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {copiedText && cmd.label.includes(copiedText) ? (
-                    <span className="text-xs font-mono text-green-400 flex items-center gap-1">
+                    <span className="text-xs font-mono text-[#10B981] flex items-center gap-1">
                       <FiCheck /> Copied
                     </span>
                   ) : (
@@ -185,11 +206,11 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 bg-black/40 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-white/40">
-          <span>Antigravity CLI v2.4 · Abdullah Awais</span>
+        <div className="px-4 py-3 bg-[#050507] border-t border-white/[0.07] flex items-center justify-between text-[11px] font-mono text-white/40">
+          <span>AA // SYSTEMS CLI · Abdullah Awais</span>
           <div className="flex items-center gap-3">
             <span>↑↓ Navigate</span>
-            <span>↵ Select</span>
+            <span>↵ Execute</span>
           </div>
         </div>
       </div>

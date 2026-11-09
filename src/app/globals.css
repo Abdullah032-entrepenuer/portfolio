@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-void: #050507;
+  --bg-surface: #0B0C10;
+  --border-specular: rgba(255, 255, 255, 0.07);
+  --accent-emerald: #10B981;
+  --accent-indigo: #6366F1;
+  --accent-violet: #8B5CF6;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,8 +18,9 @@
 }
 
 html, body, #__next, #root {
-  background-color: #0C0C0C;
-  color: #D7E2EA;
+  background-color: #050507;
+  color: #F3F4F6;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -18,44 +28,80 @@ body {
 }
 
 .hero-heading {
-  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #9CA3AF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent; /* Fallback */
+  color: transparent;
+}
+
+/* Spotlight Card CSS variable effects */
+.spotlight-card {
+  position: relative;
+  background-color: #0B0C10;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--spotlight-color, rgba(16, 185, 129, 0.12)),
+    transparent 40%
+  );
+  opacity: var(--spotlight-opacity, 0);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--spotlight-border-color, rgba(16, 185, 129, 0.45)),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: var(--spotlight-opacity, 0);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* Custom Hide Scrollbar Utility */
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom Sleek Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   height: 8px;
+  width: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(215, 226, 234, 0.3);
+  background: rgba(16, 185, 129, 0.3);
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(215, 226, 234, 0.5);
-}
-
-/* Base resets to clear previous theme if any remain */
-button {
-  all: unset;
-  display: inline-block;
-  box-sizing: border-box;
-  cursor: pointer;
+  background: rgba(16, 185, 129, 0.5);
 }
 
 a {

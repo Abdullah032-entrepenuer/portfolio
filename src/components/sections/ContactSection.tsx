@@ -1,249 +1,547 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { FiGithub, FiExternalLink, FiSend, FiCheck, FiMail, FiPhone } from 'react-icons/fi';
-import { SiFiverr } from 'react-icons/si';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  FiGithub,
+  FiSend,
+  FiCheck,
+  FiMail,
+  FiCopy,
+  FiDownload,
+  FiBriefcase,
+  FiCpu,
+} from 'react-icons/fi';
 import { ContactData } from '@/lib/db';
-import { useMagneticEffect } from '@/hooks/useMagneticEffect';
+import SpotlightCard from '@/components/ui/SpotlightCard';
 
-const BeaconMesh = dynamic(() => import('@/components/3d/BeaconMesh'), { ssr: false });
+const BeaconMesh = dynamic(() => import('@/components/3d/BeaconMesh'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[220px] flex items-center justify-center">
+      <div className="w-20 h-20 rounded-full border border-dashed border-[#10B981]/30 animate-spin" />
+    </div>
+  ),
+});
 
-gsap.registerPlugin(ScrollTrigger);
+type FunnelMode = 'hiring' | 'consulting';
 
-const budgetOptions = [
-  'Under $500',
-  '$500 – $2,000',
-  '$2,000 – $5,000',
-  '$5,000 – $10,000',
-  '$10,000+',
-  'Let\'s Discuss',
-];
+const budgetOptions = ['$2,000 – $5,000', '$5,000 – $10,000', '$10,000+'];
 
 const projectTypes = [
-  'API Reference / Documentation',
-  'System Architecture Design',
-  'E-Commerce Platform',
-  'Technical Documentation',
-  'Consultation',
-  'Other',
+  'Full-Stack AI / RAG Pipeline',
+  '3D Spatial Web / R3F',
+  'E-Commerce / MedusaJS',
+  'System Architecture & Docs-as-Code',
 ];
 
-export default function ContactSection({ data }: { data: ContactData }) {
+export default function ContactSection({ data }: { data?: ContactData }) {
   const emailVal = data?.email || 'abdullahawais034@gmail.com';
   const phoneVal = data?.phone || '923250995477';
-  const phoneDisplayVal = data?.phoneDisplay || '0325 099 5477';
 
-  const [form, setForm] = useState({ name: '', email: '', type: '', budget: '', message: '' });
+  const [mode, setMode] = useState<FunnelMode>('hiring');
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  // Fast-track Hiring Form State
+  const [hireForm, setHireForm] = useState({
+    nameCompany: '',
+    workEmail: '',
+    challengeOrCalendly: '',
+  });
+
+  // High-Ticket Project Commission Form State
+  const [projectForm, setProjectForm] = useState({
+    name: '',
+    email: '',
+    type: projectTypes[0],
+    budget: budgetOptions[1],
+    message: '',
+  });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
-  const submitBtnRef = useMagneticEffect({ strength: 0.3, radius: 70 });
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Header entrance
-      if (headerRef.current) {
-        gsap.fromTo(headerRef.current.children,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1, y: 0,
-            duration: 1, stagger: 0.12, ease: 'power3.out',
-            scrollTrigger: { trigger: headerRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
-          }
-        );
-      }
-
-      // Form entrance
-      if (formRef.current) {
-        gsap.fromTo(formRef.current,
-          { opacity: 0, y: 50, scale: 0.96 },
-          {
-            opacity: 1, y: 0, scale: 1,
-            duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: formRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const validate = () => {
-    const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = 'Name is required';
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Valid email required';
-    if (!form.message.trim() || form.message.length < 20) errs.message = 'Tell me more about your project (20+ chars)';
-    return errs;
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(emailVal);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleHiringSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
+    const errs: Record<string, string> = {};
+    if (!hireForm.nameCompany.trim()) errs.nameCompany = 'Name & Company is required';
+    if (!hireForm.workEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(hireForm.workEmail)) {
+      errs.workEmail = 'Valid work email required';
+    }
+    if (!hireForm.challengeOrCalendly.trim()) {
+      errs.challengeOrCalendly = 'Please share the role details or a scheduling link';
+    }
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    setSending(true);
-
-    const phone = phoneVal;
-    const text = `*New Project Inquiry from Portfolio*\n\n*Name:* ${form.name}\n*Email:* ${form.email}\n*Project Type:* ${form.type || 'Not specified'}\n*Budget:* ${form.budget || 'Not specified'}\n\n*Project Brief:*\n${form.message}`;
-    const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedText}`;
-
+    const text = `*Engineering Role / Hiring Inquiry*\n\n*Name & Company:* ${hireForm.nameCompany}\n*Work Email:* ${hireForm.workEmail}\n*Role / Challenge / Calendly:* ${hireForm.challengeOrCalendly}`;
+    const whatsappUrl = `https://wa.me/${phoneVal}?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, '_blank');
-
-    setSending(false);
     setSubmitted(true);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    if (errors[e.target.name]) setErrors((prev) => { const n = { ...prev }; delete n[e.target.name]; return n; });
+  const handleProjectSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (!projectForm.name.trim()) errs.name = 'Name is required';
+    if (!projectForm.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectForm.email)) {
+      errs.email = 'Valid email required';
+    }
+    if (!projectForm.message.trim() || projectForm.message.length < 15) {
+      errs.message = 'Please share your project architecture brief (15+ chars)';
+    }
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    const text = `*High-Ticket Architecture / Project Inquiry*\n\n*Name:* ${projectForm.name}\n*Email:* ${projectForm.email}\n*Architecture Scope:* ${projectForm.type}\n*Budget:* ${projectForm.budget}\n\n*Project Brief:*\n${projectForm.message}`;
+    const whatsappUrl = `https://wa.me/${phoneVal}?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+    setSubmitted(true);
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-32 bg-[#0C0C0C] border-t border-white/5 relative z-10 overflow-hidden" aria-label="Contact section">
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="py-28 md:py-36 bg-[#050507] border-t border-white/[0.07] relative z-10 overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* ── Left: Info + 3D Beacon ── */}
-          <div ref={headerRef} className="lg:col-span-5 flex flex-col gap-8">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-12 items-start">
+          {/* Left Column: Positioning, 3D Beacon & One-Click Quick Actions */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
             <div>
-              <span className="text-sm font-mono tracking-widest text-[#D7E2EA] uppercase mb-3 block" style={{ opacity: 0 }}>
-                Start a Conversation
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight uppercase" style={{ opacity: 0 }}>
-                Let&apos;s build something <br />
-                <span className="hero-heading">extraordinary.</span>
+              <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-[#10B981] mb-4">
+                <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                <span>03 // START A CONVERSATION</span>
+              </div>
+              <h2
+                id="contact-heading"
+                className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-[1.1]"
+              >
+                Ready for Immediate{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] via-[#6366F1] to-[#8B5CF6]">
+                  Systems Impact.
+                </span>
               </h2>
-              <p className="text-white/60 text-base md:text-lg leading-relaxed font-light mb-8" style={{ opacity: 0 }}>
-                Whether you have a fully-formed idea or just a spark of inspiration, I&apos;m here to turn it into
-                a production-ready, high-performance product. High-ticket projects welcome.
+              <p className="text-white/65 text-sm sm:text-base leading-relaxed">
+                Whether you are hiring a Founding / Staff Full-Stack AI &amp; Spatial Web Engineer
+                or commissioning an end-to-end production platform, select your track to connect
+                directly.
               </p>
             </div>
 
             {/* Embedded 3D Beacon Scene */}
-            <div className="relative rounded-2xl border border-white/10 bg-[#111111]/30 backdrop-blur-md p-4 overflow-hidden flex items-center justify-center min-h-[220px]">
+            <div className="relative rounded-2xl border border-white/[0.07] bg-[#0B0C10] p-4 overflow-hidden flex items-center justify-center min-h-[220px]">
               <div className="absolute inset-0 pointer-events-none z-0">
                 <BeaconMesh />
               </div>
-              <div className="relative z-10 text-center">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#D7E2EA] text-xs font-mono">
-                  <span className="w-2 h-2 rounded-full bg-[#D7E2EA] animate-ping" />
-                  Signal Active · Ready to Build
+              <div className="relative z-10 text-center mt-28">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#050507]/90 border border-[#10B981]/30 text-[#10B981] text-xs font-mono">
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
+                  TELEMETRY ACTIVE · RESPONSE &lt; 4 HOURS
                 </span>
               </div>
             </div>
 
-            {/* Direct Contact Chips */}
-            <div className="flex flex-col gap-3" style={{ opacity: 0 }}>
-              <a href={`mailto:${emailVal}`} className="flex items-center gap-3 p-4 rounded-xl border border-white/5 bg-[#111111]/40 hover:border-white/30 transition-all text-white/80 hover:text-white" id="link-email">
-                <FiMail size={18} className="text-[#D7E2EA]" />
-                <span className="text-sm font-mono">{emailVal}</span>
-              </a>
-              <a href={`tel:+${phoneVal}`} className="flex items-center gap-3 p-4 rounded-xl border border-white/5 bg-[#111111]/40 hover:border-white/30 transition-all text-white/80 hover:text-white" id="link-phone">
-                <FiPhone size={18} className="text-[#D7E2EA]" />
-                <span className="text-sm font-mono">{phoneDisplayVal}</span>
-              </a>
-              <div className="grid grid-cols-2 gap-3">
-                <a href="https://www.fiverr.com/users/abdu1lah_awais" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-[#111111]/40 hover:border-green-500/30 transition-all text-white/80 hover:text-white text-xs font-mono" id="link-fiverr">
-                  <div className="flex items-center gap-2">
-                    <SiFiverr size={18} className="text-green-500" />
-                    <span>Fiverr</span>
-                  </div>
-                  <FiExternalLink size={12} className="opacity-50" />
-                </a>
-                <a href="https://github.com/abdullah-032s" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-[#111111]/40 hover:border-white/20 transition-all text-white/80 hover:text-white text-xs font-mono" id="link-github">
-                  <div className="flex items-center gap-2">
-                    <FiGithub size={18} />
-                    <span>GitHub</span>
-                  </div>
-                  <FiExternalLink size={12} className="opacity-50" />
-                </a>
+            {/* One-Click Quick Actions */}
+            <div className="space-y-2.5 font-mono text-xs">
+              <div className="text-white/40 uppercase tracking-widest text-[11px] mb-1">
+                One-Click Quick Actions
               </div>
+
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.08] bg-[#0B0C10] hover:border-[#10B981]/50 transition-all text-white/90 hover:text-white text-left"
+              >
+                <span className="flex items-center gap-3 truncate">
+                  <FiMail size={16} className="text-[#10B981] shrink-0" />
+                  <span className="truncate">Copy Direct Email ({emailVal})</span>
+                </span>
+                {copiedEmail ? (
+                  <span className="inline-flex items-center gap-1 text-[#10B981] font-semibold shrink-0">
+                    <FiCheck size={14} /> Copied
+                  </span>
+                ) : (
+                  <FiCopy size={14} className="text-white/50 shrink-0" />
+                )}
+              </button>
+
+              <a
+                href="/abdullah_awais_resume.pdf"
+                download="Abdullah_Awais_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.08] bg-[#0B0C10] hover:border-[#10B981]/50 transition-all text-white/90 hover:text-white"
+              >
+                <span className="flex items-center gap-3">
+                  <FiDownload size={16} className="text-[#10B981] shrink-0" />
+                  <span>Download ATS Resume (PDF)</span>
+                </span>
+                <span className="text-[11px] text-[#10B981]">PDF ↗</span>
+              </a>
+
+              <a
+                href="https://github.com/abdullah-032s"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.08] bg-[#0B0C10] hover:border-[#6366F1]/50 transition-all text-white/90 hover:text-white"
+              >
+                <span className="flex items-center gap-3">
+                  <FiGithub size={16} className="text-[#6366F1] shrink-0" />
+                  <span>View GitHub Profile</span>
+                </span>
+                <span className="text-[11px] text-[#A5B4FC]">@abdullah-032s ↗</span>
+              </a>
             </div>
           </div>
 
-          {/* ── Right: Form ── */}
-          <div ref={formRef} className="lg:col-span-7 rounded-3xl border border-white/10 bg-[#111111]/40 backdrop-blur-xl p-8 md:p-10 shadow-2xl relative" style={{ opacity: 0 }}>
-            {submitted ? (
-              <div className="py-16 text-center space-y-4" role="alert" aria-live="polite">
-                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 text-[#D7E2EA] flex items-center justify-center mx-auto">
-                  <FiCheck size={32} />
-                </div>
-                <h3 className="text-2xl font-bold text-white">Message received!</h3>
-                <p className="text-white/60 max-w-md mx-auto text-sm">
-                  Thanks for reaching out. I&apos;ll review your project details and get back to you within 24 hours.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-label="Contact form">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="contact-name" className="text-xs font-mono text-white/60 uppercase tracking-wider block">Your Name</label>
-                    <input id="contact-name" name="name" type="text" value={form.name} onChange={handleChange} placeholder="Abdullah Khan" className={`w-full bg-[#0C0C0C] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#D7E2EA] transition-colors ${errors.name ? 'border-red-500' : ''}`} autoComplete="name" />
-                    {errors.name && <span className="text-red-400 text-xs font-mono block">{errors.name}</span>}
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="contact-email" className="text-xs font-mono text-white/60 uppercase tracking-wider block">Email Address</label>
-                    <input id="contact-email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@company.com" className={`w-full bg-[#0C0C0C] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#D7E2EA] transition-colors ${errors.email ? 'border-red-500' : ''}`} autoComplete="email" />
-                    {errors.email && <span className="text-red-400 text-xs font-mono block">{errors.email}</span>}
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="contact-type" className="text-xs font-mono text-white/60 uppercase tracking-wider block">Project Type</label>
-                    <select id="contact-type" name="type" value={form.type} onChange={handleChange} className="w-full bg-[#0C0C0C] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#D7E2EA] transition-colors">
-                      <option value="">Select a type…</option>
-                      {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="contact-budget" className="text-xs font-mono text-white/60 uppercase tracking-wider block">Budget Range</label>
-                    <select id="contact-budget" name="budget" value={form.budget} onChange={handleChange} className="w-full bg-[#0C0C0C] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#D7E2EA] transition-colors">
-                      <option value="">Select a range…</option>
-                      {budgetOptions.map((b) => <option key={b} value={b}>{b}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="contact-message" className="text-xs font-mono text-white/60 uppercase tracking-wider block">Project Brief</label>
-                  <textarea id="contact-message" name="message" value={form.message} onChange={handleChange} placeholder="Tell me about your project — what are you building, what problem does it solve, and what's your timeline?" className={`w-full bg-[#0C0C0C] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#D7E2EA] transition-colors ${errors.message ? 'border-red-500' : ''}`} rows={5} />
-                  {errors.message && <span className="text-red-400 text-xs font-mono block">{errors.message}</span>}
-                </div>
+          {/* Right Column: Dual-Mode Segmented Switcher & Dynamic Form */}
+          <div className="lg:col-span-7">
+            <SpotlightCard
+              className="p-6 sm:p-8 md:p-10"
+              spotlightColor={
+                mode === 'hiring' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(99, 102, 241, 0.14)'
+              }
+              borderColor={
+                mode === 'hiring' ? 'rgba(16, 185, 129, 0.45)' : 'rgba(99, 102, 241, 0.45)'
+              }
+            >
+              {/* Animated Segmented Mode Switcher */}
+              <div
+                role="tablist"
+                aria-label="Conversion Funnel Mode Switcher"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-1.5 rounded-2xl bg-[#050507] border border-white/10 mb-8"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === 'hiring'}
+                  onClick={() => {
+                    setMode('hiring');
+                    setSubmitted(false);
+                    setErrors({});
+                  }}
+                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-mono text-xs transition-all duration-200 ${
+                    mode === 'hiring'
+                      ? 'bg-[#10B981] text-[#050507] font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                      : 'text-white/65 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <FiBriefcase size={14} className="shrink-0" />
+                  <span>Hire Full-Time / Remote Engineering Role</span>
+                </button>
 
                 <button
-                  ref={submitBtnRef as React.RefObject<HTMLButtonElement | null>}
-                  id="btn-send"
-                  type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#646973] to-[#BBCCD7] text-[#0C0C0C] font-bold text-sm tracking-wide uppercase hover:opacity-90 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  disabled={sending}
-                  aria-label={sending ? 'Sending message…' : 'Send project brief'}
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === 'consulting'}
+                  onClick={() => {
+                    setMode('consulting');
+                    setSubmitted(false);
+                    setErrors({});
+                  }}
+                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-mono text-xs transition-all duration-200 ${
+                    mode === 'consulting'
+                      ? 'bg-[#6366F1] text-white font-bold shadow-[0_0_20px_rgba(99,102,241,0.35)]'
+                      : 'text-white/65 hover:text-white hover:bg-white/5'
+                  }`}
                 >
-                  {sending ? (
-                    <>Sending…</>
-                  ) : (
-                    <>
-                      <FiSend size={16} />
-                      Send Project Brief
-                    </>
-                  )}
+                  <FiCpu size={14} className="shrink-0" />
+                  <span>Commission High-Ticket Project / Architecture Consulting</span>
                 </button>
-              </form>
-            )}
-          </div>
+              </div>
 
+              {submitted ? (
+                <div className="py-14 text-center space-y-4" role="alert" aria-live="polite">
+                  <div className="w-14 h-14 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 text-[#10B981] flex items-center justify-center mx-auto">
+                    <FiCheck size={28} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Transmission Dispatched</h3>
+                  <p className="text-white/65 max-w-md mx-auto text-sm">
+                    Thank you for reaching out. Your inquiry has been routed directly—I will respond
+                    within a few hours.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="mt-4 px-5 py-2.5 rounded-xl bg-white/10 text-xs font-mono text-white hover:bg-white/15"
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <AnimatePresence mode="wait">
+                  {mode === 'hiring' ? (
+                    <motion.div
+                      key="hiring-tab"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {/* Immediate Hiring Telemetry Strip */}
+                      <div className="mb-7 p-4 rounded-xl bg-[#050507] border border-[#10B981]/25 space-y-2 font-mono text-xs">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/85">
+                          <span className="inline-flex items-center gap-1.5 text-[#10B981] font-semibold">
+                            <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
+                            Role Readiness: Immediate
+                          </span>
+                          <span className="text-white/30">|</span>
+                          <span>Time Zone: UTC+5 (Flexible EU &amp; US-East Overlap)</span>
+                        </div>
+                        <div className="text-white/65 text-[11px]">
+                          Engagement: Full-Time Remote / Founding Engineer / Contractor
+                        </div>
+                      </div>
+
+                      {/* Streamlined 3-Field Fast-Track Input */}
+                      <form
+                        onSubmit={handleHiringSubmit}
+                        className="space-y-5"
+                        noValidate
+                        aria-label="Fast-Track Engineering Hiring Form"
+                      >
+                        <div className="grid sm:grid-cols-2 gap-5">
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="hire-name-company"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              Your Name &amp; Company
+                            </label>
+                            <input
+                              id="hire-name-company"
+                              type="text"
+                              value={hireForm.nameCompany}
+                              onChange={(e) =>
+                                setHireForm((s) => ({ ...s, nameCompany: e.target.value }))
+                              }
+                              placeholder="Alex Rivera · CTO @ Acme AI"
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#10B981] transition-colors"
+                            />
+                            {errors.nameCompany && (
+                              <span className="text-red-400 text-xs font-mono block">
+                                {errors.nameCompany}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="hire-work-email"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              Work Email
+                            </label>
+                            <input
+                              id="hire-work-email"
+                              type="email"
+                              value={hireForm.workEmail}
+                              onChange={(e) =>
+                                setHireForm((s) => ({ ...s, workEmail: e.target.value }))
+                              }
+                              placeholder="alex@company.com"
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#10B981] transition-colors"
+                            />
+                            {errors.workEmail && (
+                              <span className="text-red-400 text-xs font-mono block">
+                                {errors.workEmail}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <label
+                            htmlFor="hire-challenge"
+                            className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                          >
+                            Role / Engineering Challenge (or calendly link)
+                          </label>
+                          <textarea
+                            id="hire-challenge"
+                            rows={4}
+                            value={hireForm.challengeOrCalendly}
+                            onChange={(e) =>
+                              setHireForm((s) => ({ ...s, challengeOrCalendly: e.target.value }))
+                            }
+                            placeholder="Share role details, tech stack focus (Next.js / Multi-Agent RAG / R3F / WebGPU), or paste your Calendly link for an immediate 10-min intro..."
+                            className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#10B981] transition-colors"
+                          />
+                          {errors.challengeOrCalendly && (
+                            <span className="text-red-400 text-xs font-mono block">
+                              {errors.challengeOrCalendly}
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="w-full py-4 rounded-xl bg-[#10B981] text-[#050507] font-mono font-bold text-xs sm:text-sm tracking-wide uppercase hover:bg-[#34D399] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(16,185,129,0.3)]"
+                        >
+                          <FiSend size={15} />
+                          <span>Fast-Track Technical Intro</span>
+                        </button>
+                      </form>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="consulting-tab"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <form
+                        onSubmit={handleProjectSubmit}
+                        className="space-y-5"
+                        noValidate
+                        aria-label="Commission High-Ticket Project Form"
+                      >
+                        <div className="grid sm:grid-cols-2 gap-5">
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="proj-name"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              Your Name
+                            </label>
+                            <input
+                              id="proj-name"
+                              type="text"
+                              value={projectForm.name}
+                              onChange={(e) =>
+                                setProjectForm((s) => ({ ...s, name: e.target.value }))
+                              }
+                              placeholder="Jordan Vance"
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#6366F1] transition-colors"
+                            />
+                            {errors.name && (
+                              <span className="text-red-400 text-xs font-mono block">
+                                {errors.name}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="proj-email"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              Email Address
+                            </label>
+                            <input
+                              id="proj-email"
+                              type="email"
+                              value={projectForm.email}
+                              onChange={(e) =>
+                                setProjectForm((s) => ({ ...s, email: e.target.value }))
+                              }
+                              placeholder="jordan@enterprise.io"
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#6366F1] transition-colors"
+                            />
+                            {errors.email && (
+                              <span className="text-red-400 text-xs font-mono block">
+                                {errors.email}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="grid sm:grid-cols-2 gap-5">
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="proj-type"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              System Architecture Track
+                            </label>
+                            <select
+                              id="proj-type"
+                              value={projectForm.type}
+                              onChange={(e) =>
+                                setProjectForm((s) => ({ ...s, type: e.target.value }))
+                              }
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#6366F1] transition-colors"
+                            >
+                              {projectTypes.map((t) => (
+                                <option key={t} value={t}>
+                                  {t}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="space-y-2">
+                            <label
+                              htmlFor="proj-budget"
+                              className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                            >
+                              Allocated Budget
+                            </label>
+                            <select
+                              id="proj-budget"
+                              value={projectForm.budget}
+                              onChange={(e) =>
+                                setProjectForm((s) => ({ ...s, budget: e.target.value }))
+                              }
+                              className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#6366F1] transition-colors"
+                            >
+                              {budgetOptions.map((b) => (
+                                <option key={b} value={b}>
+                                  {b}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <label
+                            htmlFor="proj-message"
+                            className="text-xs font-mono text-white/70 uppercase tracking-wider block"
+                          >
+                            Project Brief &amp; Target SLA
+                          </label>
+                          <textarea
+                            id="proj-message"
+                            rows={4}
+                            value={projectForm.message}
+                            onChange={(e) =>
+                              setProjectForm((s) => ({ ...s, message: e.target.value }))
+                            }
+                            placeholder="Describe your product architecture, AI/RAG or 3D spatial web requirements, and target launch timeline..."
+                            className="w-full bg-[#050507] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#6366F1] transition-colors"
+                          />
+                          {errors.message && (
+                            <span className="text-red-400 text-xs font-mono block">
+                              {errors.message}
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="w-full py-4 rounded-xl bg-[#6366F1] text-white font-mono font-bold text-xs sm:text-sm tracking-wide uppercase hover:bg-[#8B5CF6] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(99,102,241,0.35)]"
+                        >
+                          <FiSend size={15} />
+                          <span>Submit Architecture Brief</span>
+                        </button>
+                      </form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </SpotlightCard>
+          </div>
         </div>
       </div>
     </section>

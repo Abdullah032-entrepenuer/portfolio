@@ -10,22 +10,28 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: {
-          900: '#030712',
-          800: '#060810',
-          700: '#111827',
+          950: '#050507',
+          900: '#050507',
+          800: '#0B0C10',
+          700: '#12141C',
+        },
+        cyber: {
+          emerald: '#10B981',
+          indigo: '#6366F1',
+          violet: '#8B5CF6',
         },
         electric: {
-          cyan: '#00F0FF',
-          gold: '#FFD700',
+          cyan: '#10B981',
+          gold: '#8B5CF6',
         }
       },
       fontFamily: {
-        sans: ['var(--font-kanit)', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'monospace'],
-        display: ['var(--font-kanit)', 'sans-serif'],
+        sans: ['var(--font-inter)', 'var(--font-kanit)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+        display: ['var(--font-syne)', 'var(--font-inter)', 'sans-serif'],
       },
       backgroundImage: {
-        'glass-gradient': 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%)',
+        'glass-gradient': 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.0) 100%)',
       }
     },
   },
